@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Property &amp; Apartment Redevelopment Services | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">Property Redevelopment</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Urban Asset Transformation</div>
+        <h1>Unlocking Value from Aging Buildings &amp; Prime Urban Plots</h1>
+        <p class="hero-desc">
+            Strategic joint development structuring for cooperative housing societies, independent plots, and aging multi-unit properties — delivering enhanced carpet area, corpus funds, and modern amenities.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/request-site-visit/" class="btn btn-gold">
+                Book Redevelopment Feasibility Audit <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/contact/?type=redevelopment" class="btn btn-outline-white">
+                Discuss Society Proposal
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Redevelopment Services Grid -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <div class="eyebrow justify-content-center">Redevelopment Models</div>
+            <h2>Transparent Partnership for Societies &amp; Plot Owners</h2>
+            <p>We navigate consensus building, FSI optimization, statutory approvals, transit rent management, and turnkey construction under RERA oversight.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Housing Society Redevelopment -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card" style="border-top: 3px solid var(--gold);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="service-icon-box mb-0" style="background: var(--gold-soft); border-color: var(--gold);">
+                            <i class="bi bi-buildings" style="color: var(--gold);"></i>
+                        </div>
+                        <span class="badge-gold">Societies</span>
+                    </div>
+                    <h3 class="h5 mb-2">Housing Society Redevelopment</h3>
+                    <p class="small mb-3">Joint development structuring for 30+ year old cooperative societies with extra carpet area &amp; corpus.</p>
+                    <ul class="service-benefits">
+                        <li>15% to 35% additional carpet area for members</li>
+                        <li>Guaranteed transit rent during construction</li>
+                        <li>Corpus fund disbursement &amp; bank guarantee</li>
+                        <li>Zero financial investment required from members</li>
+                    </ul>
+                    <a href="/contact/?type=society_redevelopment" class="service-link">
+                        Inquire Society Redevelopment <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Plot Redevelopment -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-aspect-ratio" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Independent Plot Transformation</h3>
+                    <p class="small mb-3">Transforming single-storey ancestral bungalows into multi-floor modern residential apartments.</p>
+                    <ul class="service-benefits">
+                        <li>FSI &amp; TDR maximization planning</li>
+                        <li>Landowner retained floors + developer revenue share</li>
+                        <li>Architectural personalization for family units</li>
+                        <li>Independent dedicated parking &amp; elevator</li>
+                    </ul>
+                    <a href="/contact/?type=plot_redevelopment" class="service-link">
+                        Inquire Plot Transformation <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Demolish & Rebuild Execution -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-arrow-repeat" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Turnkey Demolition-to-Handover</h3>
+                    <p class="small mb-3">End-to-end civil execution managing safe mechanical razing through to OC certification.</p>
+                    <ul class="service-benefits">
+                        <li>Rapid non-explosive structural razing</li>
+                        <li>RERA registration &amp; quarterly compliance filings</li>
+                        <li>High-speed RCC construction technologies</li>
+                        <li>Snag-free handover with occupancy certificate</li>
+                    </ul>
+                    <a href="/contact/?type=turnkey_redevelopment" class="service-link">
+                        Inquire Turnkey Rebuild <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

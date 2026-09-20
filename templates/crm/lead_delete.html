@@ -1,0 +1,39 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Confirm Delete Lead: {{ lead.lead_id }}{% endblock %}
+{% block page_title %}Soft-Delete Lead Confirmation{% endblock %}
+
+{% block crm_content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-danger text-white py-3">
+                <h5 class="font-heading mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirm Move to Trash</h5>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="text-muted fs-5 mb-4">
+                    Are you sure you want to soft-delete this lead? It will be moved to the Trash bin and can be restored at any time.
+                </p>
+
+                <div class="p-3 bg-light rounded text-start mb-4">
+                    <table class="table table-sm table-borderless mb-0">
+                        <tr><td class="text-muted">Lead ID:</td><td class="fw-bold font-monospace">{{ lead.lead_id }}</td></tr>
+                        <tr><td class="text-muted">Customer Name:</td><td class="fw-bold">{{ lead.full_name }}</td></tr>
+                        <tr><td class="text-muted">Phone:</td><td class="fw-bold">{{ lead.phone }}</td></tr>
+                        <tr><td class="text-muted">Service:</td><td class="fw-bold">{{ lead.get_service_type_display }}</td></tr>
+                        <tr><td class="text-muted">Current Status:</td><td><span class="badge {{ lead.status_badge_class }}">{{ lead.get_status_display }}</span></td></tr>
+                    </table>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a href="/cms/crm/leads/{{ lead.id }}/" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-4 fw-bold">Yes, Move to Trash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

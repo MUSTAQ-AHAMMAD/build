@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog.get_meta_title }} | BUILD+{% endblock %}
+{% block meta_description %}{{ blog.get_meta_description }}{% endblock %}
+{% block meta_keywords %}{{ blog.seo_keywords|default:site_settings.meta_keywords }}{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="{{ blog.get_meta_title }}">
+<meta property="og:description" content="{{ blog.get_meta_description }}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% if blog.featured_image %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ blog.featured_image.url }}">
+{% endif %}
+
+<!-- Schema.org BlogPosting JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ blog.title|escapejs }}",
+  "description": "{{ blog.short_description|escapejs }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ blog.author|escapejs }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BUILD+ Construction & Property Services"
+  },
+  "datePublished": "{{ blog.published_date|date:'c' }}",
+  "dateModified": "{{ blog.updated_at|date:'c' }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- ARTICLE HEADER & BREADCRUMBS -->
+<section class="py-4 bg-light border-bottom">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a href="/" class="text-muted text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog/" class="text-muted text-decoration-none">Blog</a></li>
+                <li class="breadcrumb-item"><a href="/blog/?category={{ blog.category.slug }}" class="text-muted text-decoration-none">{{ blog.category.name }}</a></li>
+                <li class="breadcrumb-item active text-truncate" aria-current="page" style="max-width: 300px;">{{ blog.title }}</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- ARTICLE BODY -->
+<article class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <!-- Article Header Info -->
+                <div class="mb-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <a href="/blog/?category={{ blog.category.slug }}" class="category-badge text-decoration-none">
+                            {{ blog.category.name }}
+                        </a>
+                        <span class="text-muted small"><i class="bi bi-clock me-1"></i> {{ blog.reading_time }} min read</span>
+                    </div>
+
+                    <h1 class="display-5 font-heading fw-bold mb-3 text-dark">
+                        {{ blog.title }}
+                    </h1>
+
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 text-muted small py-3 border-top border-bottom">
+                        <div>
+                            <strong>Written by:</strong> <span class="text-dark fw-bold">{{ blog.author }}</span>
+                        </div>
+                        <div>
+                            <strong>Published:</strong> {{ blog.published_date|date:"F d, Y" }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Image -->
+                {% if blog.featured_image %}
+                <div class="mb-5 rounded-4 overflow-hidden shadow-sm">
+                    <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                </div>
+                {% endif %}
+
+                <!-- Short Summary Box -->
+                <div class="p-4 rounded-3 mb-5 border-start border-4 border-warning shadow-sm" style="background-color: var(--cream);">
+                    <p class="fs-5 fst-italic text-dark mb-0 fw-medium">
+                        "{{ blog.short_description }}"
+                    </p>
+                </div>
+
+                <!-- Main Content HTML -->
+                <div class="article-content">
+                    {{ blog.content|safe }}
+                </div>
+
+                <!-- CONTEXTUAL COMMERCIAL ENQUIRY CTA -->
+                <div class="card border-0 shadow-md rounded-4 overflow-hidden my-5 text-white" style="background: linear-gradient(125deg, #102a43, #173f5f);">
+                    <div class="card-body p-4 p-md-5 text-center text-md-start">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <span class="eyebrow">Expert Consultation</span>
+                                <h3 class="text-white font-heading mb-2">
+                                    {% if blog.related_service_type == 'flat_renovation' %}
+                                    Planning a Flat or Apartment Renovation?
+                                    {% elif blog.related_service_type == 'demolition' %}
+                                    Need Controlled Demolition or Site Clearance?
+                                    {% elif blog.related_service_type == 'redevelopment' %}
+                                    Considering Property or Society Redevelopment?
+                                    {% elif blog.related_service_type == 'nri_services' %}
+                                    Living Abroad? Need Local Property Supervision?
+                                    {% elif blog.related_service_type == 'construction_loan' %}
+                                    Need Construction or Renovation Finance Support?
+                                    {% else %}
+                                    Planning a New Construction or Rebuilding Project?
+                                    {% endif %}
+                                </h3>
+                                <p class="text-light opacity-75 small mb-4 mb-md-0">
+                                    Our senior civil engineers provide on-site structural inspections, itemized BOQ estimates, and turnkey project delivery.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <a href="/request-site-visit/" class="btn btn-gold fw-bold px-4 py-3 d-block d-md-inline-block mb-2">
+                                    Request Site Visit →
+                                </a>
+                                <a href="https://wa.me/919876543210" target="_blank" class="btn btn-outline-light btn-sm d-block d-md-inline-block">
+                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp Us
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AUTHOR BIO BOX -->
+                <div class="d-flex align-items-center gap-3 p-4 bg-light rounded-3 border mb-5">
+                    <div class="fs-1"><i class="bi bi-person-gear me-1"></i></div>
+                    <div>
+                        <h5 class="font-heading mb-1">{{ blog.author }}</h5>
+                        <p class="small text-muted mb-0">Senior Civil Engineering & Construction Advisory Cell at BUILD+. Providing turnkey structural solutions, flat renovations, and redevelopment project management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- RELATED BLOGS SECTION -->
+{% if related_blogs %}
+<section class="py-5 bg-light border-top">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="eyebrow">Further Reading</span>
+                <h2 class="h3 font-heading mb-0">Related Articles & Guides</h2>
+            </div>
+            <a href="/blog/?category={{ blog.category.slug }}" class="btn btn-sm btn-outline-primary">
+                More in {{ blog.category.name }} →
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for rel_blog in related_blogs %}
+            <div class="col-lg-4 col-md-6">
+                <article class="blog-card bg-white">
+                    <a href="{{ rel_blog.get_absolute_url }}">
+                        {% if rel_blog.featured_image %}
+                        <div class="blog-card-img" style="background-image: url('{{ rel_blog.featured_image.url }}'); height: 180px;">
+                            <span class="category-badge position-absolute top-0 start-0 m-3">{{ rel_blog.category.name }}</span>
+                        </div>
+                        {% else %}
+                        <div class="blog-card-img d-flex align-items-center justify-content-center" style="height: 180px;">
+                            <span class="category-badge position-absolute top-0 start-0 m-3">{{ rel_blog.category.name }}</span>
+                            <span class="fs-3"><i class="bi bi-buildings me-1"></i></span>
+                        </div>
+                        {% endif %}
+                    </a>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <small class="text-muted mb-2"><i class="bi bi-clock me-1"></i> {{ rel_blog.reading_time }} min read • {{ rel_blog.published_date|date:"M d, Y" }}</small>
+                        <h4 class="h6 font-heading fw-bold mb-2">
+                            <a href="{{ rel_blog.get_absolute_url }}" class="text-dark text-decoration-none">
+                                {{ rel_blog.title }}
+                            </a>
+                        </h4>
+                        <p class="text-muted small mb-3 flex-grow-1">
+                            {{ rel_blog.short_description|truncatewords:16 }}
+                        </p>
+                        <a href="{{ rel_blog.get_absolute_url }}" class="text-primary fw-bold text-decoration-none small">
+                            Read Guide →
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Property & Construction Services | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+{% block meta_description %}BUILD+ provides 20 complete property and construction services: new construction, renovation, demolition, redevelopment, NRI services, property advisory and more.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero" aria-labelledby="srv-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+      <a href="/">Home</a><span class="separator">/</span>
+      <span class="current">Services</span>
+    </nav>
+    <div class="eyebrow" style="color:var(--gold);">Our Capabilities</div>
+    <h1 id="srv-h1">Property &amp; Construction Services</h1>
+    <p class="hero-desc">From new construction to renovation, redevelopment, and remote NRI property supervision — BUILD+ provides structured, end-to-end solutions across 20 specialist disciplines.</p>
+  </div>
+</section>
+
+<!-- FEATURED SERVICES — Large Visual Cards -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">Flagship Services</div>
+      <h2>Our Most In-Demand Capabilities</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <a href="/construction/" class="featured-service-card">
+          <div class="featured-service-num">01</div>
+          <div class="featured-service-icon"><i class="bi bi-buildings-fill"></i></div>
+          <h3>New Construction</h3>
+          <p>Independent houses, villas, multi-unit residential and commercial construction — turnkey delivery with structural integrity and quality finishes.</p>
+          <div class="featured-service-link">Explore Service <i class="bi bi-arrow-right ms-1"></i></div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="/renovation/" class="featured-service-card featured-service-card-gold">
+          <div class="featured-service-num">05</div>
+          <div class="featured-service-icon"><i class="bi bi-house-gear-fill"></i></div>
+          <h3>Flat &amp; Apartment Renovation</h3>
+          <p>Complete renovation for old, resale, damaged or occupied flats and apartments — structural, waterproofing, MEP, and interior modernization.</p>
+          <div class="featured-service-link">Explore Service <i class="bi bi-arrow-right ms-1"></i></div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="/demolition-reconstruction/" class="featured-service-card">
+          <div class="featured-service-num">10</div>
+          <div class="featured-service-icon"><i class="bi bi-hammer"></i></div>
+          <h3>Demolition &amp; Reconstruction</h3>
+          <p>Controlled demolition, debris clearance, site preparation, and full reconstruction — a complete end-to-end solution for aging structures.</p>
+          <div class="featured-service-link">Explore Service <i class="bi bi-arrow-right ms-1"></i></div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="/nri-services/" class="featured-service-card featured-service-card-dark">
+          <div class="featured-service-num">16</div>
+          <div class="featured-service-icon"><i class="bi bi-globe2"></i></div>
+          <h3>NRI Property Services</h3>
+          <p>Remote property supervision, renovation coordination, documentation assistance, and local presence for overseas Indian property owners.</p>
+          <div class="featured-service-link">Explore Service <i class="bi bi-arrow-right ms-1"></i></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL 20 SERVICES — By Category -->
+<section class="section section-light">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">Complete Service Portfolio</div>
+      <h2>All 20 Specialist Services</h2>
+    </div>
+
+    <!-- CONSTRUCTION -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon"><i class="bi bi-buildings"></i></div>
+        <div>
+          <div class="service-category-label">Category A</div>
+          <h3 class="service-category-title">Construction</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <a href="/construction/" class="srv-card">
+            <div class="srv-num">01</div>
+            <div class="srv-icon"><i class="bi bi-buildings-fill"></i></div>
+            <h4>New Construction</h4>
+            <p>Independent houses, villas, multi-unit residential and commercial construction.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/construction/" class="srv-card">
+            <div class="srv-num">02</div>
+            <div class="srv-icon"><i class="bi bi-house-door-fill"></i></div>
+            <h4>Villa Construction</h4>
+            <p>Premium villa construction with coordinated architectural, structural and execution services.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/construction/" class="srv-card">
+            <div class="srv-num">03</div>
+            <div class="srv-icon"><i class="bi bi-building"></i></div>
+            <h4>Apartment &amp; Multi-Unit</h4>
+            <p>Residential apartment and multi-unit construction solutions.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/construction/" class="srv-card">
+            <div class="srv-num">04</div>
+            <div class="srv-icon"><i class="bi bi-briefcase-fill"></i></div>
+            <h4>Commercial Construction</h4>
+            <p>Office, retail, commercial and business property construction.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RENOVATION -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:var(--gold-soft); border-color:var(--gold); color:var(--gold);"><i class="bi bi-house-gear"></i></div>
+        <div>
+          <div class="service-category-label">Category B</div>
+          <h3 class="service-category-title">Renovation &amp; Repair</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <a href="/renovation/" class="srv-card">
+            <div class="srv-num">05</div>
+            <div class="srv-icon" style="color:var(--gold);"><i class="bi bi-house-gear-fill"></i></div>
+            <h4>Flat &amp; Apartment Renovation</h4>
+            <p>Complete renovation for old, resale, damaged or occupied flats and apartments.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/renovation/" class="srv-card">
+            <div class="srv-num">06</div>
+            <div class="srv-icon" style="color:var(--gold);"><i class="bi bi-tools"></i></div>
+            <h4>Home Renovation</h4>
+            <p>Interior, structural, electrical, plumbing, waterproofing and finishing renovation.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/repair-restoration-maintenance/" class="srv-card">
+            <div class="srv-num">07</div>
+            <div class="srv-icon" style="color:var(--gold);"><i class="bi bi-wrench-adjustable"></i></div>
+            <h4>Structural Repairs</h4>
+            <p>Technical structural repair, strengthening and rehabilitation services.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/repair-restoration-maintenance/" class="srv-card">
+            <div class="srv-num">08</div>
+            <div class="srv-icon" style="color:var(--gold);"><i class="bi bi-droplet-fill"></i></div>
+            <h4>Waterproofing</h4>
+            <p>Terrace, bathroom, basement, external wall and structural waterproofing solutions.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMOLITION -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:rgba(180,35,24,0.08); border-color:rgba(180,35,24,0.2); color:var(--danger);"><i class="bi bi-hammer"></i></div>
+        <div>
+          <div class="service-category-label">Category C</div>
+          <h3 class="service-category-title">Demolition &amp; Reconstruction</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-6">
+          <a href="/demolition-reconstruction/" class="srv-card">
+            <div class="srv-num">09</div>
+            <div class="srv-icon" style="color:var(--danger);"><i class="bi bi-building-dash"></i></div>
+            <h4>Demolition Services</h4>
+            <p>Controlled residential and commercial demolition with safety protocols, debris clearance, and site preparation.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <a href="/demolition-reconstruction/" class="srv-card">
+            <div class="srv-num">10</div>
+            <div class="srv-icon" style="color:var(--danger);"><i class="bi bi-hammer"></i></div>
+            <h4>Demolition &amp; Reconstruction</h4>
+            <p>Demolition, debris clearance, site preparation, and full reconstruction as a single coordinated service.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- REDEVELOPMENT -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:rgba(23,92,211,0.08); border-color:rgba(23,92,211,0.2); color:var(--info);"><i class="bi bi-arrow-repeat"></i></div>
+        <div>
+          <div class="service-category-label">Category D</div>
+          <h3 class="service-category-title">Redevelopment</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-6">
+          <a href="/redevelopment/" class="srv-card">
+            <div class="srv-num">11</div>
+            <div class="srv-icon" style="color:var(--info);"><i class="bi bi-arrow-repeat"></i></div>
+            <h4>Property Redevelopment</h4>
+            <p>Redevelopment of aging buildings and underutilized properties — from concept to completion.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <a href="/redevelopment/" class="srv-card">
+            <div class="srv-num">12</div>
+            <div class="srv-icon" style="color:var(--info);"><i class="bi bi-building-fill-gear"></i></div>
+            <h4>Apartment Redevelopment</h4>
+            <p>Redevelopment coordination for apartment buildings and housing societies.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPERTY & LAND -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:rgba(23,107,82,0.08); border-color:rgba(23,107,82,0.2); color:var(--success);"><i class="bi bi-map-fill"></i></div>
+        <div>
+          <div class="service-category-label">Category E</div>
+          <h3 class="service-category-title">Property &amp; Land</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <a href="/property-land/" class="srv-card">
+            <div class="srv-num">13</div>
+            <div class="srv-icon" style="color:var(--success);"><i class="bi bi-map-fill"></i></div>
+            <h4>Land &amp; Property Advisory</h4>
+            <p>Property due diligence, site assessment and transaction support.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a href="/property-documentation/" class="srv-card">
+            <div class="srv-num">14</div>
+            <div class="srv-icon" style="color:var(--success);"><i class="bi bi-file-earmark-check-fill"></i></div>
+            <h4>Property Documentation</h4>
+            <p>Structured assistance and coordination for property documentation requirements.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <a href="/bank-loan-finance-support/" class="srv-card">
+            <div class="srv-num">15</div>
+            <div class="srv-icon" style="color:var(--success);"><i class="bi bi-bank2"></i></div>
+            <h4>Construction Finance Support</h4>
+            <p>Assistance and coordination for construction finance and loan documentation requirements.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NRI & PROPERTY MANAGEMENT -->
+    <div class="service-category-block">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:rgba(11,31,51,0.06); border-color:var(--border); color:var(--primary);"><i class="bi bi-globe2"></i></div>
+        <div>
+          <div class="service-category-label">Category F</div>
+          <h3 class="service-category-title">NRI &amp; Property Management</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <a href="/nri-services/" class="srv-card">
+            <div class="srv-num">16</div>
+            <div class="srv-icon" style="color:var(--primary);"><i class="bi bi-globe2"></i></div>
+            <h4>NRI Property Services</h4>
+            <p>Remote property supervision and local coordination for overseas property owners.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/nri-services/" class="srv-card">
+            <div class="srv-num">17</div>
+            <div class="srv-icon" style="color:var(--primary);"><i class="bi bi-camera-video-fill"></i></div>
+            <h4>NRI Renovation Supervision</h4>
+            <p>Local renovation monitoring, progress reporting and coordination for NRI clients.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/property-inspection-assessment/" class="srv-card">
+            <div class="srv-num">18</div>
+            <div class="srv-icon" style="color:var(--primary);"><i class="bi bi-search"></i></div>
+            <h4>Property Inspection</h4>
+            <p>Property inspection, progress verification and site reporting services.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/nri-services/" class="srv-card">
+            <div class="srv-num">19</div>
+            <div class="srv-icon" style="color:var(--primary);"><i class="bi bi-gear-fill"></i></div>
+            <h4>Property Maintenance</h4>
+            <p>Ongoing property maintenance and management coordination services.</p>
+            <div class="srv-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSULTATION -->
+    <div class="service-category-block mb-0">
+      <div class="service-category-header">
+        <div class="service-category-icon" style="background:var(--gold-soft); border-color:var(--gold); color:var(--gold);"><i class="bi bi-chat-square-text-fill"></i></div>
+        <div>
+          <div class="service-category-label">Category G</div>
+          <h3 class="service-category-title">Consultation</h3>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-6">
+          <a href="/get-free-consultation/" class="srv-card" style="border-color:var(--gold); border-top-width:3px;">
+            <div class="srv-num">20</div>
+            <div class="srv-icon" style="color:var(--gold);"><i class="bi bi-chat-square-text-fill"></i></div>
+            <h4>Free Property Consultation</h4>
+            <p>Professional initial consultation, requirement analysis and site assessment — free of charge, no obligation.</p>
+            <div class="srv-link" style="color:var(--gold);">Get Free Consultation <i class="bi bi-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-navy">
+  <div class="container-xxl text-center">
+    <div class="eyebrow justify-content-center" style="color:var(--gold);">Ready to Start?</div>
+    <h2 class="text-white mb-4">Tell Us About Your Property</h2>
+    <p class="mb-5" style="color:rgba(255,255,255,0.72); max-width:520px; margin:0 auto 2.5rem;">Our team will review your requirement and connect you with the right specialist. Free, confidential, no obligation.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Get Free Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="/contact/" class="btn btn-outline-light btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

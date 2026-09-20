@@ -1,0 +1,135 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}AI Conversations Directory | BUILD+ CMS{% endblock %}
+{% block page_title %}AI Customer Conversations ({{ total_count }}){% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/cms/ai/" class="text-decoration-none text-muted">AI Intelligence</a></li>
+<li class="breadcrumb-item active">Conversations</li>
+{% endblock %}
+
+{% block header_actions %}
+<a href="/cms/ai/settings/" class="btn btn-outline-secondary fw-bold">
+    <i class="bi bi-gear me-1"></i> Chatbot Configuration
+</a>
+{% endblock %}
+
+{% block cms_content %}
+<!-- FILTER & SEARCH -->
+<div class="card border shadow-sm rounded-3 mb-4" style="background-color:var(--admin-bg-surface);border-color:var(--admin-border)!important;">
+    <div class="card-body p-3">
+        <form method="get" action="/cms/ai/conversations/" class="row g-2 align-items-center">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-text border-end-0" style="background-color:var(--admin-bg-hover);border-color:var(--admin-border);"><i class="bi bi-search" style="color:var(--admin-text-secondary);"></i></span>
+                    <input type="text" name="q" value="{{ search_q }}" class="form-control border-start-0" placeholder="Search by name, phone, location, intent..." style="background-color:var(--admin-bg-surface);color:var(--admin-text-primary);border-color:var(--admin-border);">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="btn-group w-100" role="group">
+                    <a href="/cms/ai/conversations/?status=all" class="btn btn-sm {% if status_filter == 'all' %}btn-dark{% else %}btn-outline-secondary{% endif %}">All</a>
+                    <a href="/cms/ai/conversations/?status=active" class="btn btn-sm {% if status_filter == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">Active</a>
+                    <a href="/cms/ai/conversations/?status=converted" class="btn btn-sm {% if status_filter == 'converted' %}btn-success{% else %}btn-outline-secondary{% endif %}">Converted</a>
+                    <a href="/cms/ai/conversations/?status=human_handoff" class="btn btn-sm {% if status_filter == 'human_handoff' %}btn-danger{% else %}btn-outline-secondary{% endif %}">Takeovers</a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100 fw-bold"><i class="bi bi-funnel me-1"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- DESKTOP TABLE -->
+<div class="card border shadow-sm rounded-3 d-none d-md-block" style="background-color:var(--admin-bg-surface);border-color:var(--admin-border)!important;">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="small text-uppercase" style="background-color:var(--admin-bg-hover);">
+                <tr>
+                    <th>Session ID / Visitor</th>
+                    <th>Service &amp; Location</th>
+                    <th>Detected Intent &amp; Scope</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Linked CRM Lead</th>
+                    <th>Last Active</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in sessions %}
+                <tr>
+                    <td>
+                        <strong class="d-block" style="color:var(--admin-text-primary);">{{ s.visitor_name|default:"Anonymous Visitor" }}</strong>
+                        <small class="text-muted font-monospace">{{ s.session_id|slice:":8" }}...{% if s.visitor_phone %} &bull; {{ s.visitor_phone }}{% endif %}</small>
+                    </td>
+                    <td>
+                        <span class="badge border text-capitalize" style="background-color:var(--admin-bg-body);color:var(--admin-text-primary);">{{ s.service_category|default:"General"|cut:"_" }}</span>
+                        <small class="text-muted d-block mt-1">{{ s.visitor_location|default:"Web User" }}</small>
+                    </td>
+                    <td>
+                        <div class="small fw-semibold" style="color:var(--admin-text-primary);">{{ s.detected_intent|default:"Browsing" }}</div>
+                        <small class="text-muted">{{ s.ai_lead_summary|truncatechars:45|default:"-" }}</small>
+                    </td>
+                    <td>
+                        <span class="badge {% if s.suggested_priority == 'URGENT' %}bg-danger{% elif s.suggested_priority == 'HIGH' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                            {{ s.suggested_priority }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge {% if s.status == 'lead_created' %}bg-success{% elif s.status == 'human_active' %}bg-info text-dark{% elif s.status == 'human_handoff' %}bg-danger{% else %}bg-secondary{% endif %}">
+                            {{ s.get_status_display }}
+                        </span>
+                        {% if s.human_agent_active %}
+                        <small class="text-danger fw-bold d-block mt-1"><i class="bi bi-circle-fill" style="font-size:0.5rem;"></i> Human Active</small>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if s.lead %}
+                        <a href="/cms/crm/leads/{{ s.lead.id }}/" class="badge bg-primary text-decoration-none">
+                            {{ s.lead.lead_id }} <i class="bi bi-box-arrow-up-right"></i>
+                        </a>
+                        {% else %}
+                        <span class="text-muted small">-</span>
+                        {% endif %}
+                    </td>
+                    <td class="small text-muted">{{ s.last_activity_at|timesince }} ago</td>
+                    <td class="text-end">
+                        <a href="/cms/ai/conversations/{{ s.session_id }}/" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-chat-dots me-1"></i> Open Chat
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="8" class="text-center py-5 text-muted">No AI conversations matching the current filter.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MOBILE CARDS -->
+<div class="d-md-none">
+    {% for s in sessions %}
+    <div class="card border shadow-sm rounded-3 mb-3" style="background-color:var(--admin-bg-surface);border-color:var(--admin-border)!important;">
+        <div class="card-body p-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <div class="fw-bold" style="color:var(--admin-text-primary);">{{ s.visitor_name|default:"Anonymous Visitor" }}</div>
+                    <small class="text-muted font-monospace">{{ s.session_id|slice:":8" }}...</small>
+                </div>
+                <span class="badge {% if s.suggested_priority == 'URGENT' %}bg-danger{% elif s.suggested_priority == 'HIGH' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">{{ s.suggested_priority }}</span>
+            </div>
+            <div class="small text-muted mb-1">{{ s.visitor_location|default:"Web User" }} &bull; {{ s.service_category|default:"General"|cut:"_" }}</div>
+            <div class="small mb-2" style="color:var(--admin-text-primary);">{{ s.detected_intent|default:"Browsing" }}</div>
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color:var(--admin-border)!important;">
+                <span class="badge {% if s.status == 'lead_created' %}bg-success{% elif s.status == 'human_active' %}bg-info text-dark{% elif s.status == 'human_handoff' %}bg-danger{% else %}bg-secondary{% endif %}">{{ s.get_status_display }}</span>
+                <a href="/cms/ai/conversations/{{ s.session_id }}/" class="btn btn-sm btn-outline-primary fw-semibold"><i class="bi bi-chat-dots me-1"></i> Open Chat</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-4 text-muted">No AI conversations matching the current filter.</div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Follow-up Communications Center{% endblock %}
+{% block page_title %}Follow-up Tasks & Communication Center{% endblock %}
+
+{% block crm_content %}
+<!-- TABS -->
+<ul class="nav nav-pills mb-4">
+    <li class="nav-item">
+        <a class="nav-link {% if tab == 'today' %}active bg-navy text-white{% endif %}" href="?tab=today">
+            Today's Follow-ups <span class="badge bg-danger ms-1">{{ today_count }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tab == 'upcoming' %}active bg-navy text-white{% endif %}" href="?tab=upcoming">
+            Upcoming <span class="badge bg-secondary ms-1">{{ upcoming_count }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tab == 'overdue' %}active bg-danger text-white{% else %}text-danger{% endif %}" href="?tab=overdue">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> Overdue <span class="badge bg-danger ms-1">{{ overdue_count }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tab == 'completed' %}active bg-success text-white{% endif %}" href="?tab=completed">
+            <i class="bi bi-check-lg me-1"></i> Completed ({{ completed_count }})
+        </a>
+    </li>
+</ul>
+
+<!-- TABLE & MOBILE CARDS -->
+<div class="card border-0 shadow-sm rounded-3">
+    <!-- Desktop Table -->
+    <div class="table-responsive d-none d-md-block">
+        <table class="table table-hover align-middle mb-0 small">
+            <thead class="table-light text-uppercase">
+                <tr>
+                    <th>Scheduled Date</th>
+                    <th>Customer Contact</th>
+                    <th>Communication Type</th>
+                    <th>Subject & Discussion Agenda</th>
+                    <th>Assigned Staff</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fu in followups %}
+                <tr class="{% if not fu.completed and fu.follow_up_date < today %}table-danger table-opacity-10{% endif %}">
+                    <td>
+                        <strong class="text-dark">{{ fu.follow_up_date|date:"d M Y" }}</strong>
+                        {% if fu.follow_up_time %}<small class="text-muted d-block">{{ fu.follow_up_time }}</small>{% endif %}
+                    </td>
+                    <td>
+                        <strong class="text-dark d-block">
+                            <a href="/cms/crm/leads/{{ fu.lead.id }}/" class="text-dark text-decoration-none">{{ fu.lead.full_name }}</a>
+                        </strong>
+                        <small class="text-muted"><i class="bi bi-telephone-fill me-1"></i>{{ fu.lead.phone }}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-light text-dark border">{{ fu.get_follow_up_type_display }}</span>
+                    </td>
+                    <td>
+                        <div class="fw-bold text-dark">{{ fu.subject }}</div>
+                        {% if fu.notes %}<small class="text-muted">{{ fu.notes|truncatewords:12 }}</small>{% endif %}
+                    </td>
+                    <td>{% if fu.assigned_to %}{{ fu.assigned_to.get_full_name|default:fu.assigned_to.username }}{% else %}-{% endif %}</td>
+                    <td>
+                        {% if fu.completed %}
+                        <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Completed</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        {% if not fu.completed %}
+                        <form method="post" action="/cms/crm/follow-ups/{{ fu.id }}/complete/" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button type="submit" class="btn btn-sm btn-success py-1 px-2" title="Mark Completed"><i class="bi bi-check-lg me-1"></i>Done</button>
+                        </form>
+                        {% endif %}
+                        <a href="/cms/crm/leads/{{ fu.lead.id }}/?tab=followup" class="btn btn-sm btn-outline-secondary py-1 px-2">View Lead <i class="bi bi-arrow-right"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-5 text-muted">
+                        No follow-ups found in this category.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Touch Cards (< 768px) -->
+    <div class="d-md-none p-3 mobile-card-list">
+        {% for fu in followups %}
+        <div class="mobile-card-item">
+            <div class="mobile-card-header">
+                <div>
+                    <a href="/cms/crm/leads/{{ fu.lead.id }}/" class="mobile-card-title text-decoration-none">
+                        {{ fu.lead.full_name }}
+                    </a>
+                    <div class="small text-muted mt-1">
+                        <i class="bi bi-calendar3 me-1"></i>{{ fu.follow_up_date|date:"d M Y" }} {% if fu.follow_up_time %}{{ fu.follow_up_time }}{% endif %}
+                    </div>
+                </div>
+                {% if fu.completed %}
+                <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Done</span>
+                {% else %}
+                <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </div>
+
+            <div class="fw-semibold text-dark small mb-1">{{ fu.subject }}</div>
+            {% if fu.notes %}<p class="text-muted small mb-2">{{ fu.notes|truncatewords:14 }}</p>{% endif %}
+
+            <div class="mobile-card-meta">
+                <span><i class="bi bi-chat-square-dots me-1"></i>{{ fu.get_follow_up_type_display }}</span>
+                {% if fu.assigned_to %}<span><i class="bi bi-person me-1"></i>{{ fu.assigned_to.username }}</span>{% endif %}
+            </div>
+
+            <div class="mobile-card-actions">
+                <a href="tel:{{ fu.lead.phone }}" class="mobile-card-btn btn-outline-primary">
+                    <i class="bi bi-telephone-fill"></i> Call
+                </a>
+                {% if not fu.completed %}
+                <form method="post" action="/cms/crm/follow-ups/{{ fu.id }}/complete/" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit" class="mobile-card-btn btn-success border-0 text-white">
+                        <i class="bi bi-check-lg"></i> Mark Done
+                    </button>
+                </form>
+                {% endif %}
+                <a href="/cms/crm/leads/{{ fu.lead.id }}/?tab=followup" class="mobile-card-btn btn-outline-secondary">
+                    <i class="bi bi-eye"></i> Details
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-5 text-muted">
+            No follow-ups found in this category.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

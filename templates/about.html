@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About BUILD+ | {{ site_settings.site_name|default:"BUILD+" }} — Property & Construction, Delivered with Accountability{% endblock %}
+{% block meta_description %}Established over 18 years ago, BUILD+ delivers turnkey construction, renovation, demolition, redevelopment and NRI property services with complete accountability.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero" aria-labelledby="about-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+      <a href="/">Home</a><span class="separator">/</span>
+      <span class="current">About Us</span>
+    </nav>
+    <div class="eyebrow" style="color:var(--gold);">Who We Are</div>
+    <h1 id="about-h1">Property &amp; Construction,<br>Delivered With Accountability.</h1>
+    <p class="hero-desc">From a single structural audit to a complete turnkey residential project — BUILD+ is the partner that stays accountable, start to finish.</p>
+  </div>
+</section>
+
+<!-- INTRO SPLIT -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 order-lg-2">
+        <div class="about-image-block">
+          <img src="/static/images/hero-construction.jpg" alt="BUILD+ Construction Site — Professional Execution" class="img-fluid rounded-3" style="width:100%; height:480px; object-fit:cover;">
+          <div class="about-image-badge">
+            <div class="badge-number">{{ site_settings.years_experience|default:"18" }}+</div>
+            <div class="badge-label">Years of Proven Excellence</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="eyebrow">Our Foundation</div>
+        <h2 class="mb-4">Eliminating Fragmentation<br>in Property Engineering</h2>
+        <p class="mb-3" style="font-size:1.05rem; line-height:1.8;">
+          Established over {{ site_settings.years_experience|default:"18" }} years ago, {{ site_settings.site_name|default:"BUILD+" }} was founded on one clear principle: eliminating the opacity, quality compromises, and uncontrolled timelines that standard contractors subject property owners to.
+        </p>
+        <p class="mb-4" style="font-size:1.05rem; line-height:1.8;">
+          Over nearly two decades, we have expanded from building luxury villas to becoming the region's foremost specialist in complex resale flat renovations, controlled structural demolition, urban society redevelopment — and dedicated NRI asset supervision.
+        </p>
+        <div class="about-stats-row">
+          <div class="about-stat">
+            <div class="about-stat-number">{{ site_settings.projects_completed|default:"450" }}+</div>
+            <div class="about-stat-label">Projects Delivered</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-number text-gold">{{ site_settings.happy_clients|default:"620" }}+</div>
+            <div class="about-stat-label">Satisfied Clients</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-number" style="color:var(--success);">100%</div>
+            <div class="about-stat-label">Code Compliance</div>
+          </div>
+        </div>
+        <div class="d-flex gap-3 mt-4">
+          <a href="/get-free-consultation/" class="btn btn-brand">Free Consultation</a>
+          <a href="/projects/" class="btn btn-outline-brand">Our Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / VISION / VALUES -->
+<section class="section section-light">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">Our Purpose</div>
+      <h2>What Drives Everything We Do</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="mvv-card">
+          <div class="mvv-icon" style="background:var(--gold-soft); border-color:var(--gold);">
+            <i class="bi bi-compass" style="color:var(--gold);"></i>
+          </div>
+          <h3 class="h5 mb-3">Our Vision</h3>
+          <p>To stand as the nation's benchmark in engineering-driven property lifecycle services — combining structural safety, transparent governance, and architectural sophistication into a single accountable partnership.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mvv-card">
+          <div class="mvv-icon" style="background:rgba(11,31,51,0.06); border-color:var(--border);">
+            <i class="bi bi-bullseye" style="color:var(--primary);"></i>
+          </div>
+          <h3 class="h5 mb-3">Our Mission</h3>
+          <p>Delivering turnkey peace of mind through institutional project governance, 100% itemized BOQ budgeting, superior material procurement, and seamless real-time digital supervision for resident and NRI property owners.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mvv-card">
+          <div class="mvv-icon" style="background:rgba(23,107,82,0.1); border-color:rgba(23,107,82,0.2);">
+            <i class="bi bi-heart-fill" style="color:var(--success);"></i>
+          </div>
+          <h3 class="h5 mb-3">Our Values</h3>
+          <p>Accountability. Transparency. Technical Integrity. Quality without compromise. Respect for client investment. Structured documentation at every stage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PILLARS -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">Core Principles</div>
+      <h2>The Four Pillars of Our Execution Standard</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-number">01</div>
+          <h4>Structural Integrity First</h4>
+          <p>Every project starts with soil, core, or structural non-destructive testing before architectural drafting begins.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-number">02</div>
+          <h4>Fixed-Price Contracts</h4>
+          <p>No mid-way rate inflation or surprise variations. All material brands, grades and quantities are locked in advance.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-number">03</div>
+          <h4>Digital Client Oversight</h4>
+          <p>Track daily site logs, inspect progress photos, and approve stage invoices in your personal Client Portal — anywhere in the world.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-number">04</div>
+          <h4>Statutory Certainty</h4>
+          <p>Full municipal compliance, RERA guidelines, environmental clearances, and formal completion certificates.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="section section-light">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">What We Deliver</div>
+      <h2>Complete Property Lifecycle Capabilities</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon"><i class="bi bi-buildings"></i></div>
+          <h3 class="h5">New Construction</h3>
+          <p>Independent houses, villas, multi-unit apartments, and commercial construction executed with structural rigor and architectural precision.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon" style="color:var(--gold);"><i class="bi bi-house-gear"></i></div>
+          <h3 class="h5">Renovation &amp; Restoration</h3>
+          <p>Deep structural retrofitting, waterproofing, MEP overhaul, and interior modernization for resale, old, and occupied properties.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon" style="color:var(--danger);"><i class="bi bi-hammer"></i></div>
+          <h3 class="h5">Demolition &amp; Reconstruction</h3>
+          <p>Controlled residential and commercial demolition, debris clearance, site preparation, and full reconstruction services.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon" style="color:var(--info);"><i class="bi bi-arrow-repeat"></i></div>
+          <h3 class="h5">Property Redevelopment</h3>
+          <p>Redevelopment of aging buildings, underutilized properties, and apartment society coordination from concept to completion.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon" style="color:var(--success);"><i class="bi bi-globe2"></i></div>
+          <h3 class="h5">NRI Property Services</h3>
+          <p>Remote property supervision, renovation management, documentation coordination, and progress reporting for overseas owners.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="capability-card">
+          <div class="capability-icon" style="color:var(--slate);"><i class="bi bi-clipboard-data"></i></div>
+          <h3 class="h5">Property Advisory</h3>
+          <p>Land due diligence, site assessment, documentation support, construction finance coordination, and property inspection services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US — EDITORIAL -->
+<section class="section why-us-editorial">
+  <div class="container-xxl">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5">
+        <div class="eyebrow" style="color:var(--gold);">Our Difference</div>
+        <h2 class="mb-4">Why Property Owners Choose BUILD+</h2>
+        <p class="mb-5" style="font-size:1.05rem; line-height:1.8;">We are not a brokerage. We are not a subcontracting agency. Every project is planned, managed, supervised, and delivered by our in-house team of licensed civil engineers and project managers.</p>
+        <a href="/how-we-work/" class="btn btn-brand btn-lg">See How We Work <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Single-Point Accountability</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Transparent Itemized BOQ</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Licensed Civil Engineers</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Real-Time Digital Oversight</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">NRI Remote Supervision</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Structured Documentation</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">Quality Milestone Control</div></div></div>
+          <div class="col-sm-6"><div class="why-us-item"><div class="why-us-check"><i class="bi bi-check-lg"></i></div><div class="why-us-text">On-Time Delivery Commitment</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM (Dynamic) -->
+{% if team_members %}
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">Leadership &amp; Engineers</div>
+      <h2>Guided by Experienced Civil Professionals</h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for member in team_members %}
+      <div class="col-lg-3 col-md-6">
+        <div class="team-card">
+          {% if member.photo %}
+          <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="team-photo">
+          {% else %}
+          <div class="team-photo-placeholder"><i class="bi bi-person-fill"></i></div>
+          {% endif %}
+          <h4 class="h5 mb-1">{{ member.name }}</h4>
+          <div class="team-role">{{ member.role }}</div>
+          {% if member.bio %}<p class="small text-muted mt-2 mb-0">{{ member.bio }}</p>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- FINAL CTA -->
+<section class="section cta-navy">
+  <div class="container-xxl text-center">
+    <div class="eyebrow justify-content-center" style="color:var(--gold);">Start Today</div>
+    <h2 class="text-white mb-4">Ready to Build, Renovate<br>or Redevelop?</h2>
+    <p class="mb-5" style="color:rgba(255,255,255,0.72); font-size:1.05rem; max-width:560px; margin:0 auto 2.5rem;">Tell us about your property. Our team will review your requirement and connect you with the right expert — free of charge.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Get Free Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="/contact/" class="btn btn-outline-light btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

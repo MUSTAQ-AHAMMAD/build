@@ -1,0 +1,105 @@
+{% extends "portal/base_portal.html" %}
+
+{% block title %}{{ ticket.ticket_id }} — Support Desk | BUILD+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="/portal/support/" class="text-decoration-none small text-muted">← Back to Support Desk</a>
+    <div class="d-flex justify-content-between align-items-center mt-1">
+        <div>
+            <span class="font-monospace text-muted small fw-bold">{{ ticket.ticket_id }}</span>
+            <h4 class="fw-bold font-heading text-navy mb-0">{{ ticket.subject }}</h4>
+        </div>
+        <span class="badge bg-primary text-uppercase">{{ ticket.get_status_display }}</span>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- MESSAGE THREAD -->
+    <div class="col-lg-8">
+        <div class="portal-card p-4 mb-4">
+            <!-- Original Description -->
+            <div class="p-3 bg-light rounded-3 border mb-4">
+                <div class="d-flex justify-content-between small text-muted mb-2">
+                    <strong>{{ ticket.customer_name }} (Ticket Creator)</strong>
+                    <span>{{ ticket.created_at|date:"d M Y, H:i" }}</span>
+                </div>
+                <div class="text-dark">{{ ticket.description|linebreaks }}</div>
+            </div>
+
+            <!-- Threaded Messages -->
+            <h6 class="fw-bold text-navy mb-3">Conversation Timeline</h6>
+            {% for msg in ticket.messages.all %}
+            <div class="mb-3 p-3 rounded-3 {% if msg.is_staff_reply %}bg-primary bg-opacity-10 border border-primary border-opacity-25 ms-md-4{% else %}bg-light border me-md-4{% endif %}">
+                <div class="d-flex justify-content-between small mb-1">
+                    <strong class="{% if msg.is_staff_reply %}text-primary{% else %}text-dark{% endif %}">
+                        {% if msg.is_staff_reply %}<i class="bi bi-person-gear me-1"></i> Engineering Staff: {% endif %}{{ msg.sender_name }}
+                    </strong>
+                    <span class="text-muted">{{ msg.created_at|date:"d M Y, H:i" }}</span>
+                </div>
+                <div class="small text-dark">{{ msg.message|linebreaks }}</div>
+                {% if msg.attachment %}
+                <div class="mt-2 pt-2 border-top small">
+                    <a href="{{ msg.attachment.url }}" target="_blank" class="text-primary text-decoration-none">
+                        <i class="bi bi-paperclip me-1"></i> Attached File (Download)
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p class="text-muted small">No replies yet. Our desk is reviewing your ticket.</p>
+            {% endfor %}
+
+            <!-- Reply Box -->
+            {% if ticket.status != 'CLOSED' %}
+            <div class="pt-4 border-top mt-4">
+                <h6 class="fw-bold text-navy mb-2">Send a Response</h6>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea name="message" rows="3" class="form-control form-control-sm" placeholder="Type your reply..." required></textarea>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <input type="file" name="attachment" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-5 text-md-end mt-2 mt-md-0">
+                            <button type="submit" class="btn btn-primary btn-sm px-4 fw-bold">Send Reply <i class="bi bi-send ms-1"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- TICKET METADATA -->
+    <div class="col-lg-4">
+        <div class="portal-card p-4">
+            <h6 class="fw-bold text-navy mb-3">Ticket Information</h6>
+            <ul class="list-group list-group-flush small">
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Category:</span>
+                    <strong>{{ ticket.get_category_display }}</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Priority:</span>
+                    <strong>{{ ticket.get_priority_display }}</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Status:</span>
+                    <span class="badge bg-secondary">{{ ticket.get_status_display }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Assigned Desk:</span>
+                    <strong>{{ ticket.assigned_to.username|default:"General Support" }}</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span class="text-muted">Created:</span>
+                    <span>{{ ticket.created_at|date:"d M Y" }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

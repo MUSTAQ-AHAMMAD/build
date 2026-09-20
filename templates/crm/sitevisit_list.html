@@ -1,0 +1,82 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Site Visits & Inspections{% endblock %}
+{% block page_title %}Site Visits & On-Site Technical Audits{% endblock %}
+
+{% block crm_content %}
+<!-- FILTER BAR -->
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <span class="small fw-bold text-muted">Status:</span>
+            <a href="?status=scheduled" class="btn btn-sm {% if status_filter == 'scheduled' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">
+                Scheduled ({{ upcoming_count }})
+            </a>
+            <a href="?status=completed" class="btn btn-sm {% if status_filter == 'completed' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">
+                Completed ({{ completed_count }})
+            </a>
+            <a href="?status=" class="btn btn-sm {% if not status_filter %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">
+                All Visits
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- TABLE -->
+<div class="card border-0 shadow-sm rounded-3">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 small">
+            <thead class="table-light text-uppercase">
+                <tr>
+                    <th>Visit Date & Time</th>
+                    <th>Customer & Lead ID</th>
+                    <th>Site Address</th>
+                    <th>Assigned Site Engineer</th>
+                    <th>Status</th>
+                    <th>Condition / Measurements</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sv in site_visits %}
+                <tr>
+                    <td>
+                        <strong class="text-dark">{{ sv.visit_date|date:"d M Y" }}</strong>
+                        {% if sv.visit_time %}<small class="text-muted d-block">{{ sv.visit_time }}</small>{% endif %}
+                    </td>
+                    <td>
+                        <strong class="text-dark d-block">
+                            <a href="/cms/crm/leads/{{ sv.lead.id }}/" class="text-dark text-decoration-none">{{ sv.lead.full_name }}</a>
+                        </strong>
+                        <small class="text-muted font-monospace">{{ sv.lead.lead_id }}</small>
+                    </td>
+                    <td>
+                        <div class="fw-bold">{{ sv.site_address }}</div>
+                        {% if sv.site_contact %}<small class="text-muted">Contact: {{ sv.site_contact }}</small>{% endif %}
+                    </td>
+                    <td>{% if sv.assigned_staff %}{{ sv.assigned_staff.get_full_name|default:sv.assigned_staff.username }}{% else %}<span class="text-muted">Unassigned</span>{% endif %}</td>
+                    <td>
+                        <span class="badge {% if sv.status == 'completed' %}bg-success{% elif sv.status == 'cancelled' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                            {{ sv.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if sv.site_condition %}<div><strong>Condition:</strong> {{ sv.site_condition|truncatewords:8 }}</div>{% endif %}
+                        {% if sv.requirements %}<small class="text-muted"><strong>Req:</strong> {{ sv.requirements|truncatewords:8 }}</small>{% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="/cms/crm/leads/{{ sv.lead.id }}/?tab=sitevisit" class="btn btn-sm btn-outline-secondary">Manage Visit →</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-5 text-muted">
+                        No site visits logged under this filter.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

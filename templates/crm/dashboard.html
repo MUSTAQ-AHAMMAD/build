@@ -1,0 +1,177 @@
+{% extends 'crm/base_crm.html' %}
+{% load humanize %}
+
+{% block title %}Executive CRM Dashboard{% endblock %}
+{% block page_title %}Sales Pipeline &amp; Enquiry Dashboard{% endblock %}
+
+{% block crm_content %}
+<!-- DATE RANGE FILTER BAR -->
+<div class="card border-0 shadow-sm rounded-3 mb-4" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+    <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <span class="small fw-bold text-muted">Date Filter:</span>
+            <a href="?range=today" class="btn btn-sm {% if date_filter == 'today' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">Today</a>
+            <a href="?range=yesterday" class="btn btn-sm {% if date_filter == 'yesterday' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">Yesterday</a>
+            <a href="?range=last_7_days" class="btn btn-sm {% if date_filter == 'last_7_days' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">Last 7 Days</a>
+            <a href="?range=this_month" class="btn btn-sm {% if date_filter == 'this_month' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">This Month</a>
+            <a href="?range=last_month" class="btn btn-sm {% if date_filter == 'last_month' %}btn-navy{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">Last Month</a>
+        </div>
+
+        <form method="get" class="d-flex align-items-center gap-2">
+            <input type="hidden" name="range" value="custom">
+            <input type="date" name="start_date" class="form-control form-control-sm" value="{{ request.GET.start_date }}">
+            <span class="text-muted small">to</span>
+            <input type="date" name="end_date" class="form-control form-control-sm" value="{{ request.GET.end_date }}">
+            <button type="submit" class="btn btn-sm btn-outline-primary">Apply</button>
+        </form>
+    </div>
+</div>
+
+<!-- TOP KPI METRIC CARDS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.5px;">Total Enquiries</small>
+                    <div class="h3 font-heading fw-bold mb-0 my-1" style="color: var(--admin-text-main);">{{ total_leads }}</div>
+                    <small class="text-primary fw-semibold">{{ new_leads }} Uncontacted New</small>
+                </div>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main); font-size: 1.2rem;"><i class="bi bi-people"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.5px;">Active Pipeline Value</small>
+                    <div class="h3 font-heading fw-bold mb-0 my-1" style="color: var(--admin-text-main);">₹{{ pipeline_value|intcomma }}</div>
+                    <small class="text-muted">Expected in Progress</small>
+                </div>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main); font-size: 1.2rem;"><i class="bi bi-briefcase"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.5px;">Won Projects</small>
+                    <div class="h3 font-heading fw-bold mb-0 my-1" style="color: var(--admin-text-main);">₹{{ won_value|intcomma }}</div>
+                    <small class="text-success fw-semibold">{{ won_leads }} Closed Contracts</small>
+                </div>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main); font-size: 1.2rem;"><i class="bi bi-trophy"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.5px;">Tasks for Today</small>
+                    <div class="h3 font-heading fw-bold mb-0 my-1" style="color: var(--admin-text-main);">{{ today_followups }}</div>
+                    <small class="text-muted">{{ overdue_followups }} Overdue &bull; {{ today_site_visits }} Site Visits</small>
+                </div>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main); font-size: 1.2rem;"><i class="bi bi-telephone"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VISUAL SALES PIPELINE FUNNEL (CLEAN COHESIVE STYLING) -->
+<div class="card border-0 shadow-sm rounded-3 mb-4" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+    <div class="card-header py-3" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+        <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-funnel me-2 text-primary"></i>Sales Pipeline Stage Funnel</h6>
+    </div>
+    <div class="card-body p-3" style="background: var(--admin-bg-surface);">
+        <div class="row g-2 text-center">
+            {% for s in stages %}
+            <div class="col-6 col-md-4 col-xl">
+                <a href="/cms/crm/leads/?status={{ s.code }}" class="text-decoration-none">
+                    <div class="p-2 rounded border h-100 d-flex flex-column justify-content-between" style="background: var(--admin-bg-subtle); border-color: var(--admin-border) !important; transition: all 0.15s ease;">
+                        <span class="small fw-semibold text-muted text-truncate d-block mb-1" style="font-size: 0.75rem;">{{ s.label }}</span>
+                        <div class="h4 font-heading fw-bold mb-0" style="color: var(--admin-text-main);">{{ s.count }}</div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- RECENT LEADS -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-3" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+                <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-inbox me-2 text-primary"></i>Recent Leads &amp; Enquiries</h6>
+                <a href="/cms/crm/leads/" class="small text-decoration-none" style="color: var(--admin-text-muted);">View All Leads <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="small text-uppercase" style="background: var(--admin-bg-subtle);">
+                        <tr>
+                            <th style="color: var(--admin-text-muted);">Lead</th>
+                            <th style="color: var(--admin-text-muted);">Service</th>
+                            <th style="color: var(--admin-text-muted);">Location</th>
+                            <th style="color: var(--admin-text-muted);">Status</th>
+                            <th style="color: var(--admin-text-muted);">Assigned</th>
+                            <th class="text-end" style="color: var(--admin-text-muted);">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="small">
+                        {% for lead in recent_leads %}
+                        <tr>
+                            <td>
+                                <a href="/crm/leads/{{ lead.pk }}/" class="fw-bold text-decoration-none" style="color: var(--admin-text-main);">{{ lead.full_name }}</a>
+                                <small class="text-muted d-block font-monospace">{{ lead.lead_id }}</small>
+                            </td>
+                            <td>{{ lead.get_service_category_display }}</td>
+                            <td>{{ lead.city|default:"Hyderabad" }}</td>
+                            <td>
+                                <span class="badge {% if lead.status == 'WON' %}bg-success-subtle text-success border border-success-subtle{% elif lead.status == 'NEW' %}bg-primary-subtle text-primary border border-primary-subtle{% else %}bg-secondary-subtle text-secondary border{% endif %}">
+                                    {{ lead.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-muted">{% if lead.assigned_to %}{{ lead.assigned_to.get_full_name|default:lead.assigned_to.username }}{% else %}Unassigned{% endif %}</td>
+                            <td class="text-end">
+                                <a href="/crm/leads/{{ lead.pk }}/" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.76rem;">Open</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="6" class="text-center py-4 text-muted">No leads found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- PENDING FOLLOW-UPS & QUICK TASKS -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 mb-4" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+                <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-clock-history me-2 text-warning"></i>Pending Follow-ups</h6>
+                <a href="/crm/follow-ups/" class="small text-decoration-none" style="color: var(--admin-text-muted);">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="p-3">
+                {% for f in pending_followup_list %}
+                <div class="p-2 border rounded mb-2" style="background: var(--admin-bg-subtle); border-color: var(--admin-border-subtle) !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <strong class="small" style="color: var(--admin-text-main);">{{ f.lead.full_name }}</strong>
+                        <small class="text-muted">{{ f.follow_up_date|date:"d M" }}</small>
+                    </div>
+                    <small class="text-muted d-block text-truncate">{{ f.notes|default:"Follow-up call" }}</small>
+                </div>
+                {% empty %}
+                <div class="text-center py-4 text-muted small">No pending follow-ups scheduled for today.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

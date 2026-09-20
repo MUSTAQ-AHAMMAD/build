@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Construction Services | Residential, Apartments, Villas &amp; Commercial | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">New Construction</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Turnkey Civil Engineering</div>
+        <h1>Build with Clarity. Construct with Confidence.</h1>
+        <p class="hero-desc">
+            Professional construction solutions for independent homes, multi-floor apartment complexes, custom luxury villas, commercial towers, and institutional projects.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/request-site-visit/" class="btn btn-gold">
+                Book Site Inspection <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/contact/?type=construction" class="btn btn-outline-white">
+                Discuss Project Scope
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Construction Services Grid -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <div class="eyebrow justify-content-center">Construction Typologies</div>
+            <h2>Tailored Execution Across Residential &amp; Commercial</h2>
+            <p>From initial soil bearing capacity tests and RCC frame design to MEP installation and fine architectural finishes.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Residential -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-house" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Residential House Construction</h3>
+                    <p class="small mb-3">Turnkey construction for independent houses and G+1 / G+2 custom family homes.</p>
+                    <ul class="service-benefits">
+                        <li>Custom floor plan architecture &amp; 3D elevations</li>
+                        <li>Soil testing &amp; isolated footings design</li>
+                        <li>Branded Fe550 steel &amp; OPC/PPC cement</li>
+                        <li>Turnkey handover with 10-year structural warranty</li>
+                    </ul>
+                    <a href="/contact/?type=residential_construction" class="service-link">
+                        Inquire About Home Build <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Apartments -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-buildings" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Apartment Building Construction</h3>
+                    <p class="small mb-3">Multi-unit residential construction for landowners, developers, and joint ventures.</p>
+                    <ul class="service-benefits">
+                        <li>Multi-floor RCC framing with shear walls</li>
+                        <li>Stilt parking, driveways &amp; elevator shafts</li>
+                        <li>Municipal approvals, plan sanction &amp; fire NOC</li>
+                        <li>Individual electrical &amp; water metering setup</li>
+                    </ul>
+                    <a href="/contact/?type=apartment_construction" class="service-link">
+                        Inquire About Apartments <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Villas -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card" style="border-top: 3px solid var(--gold);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="service-icon-box mb-0" style="background: var(--gold-soft); border-color: var(--gold);">
+                            <i class="bi bi-gem" style="color: var(--gold);"></i>
+                        </div>
+                        <span class="badge-gold">Bespoke</span>
+                    </div>
+                    <h3 class="h5 mb-2">Custom Luxury Villa Construction</h3>
+                    <p class="small mb-3">Ultra-luxury custom villas with personalized architectural styling and landscape design.</p>
+                    <ul class="service-benefits">
+                        <li>Double-height living rooms &amp; skylights</li>
+                        <li>Private swimming pools, decks &amp; landscaped lawns</li>
+                        <li>Home automation, solar integration &amp; EV charger</li>
+                        <li>Imported marble, hardwood joinery &amp; designer facades</li>
+                    </ul>
+                    <a href="/contact/?type=villa_construction" class="service-link">
+                        Inquire About Villa Build <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Commercial -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-building-gear" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Commercial Building Construction</h3>
+                    <p class="small mb-3">Commercial offices, retail complexes, and mixed-use commercial buildings.</p>
+                    <ul class="service-benefits">
+                        <li>High-load capacity post-tensioned floor slabs</li>
+                        <li>Central HVAC ducting rough-ins &amp; server room MEP</li>
+                        <li>Modern structural glass facade &amp; ACP cladding</li>
+                        <li>Basement parking &amp; rainwater harvesting wells</li>
+                    </ul>
+                    <a href="/contact/?type=commercial_construction" class="service-link">
+                        Inquire Commercial <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Semi-Commercial -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-shop" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Semi-Commercial / Mixed-Use</h3>
+                    <p class="small mb-3">Ground floor retail with upper residential rental floors for steady passive returns.</p>
+                    <ul class="service-benefits">
+                        <li>Dual-purpose utility &amp; separate access staircases</li>
+                        <li>Commercial display frontage &amp; rolling shutters</li>
+                        <li>Optimized FSI planning for maximum rental yield</li>
+                        <li>Independent power &amp; water sub-metering</li>
+                    </ul>
+                    <a href="/contact/?type=mixed_use_construction" class="service-link">
+                        Inquire Mixed-Use <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Civil PMC -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-clipboard2-check" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Project Management (PMC)</h3>
+                    <p class="small mb-3">Independent structural oversight, contractor quality audit, and bill certification.</p>
+                    <ul class="service-benefits">
+                        <li>Third-party quality auditing &amp; slump/cube testing</li>
+                        <li>Contractor bill certification against verified BOQ</li>
+                        <li>Milestone Gantt chart progress monitoring</li>
+                        <li>Snag list identification &amp; clearance sign-off</li>
+                    </ul>
+                    <a href="/project-management/" class="service-link">
+                        Explore PMC Services <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

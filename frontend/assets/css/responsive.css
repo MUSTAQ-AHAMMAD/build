@@ -1,0 +1,77 @@
+/* ==============================================================================
+   BUILD+ RESPONSIVE BREAKPOINTS & MOBILE OPTIMIZATIONS (320px - 1400px+)
+   ============================================================================== */
+
+@media (max-width: 991.98px) {
+    .site-header {
+        padding: 0.75rem 0;
+    }
+
+    .nav-link-custom {
+        padding: 0.65rem 0.5rem !important;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hero-architectural {
+        padding: 3rem 0 2rem;
+    }
+
+    .hero-image-card img {
+        height: 340px;
+    }
+
+    .hero-floating-stat {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 1rem;
+    }
+
+    .ba-container {
+        height: 320px;
+    }
+
+    .mobile-bottom-bar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    body {
+        padding-bottom: 60px; /* Offset for mobile bottom bar */
+    }
+
+    .stepper-progress-bar .step-label {
+        display: none; /* Hide step labels on small screens to avoid overlap */
+    }
+}
+
+@media (max-width: 575.98px) {
+    h1, .display-4 {
+        font-size: 2rem !important;
+    }
+
+    h2 {
+        font-size: 1.6rem !important;
+    }
+
+    .card-custom {
+        padding: 1.25rem;
+    }
+
+    .trust-item {
+        margin-bottom: 1rem;
+    }
+
+    .ba-container {
+        height: 260px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1320px;
+    }
+}

@@ -1,0 +1,945 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name|default:"BUILD+" }} — Complete Construction, Renovation & Property Solutions{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     1. HERO SECTION — EDITORIAL CORPORATE SPLIT
+     ============================================================ -->
+<section class="hero-corporate" aria-labelledby="hero-heading">
+    <div class="container-xxl">
+        <div class="row align-items-center g-5">
+            <!-- Left Column: Value Proposition -->
+            <div class="col-lg-7">
+                <div class="hero-eyebrow">
+                    Enterprise Construction & Property Solutions
+                </div>
+                <h1 id="hero-heading">
+                    Complete Construction &amp; <span class="hero-highlight">Property Solutions</span> Partner.
+                </h1>
+                <p class="hero-supporting">
+                    From land acquisition, structural audits, and municipal approvals to turnkey construction, old flat renovation, controlled demolition, and dedicated NRI asset supervision.
+                </p>
+                <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
+                    <a href="/contact/" class="btn btn-white btn-lg">
+                        Get Free Consultation <i class="bi bi-arrow-right btn-arrow ms-1"></i>
+                    </a>
+                    <a href="/services/" class="btn btn-outline-white btn-lg">
+                        Explore Services
+                    </a>
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
+                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                    </a>
+                </div>
+                <!-- Micro trust points -->
+                <div class="d-flex flex-wrap gap-4 pt-2" style="border-top: 1px solid rgba(255,255,255,0.12); font-size: 13.5px; color: rgba(255,255,255,0.72);">
+                    <div><i class="bi bi-shield-check text-gold me-1"></i> Government Approved Engineers</div>
+                    <div><i class="bi bi-file-earmark-text text-gold me-1"></i> 100% Itemized BOQ</div>
+                    <div><i class="bi bi-clock-history text-gold me-1"></i> Milestone-Linked Guarantee</div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Feature Card -->
+            <div class="col-lg-5">
+                <div class="hero-image-card position-relative">
+                    <img src="/static/images/hero-construction.jpg" alt="BUILD+ Luxury residential construction under execution" width="600" height="400">
+                    <div class="hero-trust-badge">
+                        <div class="badge-label">Demonstrated Track Record</div>
+                        <div class="badge-value">
+                            {{ site_settings.years_experience|default:"18" }}+ Years &bull; {{ site_settings.projects_completed|default:"450" }}+ Projects Delivered
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     2. TRUST STATISTICS STRIP
+     ============================================================ -->
+<section class="trust-stats" aria-label="Key Performance Indicators">
+    <div class="container-xxl">
+        <div class="row g-0 align-items-center">
+            <div class="col-6 col-md-3 trust-stat-item">
+                <div class="trust-stat-number">
+                    {{ site_settings.years_experience|default:"18" }}<span class="stat-gold">+</span>
+                </div>
+                <div class="trust-stat-label">Years Experience</div>
+            </div>
+            <div class="col-6 col-md-3 trust-stat-item">
+                <div class="trust-stat-number">
+                    {{ site_settings.projects_completed|default:"450" }}<span class="stat-gold">+</span>
+                </div>
+                <div class="trust-stat-label">Projects Completed</div>
+            </div>
+            <div class="col-6 col-md-3 trust-stat-item">
+                <div class="trust-stat-number">
+                    {{ site_settings.happy_clients|default:"620" }}<span class="stat-gold">+</span>
+                </div>
+                <div class="trust-stat-label">Satisfied Clients</div>
+            </div>
+            <div class="col-6 col-md-3 trust-stat-item">
+                <div class="trust-stat-number">
+                    100<span class="stat-gold">%</span>
+                </div>
+                <div class="trust-stat-label">Compliance &amp; Quality QA</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     3. SPECIALIZED SERVICES SECTION
+     ============================================================ -->
+<section class="section section-light" id="services-overview" aria-labelledby="services-heading">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5 reveal">
+            <div class="eyebrow justify-content-center">Core Engineering Divisions</div>
+            <h2 id="services-heading" class="mb-3">Engineered Solutions Across the Full Property Lifecycle</h2>
+            <p>
+                Whether developing prime greenfield land, restoring an aging apartment, safely razing outdated structures, or managing assets from overseas.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. New Construction -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-buildings" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h4 mb-2">New Construction</h3>
+                    <p class="small mb-3">
+                        Turnkey architectural design and structural execution for independent villas, multi-storey residential complexes, and commercial facilities.
+                    </p>
+                    <ul class="service-benefits">
+                        <li>Independent Houses &amp; Luxury Villas</li>
+                        <li>Multi-Unit Residential Apartments</li>
+                        <li>Commercial &amp; Institutional Complexes</li>
+                        <li>Structural Soil Testing &amp; Foundation QA</li>
+                    </ul>
+                    <a href="/construction/" class="service-link">
+                        Explore Construction <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Flat & Apartment Renovation (Major Specialized Division) -->
+            <div class="col-lg-4 col-md-6 reveal reveal-delay-1">
+                <div class="service-card" style="border-top: 3px solid var(--gold);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="service-icon-box mb-0" style="background: var(--gold-soft); border-color: var(--gold);">
+                            <i class="bi bi-house-gear" style="color: var(--gold);"></i>
+                        </div>
+                        <span class="badge-gold">Specialized Division</span>
+                    </div>
+                    <h3 class="h4 mb-2">Flat &amp; Apartment Renovation</h3>
+                    <p class="small mb-3">
+                        Deep structural retrofitting, plumbing overhaul, permanent waterproofing, and modern modular interior transformations for resale or occupied flats.
+                    </p>
+                    <ul class="service-benefits">
+                        <li>Complete Resale Flat Modernization</li>
+                        <li>Plumbing, Wiring &amp; MEP Replacement</li>
+                        <li>Bathrooms, Modular Kitchens &amp; Waterproofing</li>
+                        <li>Column Strengthening &amp; Layout Redesign</li>
+                    </ul>
+                    <a href="/renovation/" class="service-link">
+                        Explore Renovation Solutions <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Demolition & Reconstruction -->
+            <div class="col-lg-4 col-md-6 reveal reveal-delay-2">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-hammer" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h4 mb-2">Demolition &amp; Reconstruction</h3>
+                    <p class="small mb-3">
+                        Controlled mechanical dismantling of old, unsafe, or obsolete buildings, internal partition razing, debris clearance, and turnkey rebuilds.
+                    </p>
+                    <ul class="service-benefits">
+                        <li>Safe Mechanical &amp; Manual Demolition</li>
+                        <li>Debris Recycling &amp; Site Clearance</li>
+                        <li>Municipal Demolition Permits &amp; NOC</li>
+                        <li>Integrated Foundation-to-Finish Rebuilding</li>
+                    </ul>
+                    <a href="/demolition-reconstruction/" class="service-link">
+                        Explore Demolition <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Property Redevelopment -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-arrow-repeat" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h4 mb-2">Property Redevelopment</h3>
+                    <p class="small mb-3">
+                        Transform aging residential housing societies and underutilized plots into high-value contemporary complexes with enhanced carpet area and modern amenities.
+                    </p>
+                    <ul class="service-benefits">
+                        <li>Housing Society Joint Development</li>
+                        <li>FSI &amp; TDR Maximization Planning</li>
+                        <li>Legal Consensus &amp; Owner Agreements</li>
+                        <li>RERA &amp; Town Planning Compliance</li>
+                    </ul>
+                    <a href="/redevelopment/" class="service-link">
+                        Explore Redevelopment <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Property & Land Advisory -->
+            <div class="col-lg-4 col-md-6 reveal reveal-delay-1">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-map" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h4 mb-2">Property &amp; Land Advisory</h3>
+                    <p class="small mb-3">
+                        Comprehensive pre-purchase due diligence, structural stability audits, boundary verification, title clearance coordination, and valuation reports.
+                    </p>
+                    <ul class="service-benefits">
+                        <li>Pre-Purchase Physical &amp; Legal Audit</li>
+                        <li>Khata, Sale Deed &amp; Encumbrance Check</li>
+                        <li>Topographic Land &amp; Soil Survey</li>
+                        <li>Bank Loan Valuation Documentation</li>
+                    </ul>
+                    <a href="/property-land/" class="service-link">
+                        Explore Land Services <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. NRI Property Services -->
+            <div class="col-lg-4 col-md-6 reveal reveal-delay-2">
+                <div class="service-card service-card-dark">
+                    <div class="service-icon-box" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                        <i class="bi bi-globe2" style="color: var(--gold);"></i>
+                    </div>
+                    <h3 class="h4 mb-2 text-white">NRI Property Services</h3>
+                    <p class="small mb-3" style="color: rgba(255,255,255,0.72);">
+                        Dedicated local representation for overseas owners: quarterly photo/video site audits, tenant handover inspections, remote renovation, and legal support.
+                    </p>
+                    <ul class="service-benefits" style="color: rgba(255,255,255,0.85);">
+                        <li>Quarterly Physical Audit &amp; High-Res Video</li>
+                        <li>Remote Turnkey Renovation Management</li>
+                        <li>Property Tax &amp; Municipal Utility Payments</li>
+                        <li>Secure Milestone-Based Digital Reporting</li>
+                    </ul>
+                    <a href="/nri-services/" class="service-link" style="color: var(--gold);">
+                        Explore NRI Support <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     4. FEATURE SPOTLIGHT: FLAT RENOVATION BEFORE / AFTER
+     ============================================================ -->
+<section class="section section-surface" aria-labelledby="renovation-spotlight-heading">
+    <div class="container-xxl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal">
+                <div class="rounded-4 overflow-hidden shadow-lg border" style="max-height: 480px;">
+                    <img src="/static/images/hero-renovation.jpg" alt="Modern flat renovation transformation before and after" class="w-100 h-100 object-fit-cover">
+                </div>
+            </div>
+            <div class="col-lg-6 reveal reveal-delay-1">
+                <div class="eyebrow">Restore • Modernize • Elevate</div>
+                <h2 id="renovation-spotlight-heading" class="mb-3">
+                    Your Old Flat Doesn’t Always Need to be Sold or Demolished.
+                </h2>
+                <p class="mb-4">
+                    Whether you have acquired a 20-year-old resale apartment or want to upgrade an occupied family home, our civil engineers inspect structural RCC integrity, overhaul aged concealed plumbing, and revitalize interior spaces into luminous modern living environments.
+                </p>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 border">
+                            <strong class="d-block text-dark mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-1"></i> Resale Apartments
+                            </strong>
+                            <small class="text-muted">Turnkey move-in ready structural &amp; finish upgrades.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 border">
+                            <strong class="d-block text-dark mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-1"></i> Complete MEP Overhaul
+                            </strong>
+                            <small class="text-muted">Replacement of rusted CPVC, wiring, and drainage stacks.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 border">
+                            <strong class="d-block text-dark mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-1"></i> Guaranteed Waterproofing
+                            </strong>
+                            <small class="text-muted">Multi-layer elastomeric membrane in wet zones.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 border">
+                            <strong class="d-block text-dark mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-1"></i> Micro-Concrete Jacketing
+                            </strong>
+                            <small class="text-muted">Slab crack sealing and RCC column reinforcement.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="/renovation/" class="btn btn-brand btn-lg">
+                        Explore Renovation Details <i class="bi bi-arrow-right btn-arrow ms-1"></i>
+                    </a>
+                    <a href="/request-site-visit/" class="btn btn-outline-brand btn-lg">
+                        Book Site Assessment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     5. INTERACTIVE BUDGET CALCULATOR WIDGET
+     ============================================================ -->
+<section class="section section-light calculator-section" id="cost-estimator" aria-labelledby="calc-heading">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5 reveal">
+            <div class="eyebrow justify-content-center">Budget Planning Tool</div>
+            <h2 id="calc-heading" class="mb-3">Interactive Construction &amp; Renovation Estimator</h2>
+            <p>
+                Generate an immediate, itemized preliminary budget forecast tailored to your project dimensions, service category, and material specification grade.
+            </p>
+        </div>
+
+        <div class="calculator-card max-w-800 mx-auto reveal">
+            <div class="calculator-header">
+                <div>
+                    <h4 class="font-heading">Property Budget Projection Calculator</h4>
+                    <small>Real-time estimation based on current material indices and civil labor rates.</small>
+                </div>
+                <span class="calculator-badge">Live Rate Estimation</span>
+            </div>
+
+            <div class="calculator-body">
+                <div class="row g-4">
+                    <!-- Inputs -->
+                    <div class="col-lg-6 border-end">
+                        <div class="mb-4">
+                            <label class="form-label" for="calc_service">1. Select Project / Service Type</label>
+                            <select id="calc_service" class="form-select">
+                                <option value="flat_renovation" data-base="1400" data-prem="2000" data-lux="2600" selected>Complete Flat &amp; Apartment Renovation</option>
+                                <option value="new_construction" data-base="1950" data-prem="2600" data-lux="3400">New Independent Home Construction</option>
+                                <option value="villa" data-base="2800" data-prem="3800" data-lux="5200">Custom Luxury Villa Construction</option>
+                                <option value="demolition_rebuild" data-base="2300" data-prem="3100" data-lux="4100">Demolition + Turnkey Reconstruction</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label mb-0" for="calc_area">2. Built-Up Area (Sq.Ft)</label>
+                                <span class="badge-status badge-status-neutral font-monospace fs-6 px-3" id="area_badge">1,800 sq.ft</span>
+                            </div>
+                            <input type="range" class="form-range" id="calc_area" min="500" max="8000" step="50" value="1800">
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>500 sq.ft</span>
+                                <span>2,500</span>
+                                <span>5,000</span>
+                                <span>8,000 sq.ft</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">3. Material &amp; Finishing Grade</label>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="calc_tier" id="tier_std" value="base" autocomplete="off">
+                                    <label class="tier-selector w-100" for="tier_std">
+                                        <strong class="d-block small">Standard</strong>
+                                        <small class="text-muted" style="font-size:11px;">Quality Base</small>
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="calc_tier" id="tier_prem" value="prem" autocomplete="off" checked>
+                                    <label class="tier-selector w-100" for="tier_prem">
+                                        <strong class="d-block small">Premium</strong>
+                                        <small class="text-muted" style="font-size:11px;">Most Chosen</small>
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="calc_tier" id="tier_lux" value="lux" autocomplete="off">
+                                    <label class="tier-selector w-100" for="tier_lux">
+                                        <strong class="d-block small">Luxury</strong>
+                                        <small class="text-muted" style="font-size:11px;">Imported Marble</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="col-lg-6">
+                        <div class="calculator-result-panel">
+                            <div>
+                                <small class="eyebrow p-0 m-0 mb-1" style="font-size:11px;">Estimated Total Project Budget</small>
+                                <div class="calc-total-amount mb-2" id="calc_total_display">
+                                    ₹ 36.00 Lakhs
+                                </div>
+                                <p class="small text-muted mb-4" id="calc_rate_display">
+                                    Approx. ₹ 2,000 / sq.ft (inclusive of materials, labor &amp; engineer supervision)
+                                </p>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span>Civil, Structure &amp; Dismantling (35%)</span>
+                                        <span id="breakdown_civil">₹ 12.60 L</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-navy" style="width: 35%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span>MEP: Plumbing, Wiring &amp; Waterproofing (25%)</span>
+                                        <span id="breakdown_mep">₹ 9.00 L</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar" style="background-color: var(--slate); width: 25%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span>Finishes: Flooring, Joinery &amp; Painting (40%)</span>
+                                        <span id="breakdown_finishes">₹ 14.40 L</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar" style="background-color: var(--gold); width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 border-top mt-3">
+                                <a href="/request-site-visit/" class="btn btn-brand w-100 justify-content-center mb-2">
+                                    Discuss My Project &bull; Book Site Visit <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                                <div class="calc-disclaimer">
+                                    *Preliminary projection. Formal proposal determined upon physical site survey and structural inspection.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     6. WHY CHOOSE US — NUMBERED EDITORIAL SECTION
+     ============================================================ -->
+<section class="section section-surface" aria-labelledby="why-us-heading">
+    <div class="container-xxl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5 reveal">
+                <div class="eyebrow">The Engineering Advantage</div>
+                <h2 id="why-us-heading" class="mb-3">A Structured Standard for High-Value Property Projects</h2>
+                <p class="mb-4">
+                    Unlike traditional contractors, we operate with a full-lifecycle engineering approach: detailed structural calculations, zero-tolerance bill of quantities, and strict milestone sign-offs.
+                </p>
+                <div class="rounded-4 overflow-hidden border shadow-sm mb-4">
+                    <img src="/static/images/site-inspection.jpg" alt="BUILD+ Structural engineer on site conducting physical audit" class="w-100 h-100 object-fit-cover">
+                </div>
+                <a href="/about/" class="btn btn-outline-brand">
+                    Read Our Engineering Philosophy <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-7 reveal reveal-delay-1">
+                <div class="benefit-item">
+                    <div class="benefit-number">01</div>
+                    <div class="benefit-content">
+                        <h4>Turnkey Architectural &amp; Civil Execution</h4>
+                        <p>Complete single-source responsibility from 3D drawings and structural engineering to RCC casting, interior finishing, and snag rectification.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-number">02</div>
+                    <div class="benefit-content">
+                        <h4>100% Itemized BOQ with Zero Hidden Surprises</h4>
+                        <p>Every bag of cement, grade of steel, brand of CPVC, and square foot of marble is explicitly itemized in a legally binding commercial contract.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-number">03</div>
+                    <div class="benefit-content">
+                        <h4>Municipal Sanctions &amp; Government Approvals</h4>
+                        <p>Dedicated compliance liaisons handling building permits, plan sanctions, fire NOCs, and municipal utility connections on your behalf.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-number">04</div>
+                    <div class="benefit-content">
+                        <h4>Dedicated Project Manager &amp; Digital Portal</h4>
+                        <p>Track your project's live construction timeline, approve engineering drawings, download tax invoices, and review weekly progress photos inside our secure Client Portal.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-number">05</div>
+                    <div class="benefit-content">
+                        <h4>Bank Loan &amp; Commercial Valuation Support</h4>
+                        <p>Direct technical documentation support for HDFC, SBI, ICICI, and leading financial institutions including stage disbursement certificates.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     7. FEATURED PROJECTS SHOWCASE (EDITORIAL GALLERY)
+     ============================================================ -->
+<section class="section section-light" id="featured-projects" aria-labelledby="projects-heading">
+    <div class="container-xxl">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 gap-3 reveal">
+            <div>
+                <div class="eyebrow">Demonstrated Capability</div>
+                <h2 id="projects-heading" class="mb-0">Selected Projects &amp; Case Studies</h2>
+            </div>
+            <a href="/projects/" class="btn btn-outline-brand">
+                View All Projects <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            <!-- Large Featured Project -->
+            <div class="col-lg-7 reveal">
+                <a href="/projects/" class="project-card h-100" style="min-height: 440px;">
+                    <img src="/static/images/project-placeholder.jpg" alt="Turnkey luxury apartment building construction" class="project-card-img">
+                    <div class="project-card-overlay"></div>
+                    <div class="project-card-arrow">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-category-badge">Turnkey Construction</span>
+                        <h3 class="project-card-title">The Grand Terraces &bull; Multi-Storey Residential</h3>
+                        <div class="project-card-meta">
+                            <i class="bi bi-geo-alt me-1"></i> Bengaluru &bull; 42,000 sq.ft Completed &amp; Handed Over
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Supporting Projects Column -->
+            <div class="col-lg-5">
+                <div class="row g-4 h-100">
+                    <div class="col-12 reveal reveal-delay-1">
+                        <a href="/projects/" class="project-card" style="height: 208px;">
+                            <img src="/static/images/hero-renovation.jpg" alt="Apartment transformation and interior renovation" class="project-card-img">
+                            <div class="project-card-overlay"></div>
+                            <div class="project-card-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </div>
+                            <div class="project-card-body">
+                                <span class="project-category-badge">Flat Renovation</span>
+                                <h3 class="project-card-title h5 mb-1">22-Year-Old Resale 3BHK Transformation</h3>
+                                <div class="project-card-meta">
+                                    <i class="bi bi-geo-alt me-1"></i> Hyderabad &bull; 2,400 sq.ft
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 reveal reveal-delay-2">
+                        <a href="/projects/" class="project-card" style="height: 208px;">
+                            <img src="/static/images/hero-construction.jpg" alt="Controlled demolition and turnkey reconstruction" class="project-card-img">
+                            <div class="project-card-overlay"></div>
+                            <div class="project-card-arrow">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </div>
+                            <div class="project-card-body">
+                                <span class="project-category-badge">Demolition &amp; Rebuild</span>
+                                <h3 class="project-card-title h5 mb-1">Obsolete Structure Razing &amp; Modern G+4 Rebuild</h3>
+                                <div class="project-card-meta">
+                                    <i class="bi bi-geo-alt me-1"></i> Chennai &bull; 11,500 sq.ft
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     8. 5-STEP ENGINEERING PROCESS TIMELINE
+     ============================================================ -->
+<section class="section section-surface" aria-labelledby="process-heading">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5 reveal">
+            <div class="eyebrow justify-content-center">How We Work</div>
+            <h2 id="process-heading" class="mb-3">From Initial Audit to Final Handover</h2>
+            <p>
+                Our standardized five-phase project workflow guarantees predictable timelines, structural integrity, and transparent billing.
+            </p>
+        </div>
+
+        <!-- Desktop Horizontal Timeline -->
+        <div class="process-timeline d-none d-lg-flex reveal">
+            <div class="process-step">
+                <div class="process-step-number">01</div>
+                <div class="process-step-label">Structural Audit &amp; Site Survey</div>
+                <div class="process-step-desc">Physical on-site inspection, soil report, and structural health assessment.</div>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">02</div>
+                <div class="process-step-label">BOQ &amp; Architectural Planning</div>
+                <div class="process-step-desc">3D layout, engineering drawings, and transparent itemized cost estimation.</div>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">03</div>
+                <div class="process-step-label">Sanctions &amp; Statutory Approvals</div>
+                <div class="process-step-desc">Building plan sanction, municipal permits, and bank loan verification.</div>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">04</div>
+                <div class="process-step-label">Turnkey Execution &amp; QA</div>
+                <div class="process-step-desc">Civil execution with staged cube tests, milestone sign-offs, and live portal tracking.</div>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">05</div>
+                <div class="process-step-label">Snag Rectification &amp; Handover</div>
+                <div class="process-step-desc">Formal handover checklist, warranty certificates, and maintenance support.</div>
+            </div>
+        </div>
+
+        <!-- Mobile Vertical Timeline -->
+        <div class="process-timeline-vertical d-lg-none">
+            <div class="process-step-v">
+                <div class="process-step-v-number">01</div>
+                <div class="process-step-v-content">
+                    <h4>Structural Audit &amp; Site Survey</h4>
+                    <p class="small text-muted">Physical on-site inspection, soil test, and structural health assessment.</p>
+                </div>
+            </div>
+            <div class="process-step-v">
+                <div class="process-step-v-number">02</div>
+                <div class="process-step-v-content">
+                    <h4>BOQ &amp; Architectural Planning</h4>
+                    <p class="small text-muted">3D architectural blueprints and itemized material cost specifications.</p>
+                </div>
+            </div>
+            <div class="process-step-v">
+                <div class="process-step-v-number">03</div>
+                <div class="process-step-v-content">
+                    <h4>Sanctions &amp; Statutory Approvals</h4>
+                    <p class="small text-muted">Building plan sanctions, fire NOCs, and municipal clearances.</p>
+                </div>
+            </div>
+            <div class="process-step-v">
+                <div class="process-step-v-number">04</div>
+                <div class="process-step-v-content">
+                    <h4>Turnkey Execution &amp; QA</h4>
+                    <p class="small text-muted">Civil execution with milestone-linked testing and portal progress updates.</p>
+                </div>
+            </div>
+            <div class="process-step-v">
+                <div class="process-step-v-number">05</div>
+                <div class="process-step-v-content">
+                    <h4>Snag Rectification &amp; Handover</h4>
+                    <p class="small text-muted">Formal key handover, warranty documentation, and ongoing maintenance.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/how-we-work/" class="btn btn-outline-brand">
+                Explore Detailed Workflow &amp; Timelines <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     9. NRI SERVICES HIGHLIGHT (DEEP NAVY STRIP)
+     ============================================================ -->
+<section class="section nri-section" aria-labelledby="nri-heading">
+    <div class="container-xxl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal">
+                <div class="eyebrow" style="color: var(--gold);">Global Property Supervision</div>
+                <h2 id="nri-heading" class="text-white mb-3">
+                    Overseas Property Ownership, Managed with Absolute Certainty.
+                </h2>
+                <p style="color: rgba(255,255,255,0.75); font-size:17px; margin-bottom: 28px;">
+                    Managing real estate in India while residing in the US, UK, UAE, or Singapore demands uncompromising integrity, photographic transparency, and local legal authority.
+                </p>
+
+                <div class="nri-feature-item">
+                    <div class="nri-feature-icon"><i class="bi bi-camera-video"></i></div>
+                    <div>
+                        <h5>High-Resolution Video Audits</h5>
+                        <p>Quarterly physical visits by our civil engineers with 360&deg; video documentation and boundary verification.</p>
+                    </div>
+                </div>
+
+                <div class="nri-feature-item">
+                    <div class="nri-feature-icon"><i class="bi bi-laptop"></i></div>
+                    <div>
+                        <h5>Remote Turnkey Flat Renovation</h5>
+                        <p>Complete interior modernization and plumbing overhauls executed while you track progress digitally from abroad.</p>
+                    </div>
+                </div>
+
+                <div class="nri-feature-item">
+                    <div class="nri-feature-icon"><i class="bi bi-shield-lock"></i></div>
+                    <div>
+                        <h5>Encumbrance &amp; Title Verification</h5>
+                        <p>Regular verification of property tax payments, municipal records, and prevention of encroachments.</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="/nri-services/" class="btn btn-gold btn-lg">
+                        Explore NRI Services <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 reveal reveal-delay-1">
+                <div class="rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-xl">
+                    <img src="/static/images/nri-property.jpg" alt="NRI homeowner reviewing Indian property blueprints remotely" class="w-100 h-100 object-fit-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     10. CLIENT TESTIMONIALS (DYNAMIC FROM CMS)
+     ============================================================ -->
+<section class="section section-light" aria-labelledby="testimonials-heading">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5 reveal">
+            <div class="eyebrow justify-content-center">Verified Client Feedback</div>
+            <h2 id="testimonials-heading" class="mb-3">What Property Owners Say</h2>
+            <p>Read experiences from homeowners, housing society committee members, and overseas NRI clients.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for t in testimonials %}
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars" aria-label="{{ t.rating }} of 5 stars">
+                        {% for i in "12345" %}
+                        <span>★</span>
+                        {% endfor %}
+                    </div>
+                    <div class="testimonial-text">{{ t.feedback }}</div>
+                    <div class="testimonial-author">
+                        <strong>{{ t.client_name }}</strong>
+                        <small>{{ t.client_title }} &bull; {{ t.service_rendered }}</small>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback High-Trust Testimonials -->
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <div class="testimonial-text">
+                        "BUILD+ completely overhauled our 25-year-old apartment in Indiranagar. Their team replaced the entire corroded plumbing lines and reconfigured the kitchen into a contemporary open layout with zero timeline overruns."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Dr. Arvind Ramanathan</strong>
+                        <small>Apartment Owner &bull; Flat Renovation</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <div class="testimonial-text">
+                        "Living in London, supervising property in Bengaluru was a constant worry until we engaged BUILD+. Their quarterly video audits and municipal tax handling have been flawless and transparent."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Siddharth &amp; Priya Nair</strong>
+                        <small>NRI Owners (UK) &bull; NRI Property Management</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <div class="testimonial-text">
+                        "Controlled demolition of our old commercial building was executed with precision without disturbing adjoining properties. The subsequent foundation and structural casting proceeded ahead of schedule."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>M. Rajasekhar Reddy</strong>
+                        <small>Commercial Developer &bull; Demolition &amp; Rebuild</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     11. FAQS PREVIEW (DYNAMIC FROM CMS)
+     ============================================================ -->
+<section class="section section-surface" aria-labelledby="faqs-heading">
+    <div class="container-xxl">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-5 reveal">
+                <div class="eyebrow">Frequently Asked Questions</div>
+                <h2 id="faqs-heading" class="mb-3">Clear Answers Before You Begin</h2>
+                <p class="mb-4">
+                    Transparent engineering, zero hidden charges, and structured contracts are the foundation of everything we build.
+                </p>
+                <div class="p-4 bg-light rounded-3 border mb-4">
+                    <h5 class="mb-2 font-heading">Have a specific property question?</h5>
+                    <p class="small text-muted mb-3">Our civil engineers are available for phone or video consultations.</p>
+                    <a href="/contact/" class="btn btn-brand btn-sm">Ask an Engineer</a>
+                </div>
+                <a href="/faqs/" class="btn btn-outline-brand">
+                    View Complete FAQ Directory <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-7 reveal reveal-delay-1">
+                <div class="accordion faq-accordion" id="homeFaqAccordion">
+                    {% for f in faqs %}
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="faqHeading{{ forloop.counter }}">
+                            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="faqCollapse{{ forloop.counter }}">
+                                {{ f.question }}
+                            </button>
+                        </h3>
+                        <div id="faqCollapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="faqHeading{{ forloop.counter }}" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body">
+                                {{ f.answer }}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="faqH1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqC1" aria-expanded="true">
+                                How is the project budget calculated and are rates fixed?
+                            </button>
+                        </h3>
+                        <div id="faqC1" class="accordion-collapse collapse show" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body">
+                                Every project budget is anchored to a comprehensive, itemized Bill of Quantities (BOQ). We specify exact brands, material grades, and labor schedules. Once agreed and signed, the rates remain fixed with zero escalation clauses unless client-requested scope changes occur.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="faqH2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqC2">
+                                Do you assist with building plan sanctions and municipal approvals?
+                            </button>
+                        </h3>
+                        <div id="faqC2" class="accordion-collapse collapse" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body">
+                                Yes. Our dedicated compliance team coordinates with local municipal corporations (BBMP, GHMC, GCC, etc.) for building approvals, commencement certificates, electricity/water sanction, and occupancy certificates (OC).
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="faqH3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqC3">
+                                Can an old flat or resale apartment be renovated without structural damage?
+                            </button>
+                        </h3>
+                        <div id="faqC3" class="accordion-collapse collapse" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body">
+                                Absolutely. We conduct a preliminary non-destructive structural audit before work begins. Load-bearing columns and beams are strictly protected; non-structural partitions are reconfigured, plumbing lines replaced, and micro-concrete jacketing applied where necessary.
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     12. DYNAMIC BUDGET ESTIMATOR SCRIPT
+     ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const serviceSelect = document.getElementById('calc_service');
+    const areaInput = document.getElementById('calc_area');
+    const areaBadge = document.getElementById('area_badge');
+    const totalDisplay = document.getElementById('calc_total_display');
+    const rateDisplay = document.getElementById('calc_rate_display');
+    const civilDisplay = document.getElementById('breakdown_civil');
+    const mepDisplay = document.getElementById('breakdown_mep');
+    const finishDisplay = document.getElementById('breakdown_finishes');
+    const tierRadios = document.querySelectorAll('input[name="calc_tier"]');
+
+    if (!serviceSelect || !areaInput) return;
+
+    function formatLakhs(amount) {
+        if (amount >= 10000000) {
+            return '₹ ' + (amount / 10000000).toFixed(2) + ' Crores';
+        }
+        return '₹ ' + (amount / 100000).toFixed(2) + ' Lakhs';
+    }
+
+    function calculate() {
+        const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+        let tier = 'prem';
+        tierRadios.forEach(r => { if (r.checked) tier = r.value; });
+
+        let rate = parseInt(selectedOption.getAttribute('data-' + tier) || '2000', 10);
+        const area = parseInt(areaInput.value, 10);
+
+        areaBadge.textContent = area.toLocaleString('en-IN') + ' sq.ft';
+
+        const total = rate * area;
+        const civil = total * 0.35;
+        const mep = total * 0.25;
+        const finishes = total * 0.40;
+
+        totalDisplay.textContent = formatLakhs(total);
+        rateDisplay.textContent = `Approx. ₹ ${rate.toLocaleString('en-IN')} / sq.ft (inclusive of materials, labor & supervision)`;
+
+        civilDisplay.textContent = formatLakhs(civil);
+        mepDisplay.textContent = formatLakhs(mep);
+        finishDisplay.textContent = formatLakhs(finishes);
+    }
+
+    serviceSelect.addEventListener('change', calculate);
+    areaInput.addEventListener('input', calculate);
+    tierRadios.forEach(r => r.addEventListener('change', calculate));
+
+    calculate();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}CRM Settings & Lead Sources{% endblock %}
+{% block page_title %}Lead Sources & CRM Configurations{% endblock %}
+
+{% block crm_content %}
+<div class="row g-4">
+    <!-- LEFT: LEAD SOURCES LIST -->
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold">Active Lead Acquisition Sources</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Source Name</th>
+                            <th>Status</th>
+                            <th>Total Leads</th>
+                            <th>Created Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for src in sources %}
+                        <tr>
+                            <td><strong class="text-dark">{{ src.name }}</strong></td>
+                            <td>
+                                {% if src.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td><span class="badge bg-navy text-white">{{ src.lead_count }}</span></td>
+                            <td class="text-muted">{{ src.created_at|date:"d M Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-4 text-muted">No lead sources configured.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: ADD NEW SOURCE -->
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold">+ Add New Lead Source</h6>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Source Name *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                    </div>
+                    <div class="mb-4 form-check">
+                        {{ form.is_active }}
+                        <label class="form-check-label small fw-bold" for="{{ form.is_active.id_for_label }}">Active for new leads</label>
+                    </div>
+                    <button type="submit" class="btn btn-navy w-100 py-2 fw-bold">Save Lead Source</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

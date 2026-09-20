@@ -1,0 +1,399 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Secure Payment — {{ payment_request.payment_reference }} | {{ settings.company_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .payment-hero {
+        background: linear-gradient(135deg, #07111c 0%, #0c1e30 100%);
+        padding: 50px 0 40px;
+        color: #ffffff;
+    }
+    .payment-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+    .payment-summary-header {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 24px;
+    }
+    .amount-highlight {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: #07111c;
+        letter-spacing: -0.5px;
+    }
+    .nav-payment-tabs .nav-link {
+        color: #64748b;
+        font-weight: 600;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 14px 18px;
+        border-radius: 0;
+        transition: all 0.2s;
+    }
+    .nav-payment-tabs .nav-link:hover {
+        color: #07111c;
+    }
+    .nav-payment-tabs .nav-link.active {
+        color: #1A6FA8;
+        border-bottom-color: #1A6FA8;
+        background: transparent;
+    }
+    .qr-container {
+        max-width: 260px;
+        margin: 0 auto;
+        padding: 16px;
+        background: #ffffff;
+        border: 2px dashed #cbd5e1;
+        border-radius: 12px;
+    }
+    .trust-badge {
+        font-size: 0.8rem;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="payment-hero">
+    <div class="container text-center">
+        <div class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-2 fw-bold"><i class="bi bi-lock-fill me-1 text-danger"></i> 256-BIT SSL ENCRYPTED GATEWAY</div>
+        <h1 class="display-6 fw-bold mb-2">Secure Client Payment Desk</h1>
+        <p class="text-white-50 mb-0">Reference: <span class="fw-semibold text-white">{{ payment_request.payment_reference }}</span></p>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="payment-card">
+                    <!-- Top Summary -->
+                    <div class="payment-summary-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-7">
+                                <span class="text-uppercase tracking-wider small fw-bold text-muted">PAYMENT FOR</span>
+                                <h4 class="fw-bold text-navy mb-1">{{ payment_request.payment_purpose }}</h4>
+                                <p class="text-muted small mb-0">Customer: <strong class="text-dark">{{ payment_request.customer_name }}</strong> ({{ payment_request.customer_phone }})</p>
+                                {% if payment_request.service %}
+                                <div class="badge bg-secondary bg-opacity-10 text-secondary mt-2">Service: {{ payment_request.service.name }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-5 text-md-end mt-3 mt-md-0">
+                                <div class="text-muted small fw-semibold">TOTAL PAYABLE</div>
+                                <div class="amount-highlight">{{ settings.currency_symbol }}{{ payment_request.total_amount|floatformat:2 }}</div>
+                                {% if payment_request.tax_amount > 0 %}
+                                <small class="text-muted">Includes {{ settings.currency_symbol }}{{ payment_request.tax_amount|floatformat:2 }} ({{ settings.gst_percentage }}% GST)</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Tabs -->
+                    <div class="p-4 p-md-5">
+                        <h5 class="fw-bold text-navy mb-4">Choose Your Preferred Payment Method</h5>
+
+                        <ul class="nav nav-tabs nav-payment-tabs mb-4" id="paymentTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="gateway-tab" data-bs-toggle="tab" data-bs-target="#tab-gateway" type="button" role="tab">
+                                    <i class="bi bi-credit-card me-1"></i> Online Gateway
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="upi-tab" data-bs-toggle="tab" data-bs-target="#tab-upi" type="button" role="tab">
+                                    <i class="bi bi-phone me-2 text-primary"></i> UPI Apps
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="qr-tab" data-bs-toggle="tab" data-bs-target="#tab-qr" type="button" role="tab">
+                                    ⬛ Scan UPI QR
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="bank-tab" data-bs-toggle="tab" data-bs-target="#tab-bank" type="button" role="tab">
+                                    <i class="bi bi-bank me-2 text-primary"></i> Bank Transfer / NEFT
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="paymentTabContent">
+                            <!-- TAB 1: ONLINE GATEWAY -->
+                            <div class="tab-pane fade show active" id="tab-gateway" role="tabpanel">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-7">
+                                        <h6 class="fw-bold mb-2">Credit / Debit Card, NetBanking & Wallets</h6>
+                                        <p class="text-muted small mb-3">Instant automated payment verification via Razorpay / Card Network. Supports Visa, MasterCard, RuPay, Maestro and 50+ major banks.</p>
+                                        <div class="d-flex flex-wrap gap-2 mb-4">
+                                            <span class="badge bg-light text-dark border px-2 py-1">Visa</span>
+                                            <span class="badge bg-light text-dark border px-2 py-1">MasterCard</span>
+                                            <span class="badge bg-light text-dark border px-2 py-1">RuPay</span>
+                                            <span class="badge bg-light text-dark border px-2 py-1">NetBanking</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 text-center">
+                                        <button type="button" id="btn-pay-gateway" class="btn btn-primary btn-lg w-100 py-3 shadow fw-bold">
+                                            Pay {{ settings.currency_symbol }}{{ payment_request.total_amount|floatformat:2 }} Securely <i class="bi bi-arrow-right ms-1"></i>
+                                        </button>
+                                        <div class="trust-badge justify-content-center mt-2">
+                                            <span><i class="bi bi-lock-fill me-1 text-danger"></i> Verified Merchant</span> • <span>Zero Surcharge</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: UPI MOBILE INTENT -->
+                            <div class="tab-pane fade" id="tab-upi" role="tabpanel">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-7">
+                                        <h6 class="fw-bold mb-2">Direct UPI Payment (GPay, PhonePe, Paytm, BHIM)</h6>
+                                        <p class="text-muted small mb-2">Pay directly through your installed UPI application on mobile.</p>
+                                        <div class="bg-light p-3 rounded-3 mb-3 border">
+                                            <div class="small text-muted">Merchant UPI VPA:</div>
+                                            <div class="fw-bold text-dark font-monospace fs-6">{{ upi_cfg.upi_id }}</div>
+                                            <div class="small text-muted mt-1">Merchant: {{ upi_cfg.merchant_name }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 text-center">
+                                        <a href="{{ upi_uri }}" class="btn btn-success btn-lg w-100 py-3 shadow fw-bold mb-2">
+                                            Open UPI App & Pay <i class="bi bi-arrow-right ms-1"></i>
+                                        </a>
+                                        <small class="text-muted d-block">Click on your mobile device to open GPay / PhonePe</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: SCAN UPI QR CODE -->
+                            <div class="tab-pane fade" id="tab-qr" role="tabpanel">
+                                <div class="text-center py-3">
+                                    <h6 class="fw-bold mb-1">Scan Merchant QR Code</h6>
+                                    <p class="text-muted small mb-3">Open any UPI app (GPay, PhonePe, Paytm, CRED) and scan to pay.</p>
+                                    
+                                    <div class="qr-container mb-3 shadow-sm">
+                                        <img id="dynamic-qr-img" src="" alt="UPI Dynamic QR" class="img-fluid rounded" style="min-height: 200px; display: none;">
+                                        <div id="qr-loading" class="spinner-border text-primary my-4" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="fw-bold text-dark fs-5 mb-1">{{ settings.currency_symbol }}{{ payment_request.total_amount|floatformat:2 }}</div>
+                                    <div class="font-monospace small text-muted mb-3">{{ upi_cfg.upi_id }}</div>
+
+                                    <div class="alert alert-info py-2 px-3 d-inline-block small text-start">
+                                        <i class="bi bi-lightbulb me-1 text-warning"></i> <strong>Tip:</strong> After completing payment in your UPI app, click below to confirm.
+                                    </div>
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-outline-primary btn-sm px-4" onclick="location.href='/pay/{{ payment_request.uuid }}/pending/'">
+                                            I Have Completed Payment <i class="bi bi-arrow-right ms-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: BANK TRANSFER / MANUAL PROOF -->
+                            <div class="tab-pane fade" id="tab-bank" role="tabpanel">
+                                <div class="row py-3">
+                                    <div class="col-md-6 border-end">
+                                        <h6 class="fw-bold mb-3">Official Corporate Bank Account</h6>
+                                        <table class="table table-sm table-borderless small mb-0">
+                                            <tr>
+                                                <td class="text-muted">Bank Name:</td>
+                                                <td class="fw-bold text-dark">{{ upi_cfg.bank_name|default:"HDFC Bank" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Account Name:</td>
+                                                <td class="fw-bold text-dark">{{ upi_cfg.merchant_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Account Number:</td>
+                                                <td class="fw-bold text-dark font-monospace">{{ upi_cfg.bank_account_number|default:"50200012345678" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">IFSC Code:</td>
+                                                <td class="fw-bold text-dark font-monospace">{{ upi_cfg.bank_ifsc_code|default:"HDFC0000036" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Branch:</td>
+                                                <td class="text-dark">{{ upi_cfg.bank_branch|default:"Jubilee Hills, Hyderabad" }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6 mt-4 mt-md-0">
+                                        <h6 class="fw-bold mb-2">Submit Payment Reference / Proof</h6>
+                                        <p class="text-muted small mb-3">Submit your UTR / Cheque reference for instant staff verification.</p>
+                                        
+                                        <form method="post" action="/pay/{{ payment_request.uuid }}/manual-submit/" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="mb-2">
+                                                <label class="form-label small fw-semibold">Payment Mode</label>
+                                                <select name="method" class="form-select form-select-sm">
+                                                    <option value="bank_transfer">Bank Transfer (NEFT/RTGS/IMPS)</option>
+                                                    <option value="upi_manual">UPI UTR Reference</option>
+                                                    <option value="cheque">Cheque Deposit</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label small fw-semibold">UTR / Transaction Reference *</label>
+                                                <input type="text" name="bank_reference" class="form-control form-control-sm" placeholder="e.g. 324109823456" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold">Upload Receipt / Screenshot (Optional)</label>
+                                                <input type="file" name="proof_document" class="form-control form-control-sm" accept="image/*,.pdf">
+                                            </div>
+                                            <button type="submit" class="btn btn-dark btn-sm w-100 py-2 fw-semibold">
+                                                Submit Proof for Verification <i class="bi bi-arrow-right ms-1"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Terms -->
+                    <div class="bg-light p-3 border-top text-center text-muted small">
+                        <div class="d-flex flex-wrap justify-content-center gap-4">
+                            <span>GSTIN: <strong>{{ settings.gst_number }}</strong></span>
+                            <span>Corporate Office: <strong>{{ settings.company_address }}</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Include Razorpay SDK dynamically if required -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const token = '{{ payment_request.uuid }}';
+
+        // 1. Fetch Dynamic QR Code on tab open
+        const qrTab = document.getElementById('qr-tab');
+        let qrLoaded = false;
+
+        function loadQRCode() {
+            if (qrLoaded) return;
+            fetch(`/pay/${token}/checkout/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ method_type: 'qr' })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok' && data.checkout_data && data.checkout_data.qr_code_base64) {
+                    const qrImg = document.getElementById('dynamic-qr-img');
+                    qrImg.src = data.checkout_data.qr_code_base64;
+                    qrImg.style.display = 'inline-block';
+                    document.getElementById('qr-loading').style.display = 'none';
+                    qrLoaded = true;
+                }
+            })
+            .catch(err => {
+                console.error('QR Load error:', err);
+            });
+        }
+
+        qrTab.addEventListener('shown.bs.tab', loadQRCode);
+
+        // 2. Gateway Checkout Trigger
+        const btnPay = document.getElementById('btn-pay-gateway');
+        btnPay.addEventListener('click', function() {
+            btnPay.disabled = true;
+            btnPay.innerText = 'Initializing Secure Gateway...';
+
+            fetch(`/pay/${token}/checkout/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ method_type: 'gateway' })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    const rzpData = data.checkout_data;
+                    
+                    // Razorpay Handler
+                    const options = {
+                        key: rzpData.key,
+                        amount: rzpData.amount,
+                        currency: rzpData.currency,
+                        name: rzpData.name,
+                        description: rzpData.description,
+                        order_id: rzpData.order_id,
+                        prefill: rzpData.prefill,
+                        theme: rzpData.theme,
+                        handler: function(response) {
+                            // Verify return signature on server
+                            fetch(`/pay/${token}/verify/`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    transaction_uuid: data.transaction_uuid,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature
+                                })
+                            })
+                            .then(vRes => vRes.json())
+                            .then(vData => {
+                                if (vData.status === 'ok') {
+                                    window.location.href = vData.redirect_url;
+                                } else {
+                                    window.location.href = `/pay/${token}/failed/`;
+                                }
+                            });
+                        },
+                        modal: {
+                            ondismiss: function() {
+                                btnPay.disabled = false;
+                                btnPay.innerText = 'Pay Securely <i class="bi bi-arrow-right ms-1"></i>';
+                            }
+                        }
+                    };
+
+                    try {
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    } catch (e) {
+                        // In sandbox / offline environment fallback
+                        alert("Simulating Sandbox Gateway Checkout for Development...");
+                        fetch(`/pay/${token}/verify/`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                transaction_uuid: data.transaction_uuid,
+                                razorpay_payment_id: 'pay_simulated_' + Date.now(),
+                                razorpay_order_id: rzpData.order_id,
+                                razorpay_signature: 'sig_test'
+                            })
+                        })
+                        .then(vRes => vRes.json())
+                        .then(vData => {
+                            window.location.href = vData.redirect_url;
+                        });
+                    }
+                } else {
+                    alert('Checkout Error: ' + data.message);
+                    btnPay.disabled = false;
+                    btnPay.innerText = 'Pay Securely <i class="bi bi-arrow-right ms-1"></i>';
+                }
+            })
+            .catch(err => {
+                alert('Network Error: ' + err);
+                btnPay.disabled = false;
+                btnPay.innerText = 'Pay Securely <i class="bi bi-arrow-right ms-1"></i>';
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}Create New Blog Post{% endblock %}
+{% block page_title %}Create New Blog Post{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/cms/blog/dashboard/" class="text-muted text-decoration-none">Blog</a></li>
+<li class="breadcrumb-item"><a href="/cms/blog/list/" class="text-muted text-decoration-none">All Posts</a></li>
+<li class="breadcrumb-item active">New Post</li>
+{% endblock %}
+
+{% block header_actions %}
+<button type="button" class="btn btn-warning text-dark fw-bold d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#aiAssistantModal">
+    <i class="bi bi-stars me-1"></i> AI Content Assistant
+</button>
+<a href="/cms/blog/list/" class="btn btn-outline-secondary">
+    Cancel & Back
+</a>
+{% endblock %}
+
+{% block cms_content %}
+<form method="post" enctype="multipart/form-data" id="blogForm">
+    {% csrf_token %}
+
+    <div class="row g-4">
+        <!-- MAIN CONTENT COLUMN (LEFT) -->
+        <div class="col-lg-8">
+            <!-- 1. Basic Content Card -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">1. Basic Information</h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">Blog Title *</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors }}</div>{% endif %}
+                    </div>
+
+                    <!-- Slug -->
+                    <div class="mb-3">
+                        <label for="{{ form.slug.id_for_label }}" class="form-label fw-bold">
+                            URL Slug <small class="text-muted fw-normal">(auto-generated from title if left blank)</small>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted small">/blog/</span>
+                            {{ form.slug }}
+                        </div>
+                        {% if form.slug.errors %}<div class="text-danger small mt-1">{{ form.slug.errors }}</div>{% endif %}
+                    </div>
+
+                    <!-- Short Description -->
+                    <div class="mb-3">
+                        <label for="{{ form.short_description.id_for_label }}" class="form-label fw-bold">Short Summary / Excerpt *</label>
+                        {{ form.short_description }}
+                        <small class="text-muted">Displayed in card listings and search engine snippets (max 500 characters).</small>
+                        {% if form.short_description.errors %}<div class="text-danger small mt-1">{{ form.short_description.errors }}</div>{% endif %}
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="mb-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                            <label for="{{ form.content.id_for_label }}" class="form-label fw-bold mb-0">Full Article Content (HTML) *</label>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-outline-secondary" onclick="insertTag('id_content', '<h3>', '</h3>')">+ Heading</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="insertTag('id_content', '<p>', '</p>')">+ Paragraph</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="insertTag('id_content', '<ul>\n    <li>', '</li>\n    <li>Item 2</li>\n</ul>')">+ List</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="insertTag('id_content', '<blockquote>\n    \"', '\"\n</blockquote>')">+ Quote</button>
+                                <button type="button" class="btn btn-outline-warning text-dark d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#aiAssistantModal">
+                                    <i class="bi bi-stars me-1"></i> AI Draft
+                                </button>
+                            </div>
+                        </div>
+                        {{ form.content }}
+                        <small class="text-muted d-block mt-1">Supports HTML tags: &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;blockquote&gt;, &lt;table&gt;.</small>
+                        {% if form.content.errors %}<div class="text-danger small mt-1">{{ form.content.errors }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. SEO Settings Card -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="font-heading mb-0">2. Search Engine Optimization (SEO)</h5>
+                    <span class="badge bg-light text-muted">Optional</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Custom SEO Title</label>
+                        {{ form.seo_title }}
+                        <small class="text-muted">Defaults to blog title if left empty.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Meta Description</label>
+                        {{ form.seo_description }}
+                        <small class="text-muted">Defaults to short summary if left empty.</small>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label fw-bold">Keywords Tag</label>
+                        {{ form.seo_keywords }}
+                        <small class="text-muted">Comma-separated keywords (e.g. flat renovation, old apartment repair).</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR CONTROLS COLUMN (RIGHT) -->
+        <div class="col-lg-4">
+            <!-- 3. Publishing Actions Card -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">Publishing Controls</h5>
+                </div>
+                <div class="card-body p-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Publication Status</label>
+                        {{ form.status }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Publication Date & Time</label>
+                        {{ form.published_date }}
+                    </div>
+
+                    <div class="mb-4 form-check">
+                        {{ form.featured }}
+                        <label class="form-check-label fw-bold" for="id_featured">
+                            <i class="bi bi-star-fill text-warning me-1"></i> Feature on Home Page Spotlight
+                        </label>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" name="action" value="publish" class="btn btn-success btn-lg fw-bold d-inline-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-send-fill"></i> Publish Live Article
+                        </button>
+                        <button type="submit" name="action" value="save_draft" class="btn btn-navy d-inline-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-save-fill"></i> Save as Draft
+                        </button>
+                        <a href="/cms/blog/list/" class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Category & Commercial Link -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">Category & Commercial Target</h5>
+                </div>
+                <div class="card-body p-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Primary Category *</label>
+                        {{ form.category }}
+                        <div class="text-end mt-1">
+                            <a href="/cms/blog/categories/create/" target="_blank" class="small text-primary">+ Create New Category</a>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Commercial Lead Generation CTA</label>
+                        {{ form.related_service_type }}
+                        <small class="text-muted d-block mt-1">Directs reader to relevant service consultation banner at the bottom of the article.</small>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label fw-bold">Author Name</label>
+                        {{ form.author }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Featured Image Card -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">Featured Image</h5>
+                </div>
+                <div class="card-body p-3">
+                    {{ form.featured_image }}
+                    <small class="text-muted d-block mt-1">Permitted formats: JPG, JPEG, PNG, WebP (Max 5MB).</small>
+                    {% if form.featured_image.errors %}<div class="text-danger small mt-1">{{ form.featured_image.errors }}</div>{% endif %}
+
+                    <!-- Live Image Preview Container -->
+                    <div id="image-preview-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- GEMINI AI ASSISTANT MODAL -->
+<div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-labelledby="aiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-navy text-white">
+                <h5 class="modal-title font-heading" id="aiModalLabel"><i class="bi bi-stars text-warning me-2"></i>Google Gemini AI Content Assistant</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted small mb-3">
+                    Generate complete engineering-grade articles, optimized SEO metadata, or structured domain FAQs tailored to construction, renovation, and property redevelopment.
+                </p>
+
+                <div id="ai-status-msg" class="mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Topic / Subject *</label>
+                    <input type="text" id="ai_topic" class="form-control" placeholder="e.g. Complete Flat Renovation Guide for Resale Apartments">
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Task Type</label>
+                        <select id="ai_task_type" class="form-select">
+                            <option value="generate_draft">Generate Complete Blog Draft & Outline</option>
+                            <option value="generate_seo">Generate SEO Title, Description & Keywords</option>
+                            <option value="generate_faqs">Generate 4-5 High-Value Frequently Asked Questions</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Custom Focus / Details</label>
+                        <input type="text" id="ai_instructions" class="form-control" placeholder="e.g. Focus on plumbing replacement and waterproofing">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="ai-generate-btn" class="btn btn-gold fw-bold d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-lightning-charge-fill"></i> Generate Content
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

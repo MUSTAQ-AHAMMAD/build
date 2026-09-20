@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{% if sub_data %}{{ sub_data.title }} — Flat &amp; Apartment Renovation | {{ site_settings.site_name|default:"BUILD+" }}{% else %}Flat &amp; Apartment Renovation Services | {{ site_settings.site_name|default:"BUILD+" }}{% endif %}
+{% endblock %}
+
+{% block meta_description %}
+{% if sub_data %}{{ sub_data.hero_subtitle }}{% else %}Dedicated flat &amp; apartment renovation services for old, damaged, resale and occupied properties. Plumbing overhauls, permanent waterproofing, structural repairs and modern interiors.{% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">{% if sub_data %}{{ sub_data.title }}{% else %}Flat Renovation{% endif %}</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">
+            {% if sub_data %}{{ sub_data.category }}{% else %}Specialized Engineering Division{% endif %}
+        </div>
+        <h1>
+            {% if sub_data %}{{ sub_data.title }}{% else %}Transform Old &amp; Resale Flats into Modern Homes{% endif %}
+        </h1>
+        <p class="hero-desc">
+            {% if sub_data %}
+            {{ sub_data.hero_subtitle }}
+            {% else %}
+            Structural assessment, MEP replacement, elastomeric waterproofing, and turnkey interior revamps for old, resale, and occupied flats — with zero disturbance to neighbors.
+            {% endif %}
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/request-site-visit/" class="btn btn-gold">
+                Request Site Assessment <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/contact/?type=flat_renovation" class="btn btn-outline-white">
+                Get Renovation Quote
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Subservice Filter Tabs -->
+<section class="py-3 bg-white border-bottom">
+    <div class="container-xxl">
+        <div class="project-filter-tabs">
+            <a href="/renovation/" class="project-filter-tab {% if not subservice %}active{% endif %}">
+                All Renovation
+            </a>
+            <a href="/renovation/flats/" class="project-filter-tab {% if subservice == 'flats' %}active{% endif %}">
+                Complete Flat Renovation
+            </a>
+            <a href="/renovation/apartments/" class="project-filter-tab {% if subservice == 'apartments' %}active{% endif %}">
+                Apartment &amp; Society Upgrades
+            </a>
+            <a href="/renovation/interior/" class="project-filter-tab {% if subservice == 'interior' %}active{% endif %}">
+                Kitchen &amp; Bath Interiors
+            </a>
+            <a href="/renovation/structural/" class="project-filter-tab {% if subservice == 'structural' %}active{% endif %}">
+                Structural &amp; Waterproofing
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Core Renovation Offerings -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <div class="eyebrow justify-content-center">Renovation Capabilities</div>
+            <h2>From Individual Flats to Full Society Upgrades</h2>
+            <p>Every renovation scope is engineered around structural safety, non-destructive MEP replacement, and verified waterproofing membranes.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Complete Flat Renovation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card {% if subservice == 'flats' %}border-warning{% endif %}">
+                    <div class="service-icon-box" style="background: var(--gold-soft); border-color: var(--gold);">
+                        <i class="bi bi-house-door" style="color: var(--gold);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Complete Flat Renovation</h3>
+                    <p class="small mb-3">Turnkey transformation for 15–30 year old resale or inherited flats.</p>
+                    <ul class="service-benefits">
+                        <li>Vitrified tile / Italian marble flooring</li>
+                        <li>Concealed CPVC plumbing replacement</li>
+                        <li>Fire-retardant electrical rewiring</li>
+                        <li>Complete wall skim coat &amp; luxury painting</li>
+                    </ul>
+                    <a href="/renovation/flats/" class="service-link">
+                        Explore Scope <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Apartment Building Renovation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card {% if subservice == 'apartments' %}border-warning{% endif %}">
+                    <div class="service-icon-box">
+                        <i class="bi bi-buildings" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Apartment Society Upgrades</h3>
+                    <p class="small mb-3">Renovation solutions for housing societies and multi-unit complexes.</p>
+                    <ul class="service-benefits">
+                        <li>Lobby, corridor &amp; lift cladding upgrades</li>
+                        <li>External facade crack repair &amp; painting</li>
+                        <li>Society NOC &amp; RWA compliance</li>
+                        <li>Terrace waterproofing &amp; solar roofing</li>
+                    </ul>
+                    <a href="/renovation/apartments/" class="service-link">
+                        Explore Scope <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Interior Renovation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card {% if subservice == 'interior' %}border-warning{% endif %}">
+                    <div class="service-icon-box">
+                        <i class="bi bi-palette" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Kitchen &amp; Bath Remodeling</h3>
+                    <p class="small mb-3">Targeted aesthetic and functional upgrades of key living zones.</p>
+                    <ul class="service-benefits">
+                        <li>Modular kitchens with soft-close hardware</li>
+                        <li>Luxury sanitaryware &amp; diverter setups</li>
+                        <li>Recessed lighting &amp; false ceiling profiles</li>
+                        <li>Custom wardrobes &amp; space-saving joinery</li>
+                    </ul>
+                    <a href="/renovation/interior/" class="service-link">
+                        Explore Scope <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Structural Renovation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card {% if subservice == 'structural' %}border-warning{% endif %}">
+                    <div class="service-icon-box">
+                        <i class="bi bi-shield-shaded" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Structural Strengthening</h3>
+                    <p class="small mb-3">Engineering retrofits to restore load-bearing capacity and safety.</p>
+                    <ul class="service-benefits">
+                        <li>RC column micro-concrete jacketing</li>
+                        <li>Non-structural wall modifications</li>
+                        <li>Delaminated slab &amp; spalling repair</li>
+                        <li>Structural stability certificate by PE</li>
+                    </ul>
+                    <a href="/renovation/structural/" class="service-link">
+                        Explore Scope <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Damage Repair & Waterproofing -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-droplet-half" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Waterproofing &amp; Dampness</h3>
+                    <p class="small mb-3">Permanent solutions for persistent leaks, seepage, and efflorescence.</p>
+                    <ul class="service-benefits">
+                        <li>Polyurethane elastomeric wet-area seal</li>
+                        <li>Pressure crack injection grouting</li>
+                        <li>48-hour flood test verification</li>
+                        <li>Written warranty on treated surfaces</li>
+                    </ul>
+                    <a href="/request-site-visit/" class="service-link">
+                        Request Inspection <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Modern Remodeling -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-arrows-fullscreen" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Layout Reconfiguration</h3>
+                    <p class="small mb-3">Open-plan transformations that maximize natural light and usable space.</p>
+                    <ul class="service-benefits">
+                        <li>Kitchen-to-living open layout integration</li>
+                        <li>Walk-in wardrobe &amp; ensuite additions</li>
+                        <li>Sound insulation &amp; acoustic glazing</li>
+                        <li>Turnkey handover with zero debris</li>
+                    </ul>
+                    <a href="/contact/?type=flat_renovation" class="service-link">
+                        Get Remodeling Quote <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Guides from CMS -->
+{% if related_guides %}
+<section class="section section-light border-top">
+    <div class="container-xxl">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <div class="eyebrow">Engineering Knowledge</div>
+                <h3 class="h4 mb-0">Renovation Guides &amp; Case Studies</h3>
+            </div>
+            <a href="/blog/?category=flat-apartment-renovation" class="btn btn-outline-brand btn-sm">
+                View All Guides <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+        <div class="row g-4">
+            {% for g in related_guides %}
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <small class="text-muted mb-2"><i class="bi bi-clock me-1"></i> {{ g.reading_time }} min read &bull; {{ g.published_date|date:"M d, Y" }}</small>
+                        <h4 class="h6 font-heading mb-2">
+                            <a href="{{ g.get_absolute_url }}" class="text-dark text-decoration-none">{{ g.title }}</a>
+                        </h4>
+                        <p class="small text-light mb-3 flex-grow-1">{{ g.short_description|truncatewords:16 }}</p>
+                        <a href="{{ g.get_absolute_url }}" class="service-link small">Read Article <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

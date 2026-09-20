@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Frequently Asked Questions | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+{% block meta_description %}Find answers to common questions about construction, renovation, demolition, redevelopment, NRI services, payments and our process at BUILD+.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero" aria-labelledby="faq-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+      <a href="/">Home</a><span class="separator">/</span>
+      <span class="current">FAQ</span>
+    </nav>
+    <div class="eyebrow" style="color:var(--gold);">Answers</div>
+    <h1 id="faq-h1">Frequently Asked Questions</h1>
+    <p class="hero-desc">Find quick, clear answers to your property and construction questions. Can't find what you're looking for? Contact our team directly.</p>
+  </div>
+</section>
+
+<!-- FAQ MAIN -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="row g-5 align-items-start">
+
+      <!-- FAQS MAIN COLUMN -->
+      <div class="col-lg-8">
+
+        <!-- SEARCH BAR -->
+        <div class="faq-search-bar mb-4">
+          <i class="bi bi-search faq-search-icon"></i>
+          <input type="text" id="faqSearch" class="form-control form-control-premium" placeholder="Search questions..." oninput="filterFAQs()" style="padding-left:44px;">
+        </div>
+
+        <!-- CATEGORY FILTERS -->
+        <div class="faq-category-tabs mb-4">
+          <button class="faq-tab active" onclick="filterCategory('all', this)">All</button>
+          <button class="faq-tab" onclick="filterCategory('construction', this)">Construction</button>
+          <button class="faq-tab" onclick="filterCategory('renovation', this)">Renovation</button>
+          <button class="faq-tab" onclick="filterCategory('demolition', this)">Demolition</button>
+          <button class="faq-tab" onclick="filterCategory('property', this)">Property</button>
+          <button class="faq-tab" onclick="filterCategory('nri', this)">NRI</button>
+          <button class="faq-tab" onclick="filterCategory('process', this)">Process</button>
+          <button class="faq-tab" onclick="filterCategory('general', this)">General</button>
+        </div>
+
+        <!-- FAQ ACCORDION -->
+        <div id="faqContainer">
+
+          {% if faqs %}
+            {% for faq in faqs %}
+            <div class="faq-item" data-category="{{ faq.category|lower }}" data-question="{{ faq.question|lower }}">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>{{ faq.question }}</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">{{ faq.answer }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <!-- Default FAQs if DB is empty -->
+            <div class="faq-item" data-category="construction" data-question="how long does construction take">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>How long does a typical new construction project take?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Construction timelines vary by project size and complexity. A typical independent house (2,000–3,000 sq.ft) takes 10–14 months. Larger residential or commercial projects may require 18–36 months. Your project manager will provide a detailed milestone schedule before work begins.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="renovation" data-question="flat renovation duration">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>How long does a complete flat renovation take?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">A complete flat renovation for a 2BHK (900–1,200 sq.ft) typically takes 60–90 days. Larger flats or complex structural work may take 120–150 days. This includes civil, waterproofing, MEP, and finishing phases.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="process" data-question="itemized boq estimate">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>What is an itemized BOQ and why does it matter?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">A BOQ (Bill of Quantities) is a detailed breakdown of every material, quantity, grade, and cost in your project. Unlike vague lump-sum quotes, a BOQ ensures complete transparency — you know exactly what you're paying for, and there are no mid-project surprises or price escalations.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="nri" data-question="nri overseas remote supervision">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>How do you manage projects for NRI clients who are overseas?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">We provide a dedicated NRI coordination service that includes regular photo and video progress updates, online Client Portal access, video call check-ins, and digital document management. You can track your property's progress from anywhere in the world, in real time.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="construction" data-question="cost per sqft construction">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>What is the approximate construction cost per square foot?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Construction costs depend on location, specification grade, and design complexity. As an indicative range for Hyderabad and Bengaluru: Standard grade ₹1,800–2,200/sq.ft; Premium grade ₹2,500–3,200/sq.ft; Luxury grade ₹3,500+/sq.ft. Our estimate includes civil, structure, MEP, waterproofing, and basic finishing. Use our Budget Calculator for a more detailed indicative estimate.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="general" data-question="payment schedule how payments work">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>How does the payment schedule work?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Payments are milestone-linked. You pay in stages — advance, foundation, structure, slab, MEP, finishing, and final payment on handover. No stage payment is released without the corresponding milestone being verified and documented. Your payment receipts and stage certificates are accessible in your Client Portal.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="demolition" data-question="demolition safe residential">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>Is demolition safe for residential properties in urban areas?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Yes, when conducted by licensed professionals with proper equipment and planning. Our demolition team follows strict safety protocols, structural assessments before demolition, debris containment, dust management, and ensures no damage to adjacent structures or utilities.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="property" data-question="property documentation help">
+              <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false">
+                <span>Do you help with property documentation and legal coordination?</span>
+                <i class="bi bi-chevron-down faq-chevron"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Yes. We provide structured assistance and coordination for property documentation including sale deeds, encumbrance certificates, RERA compliance, khata, mutation, and construction approvals. We work with qualified legal professionals and liaison specialists to coordinate on your behalf.</div>
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+
+        <!-- NO RESULTS -->
+        <div id="faqNoResults" class="faq-empty-state" style="display:none;">
+          <i class="bi bi-search"></i>
+          <p>No questions found matching your search.</p>
+          <a href="/contact/" class="btn btn-outline-brand">Ask Us Directly</a>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="col-lg-4">
+        <div class="faq-sidebar sticky-top" style="top:90px;">
+          <div class="faq-sidebar-block">
+            <div class="faq-sidebar-title">Still Have Questions?</div>
+            <p class="text-muted mb-4" style="font-size:0.9rem;">Our team is ready to answer any question about your property project — free of charge.</p>
+            <a href="/get-free-consultation/" class="btn btn-brand w-100 mb-2">Free Consultation</a>
+            <a href="/contact/" class="btn btn-outline-brand w-100 mb-2">Send a Message</a>
+            <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" class="btn btn-whatsapp w-100">
+              <i class="bi bi-whatsapp me-2"></i> WhatsApp Us
+            </a>
+          </div>
+          <div class="faq-sidebar-block" style="background:var(--background); border:1px solid var(--border); border-radius:10px; padding:20px;">
+            <div class="faq-sidebar-title mb-3">Quick FAQ Categories</div>
+            <a href="#" onclick="filterCategory('construction', null)" class="faq-sidebar-cat"><i class="bi bi-buildings me-2"></i> Construction</a>
+            <a href="#" onclick="filterCategory('renovation', null)" class="faq-sidebar-cat"><i class="bi bi-house-gear me-2"></i> Renovation</a>
+            <a href="#" onclick="filterCategory('demolition', null)" class="faq-sidebar-cat"><i class="bi bi-hammer me-2"></i> Demolition</a>
+            <a href="#" onclick="filterCategory('property', null)" class="faq-sidebar-cat"><i class="bi bi-map me-2"></i> Property</a>
+            <a href="#" onclick="filterCategory('nri', null)" class="faq-sidebar-cat"><i class="bi bi-globe2 me-2"></i> NRI Services</a>
+            <a href="#" onclick="filterCategory('process', null)" class="faq-sidebar-cat"><i class="bi bi-diagram-3 me-2"></i> Our Process</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-navy">
+  <div class="container-xxl text-center">
+    <div class="eyebrow justify-content-center" style="color:var(--gold);">Get Started</div>
+    <h2 class="text-white mb-4">Ready to Begin Your Property Project?</h2>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Get Free Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="/contact/" class="btn btn-outline-light btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  // Close all
+  document.querySelectorAll('.faq-question[aria-expanded="true"]').forEach(b => {
+    b.setAttribute('aria-expanded', 'false');
+    b.closest('.faq-item').querySelector('.faq-answer').style.maxHeight = '0';
+    b.closest('.faq-item').classList.remove('faq-open');
+  });
+  if (!isOpen) {
+    btn.setAttribute('aria-expanded', 'true');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    item.classList.add('faq-open');
+  }
+}
+
+function filterFAQs() {
+  const q = document.getElementById('faqSearch').value.toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const text = item.getAttribute('data-question') + ' ' + item.textContent.toLowerCase();
+    const show = text.includes(q);
+    item.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('faqNoResults').style.display = visible === 0 ? '' : 'none';
+}
+
+function filterCategory(cat, btn) {
+  // Update tab active
+  if (btn) {
+    document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  let visible = 0;
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const show = cat === 'all' || item.getAttribute('data-category') === cat;
+    item.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('faqNoResults').style.display = visible === 0 ? '' : 'none';
+  return false;
+}
+</script>
+{% endblock %}

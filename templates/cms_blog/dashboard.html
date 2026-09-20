@@ -1,0 +1,138 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}Blog Management Dashboard{% endblock %}
+{% block page_title %}Blog Management Dashboard{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Blog Dashboard</li>
+{% endblock %}
+
+{% block cms_content %}
+<!-- STATS ROW -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card border-start border-4 border-primary">
+            <small class="text-uppercase fw-bold text-muted">Total Blog Articles</small>
+            <div class="num text-primary">{{ total_blogs }}</div>
+            <small class="text-muted">In all categories</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-start border-4 border-success">
+            <small class="text-uppercase fw-bold text-muted">Published & Live</small>
+            <div class="num text-success">{{ published_blogs }}</div>
+            <small class="text-success">Visible to public visitors</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-start border-4 border-warning">
+            <small class="text-uppercase fw-bold text-muted">Drafts (Unpublished)</small>
+            <div class="num text-warning">{{ draft_blogs }}</div>
+            <small class="text-muted">In progress / review</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-start border-4 border-info">
+            <small class="text-uppercase fw-bold text-muted">Featured Articles</small>
+            <div class="num text-info">{{ featured_blogs }}</div>
+            <small class="text-muted">Highlighted on Home page</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- RECENT ARTICLES TABLE -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="font-heading mb-0">Recent Blog Posts</h5>
+                <a href="/cms/blog/list/" class="btn btn-sm btn-outline-primary">View All Posts →</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light small text-uppercase">
+                        <tr>
+                            <th>Title & Category</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Published</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for blog in recent_blogs %}
+                        <tr>
+                            <td>
+                                <a href="/cms/blog/{{ blog.id }}/" class="fw-bold text-dark text-decoration-none d-block">
+                                    {{ blog.title|truncatechars:45 }}
+                                </a>
+                                <span class="badge bg-light text-dark border">{{ blog.category.name }}</span>
+                                {% if blog.featured %}
+                                <span class="badge bg-warning text-dark">⭐ Featured</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted">{{ blog.author|truncatechars:20 }}</td>
+                            <td>
+                                {% if blog.status == 'published' %}
+                                <span class="badge bg-success">Published</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Draft</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted">
+                                {% if blog.published_date %}
+                                {{ blog.published_date|date:"d M Y" }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="/cms/blog/{{ blog.id }}/" class="btn btn-sm btn-outline-secondary" title="View Preview"><i class="bi bi-eye"></i></a>
+                                <a href="/cms/blog/{{ blog.id }}/edit/" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No blog articles found. Start by creating one!</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK ACTIONS & CATEGORIES -->
+    <div class="col-lg-4">
+        <!-- AI Assistant Spotlight Card -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4 bg-light" style="border-left: 4px solid var(--gold) !important;">
+            <div class="card-body">
+                <h5 class="font-heading mb-2"><i class="bi bi-stars text-warning me-1"></i>Gemini AI Content Assistant</h5>
+                <p class="small text-muted mb-3">Accelerate writing blog articles, generating SEO metadata, or drafting domain FAQs for construction and renovation topics.</p>
+                <a href="/cms/blog/create/" class="btn btn-gold w-100 btn-sm fw-bold">Create Blog with AI Assistant <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="font-heading mb-0">Categories ({{ total_categories }})</h5>
+                <a href="/cms/blog/categories/" class="btn btn-sm btn-outline-secondary">Manage</a>
+            </div>
+            <div class="list-group list-group-flush">
+                {% for cat in recent_categories %}
+                <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                    <div>
+                        <div class="fw-bold small">{{ cat.name }}</div>
+                        <small class="text-muted">{{ cat.blog_count }} total articles</small>
+                    </div>
+                    <a href="/cms/blog/list/?category={{ cat.id }}" class="badge bg-secondary text-decoration-none">Filter →</a>
+                </div>
+                {% empty %}
+                <div class="p-3 text-muted small text-center">No categories yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

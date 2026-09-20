@@ -1,0 +1,112 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}AI Chatbot Configuration | BUILD+ CMS{% endblock %}
+{% block page_title %}AI Assistant Parameters & Response Settings{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/cms/ai/" class="text-decoration-none text-muted">AI Intelligence</a></li>
+<li class="breadcrumb-item active">Settings</li>
+{% endblock %}
+
+{% block cms_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <form method="post" action="/cms/ai/settings/">
+            {% csrf_token %}
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">General AI Assistant Parameters</h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Master Toggle -->
+                    <div class="form-check form-switch mb-4 p-3 bg-light rounded-3">
+                        <input class="form-check-input ms-0 me-3" type="checkbox" name="is_enabled" id="is_enabled" {% if settings.is_enabled %}checked{% endif %} style="transform: scale(1.3);">
+                        <label class="form-check-label fw-bold" for="is_enabled">
+                            Enable Floating AI Consultant on Public Website
+                        </label>
+                        <small class="d-block text-muted mt-1">When disabled, the floating AI assistant button will be hidden from public visitors.</small>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">AI Bot Name</label>
+                            <input type="text" name="ai_name" class="form-control" value="{{ settings.ai_name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Operating Hours</label>
+                            <input type="text" name="working_hours" class="form-control" value="{{ settings.working_hours }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Direct Helpline Phone</label>
+                            <input type="text" name="contact_phone" class="form-control" value="{{ settings.contact_phone }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">WhatsApp Desk Number</label>
+                            <input type="text" name="whatsapp_number" class="form-control" value="{{ settings.whatsapp_number }}">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold small">Welcome Greeting</label>
+                            <textarea name="welcome_message" class="form-control" rows="2">{{ settings.welcome_message }}</textarea>
+                            <small class="text-muted">First message displayed when a visitor clicks the AI widget.</small>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold small">Company Capability Grounding Description</label>
+                            <textarea name="business_description" class="form-control" rows="2">{{ settings.business_description }}</textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Human Handoff Message</label>
+                            <textarea name="human_handoff_message" class="form-control" rows="2">{{ settings.human_handoff_message }}</textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Fallback / Safety Message</label>
+                            <textarea name="fallback_message" class="form-control" rows="2">{{ settings.fallback_message }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intelligent Automation Toggles -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="font-heading mb-0">CRM Automation & Lead Synthesis</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-check form-switch p-3 border rounded-3 h-100">
+                                <input class="form-check-input ms-0 me-2" type="checkbox" name="enable_lead_capture" id="enable_lead_capture" {% if settings.enable_lead_capture %}checked{% endif %}>
+                                <label class="form-check-label fw-bold" for="enable_lead_capture">Auto Lead Capture</label>
+                                <small class="text-muted d-block mt-1">Convert qualified chat visitors directly into CRM Leads.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check form-switch p-3 border rounded-3 h-100">
+                                <input class="form-check-input ms-0 me-2" type="checkbox" name="enable_ai_summary" id="enable_ai_summary" {% if settings.enable_ai_summary %}checked{% endif %}>
+                                <label class="form-check-label fw-bold" for="enable_ai_summary">AI Lead Summarization</label>
+                                <small class="text-muted d-block mt-1">Synthesize multi-turn project scope into an executive note.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check form-switch p-3 border rounded-3 h-100">
+                                <input class="form-check-input ms-0 me-2" type="checkbox" name="enable_ai_priority" id="enable_ai_priority" {% if settings.enable_ai_priority %}checked{% endif %}>
+                                <label class="form-check-label fw-bold" for="enable_ai_priority">AI Priority Scoring</label>
+                                <small class="text-muted d-block mt-1">Automatically assign LOW/MEDIUM/HIGH/URGENT priority.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light p-3 text-end">
+                    <button type="submit" class="btn btn-primary fw-bold px-4">
+                        Save AI Configuration
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

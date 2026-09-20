@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book an On-Site Engineering Inspection | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <span class="current">Book Site Visit</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">On-Site Technical Audit</div>
+        <h1>Schedule an Engineering Site Inspection</h1>
+        <p class="hero-desc">
+            Have our licensed civil and structural engineers inspect your flat, independent house, or demolition plot. We evaluate the physical condition and provide an itemized BOQ proposal.
+        </p>
+    </div>
+</section>
+
+<!-- Form & Value Prop -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="card-premium p-4 p-md-5">
+                    <h3 class="h4 font-heading mb-1">Schedule Your Site Visit</h3>
+                    <p class="small text-muted mb-4">Fill out the property details below. Our engineering dispatch coordinator will contact you to confirm the date and time.</p>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.enquiry_type.id_for_label }}">Enquiry Type</label>
+                            {{ form.enquiry_type }}
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.full_name.id_for_label }}">Full Name *</label>
+                                {{ form.full_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.phone_number.id_for_label }}">Contact Phone / WhatsApp *</label>
+                                {{ form.phone_number }}
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.city_location.id_for_label }}">Exact Property Location / Address *</label>
+                                {{ form.city_location }}
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.property_type.id_for_label }}">Property Typology (e.g. 3BHK Resale Flat)</label>
+                                {{ form.property_type }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.approximate_area.id_for_label }}">Approx. Area (e.g. 1,800 sq.ft)</label>
+                                {{ form.approximate_area }}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="{{ form.message.id_for_label }}">Specific Inspection Notes / Observations</label>
+                            {{ form.message }}
+                        </div>
+
+                        <button type="submit" class="btn btn-brand btn-lg w-100 justify-content-center">
+                            Confirm Site Visit Booking <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Value Prop Column -->
+            <div class="col-lg-5">
+                <div class="card-premium p-4 p-md-5 mb-4">
+                    <h4 class="h5 font-heading mb-4 pb-2 border-bottom">What the Site Visit Delivers</h4>
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="service-icon-box mb-0" style="width:40px; height:40px; font-size:16px;">
+                            <i class="bi bi-shield-check" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <strong class="d-block text-dark mb-1">Structural Health Check</strong>
+                            <p class="small text-muted mb-0">Non-destructive evaluation of RCC columns, beams, dampness, and moisture levels.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="service-icon-box mb-0" style="width:40px; height:40px; font-size:16px;">
+                            <i class="bi bi-file-earmark-ruled" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <strong class="d-block text-dark mb-1">Itemized BOQ Estimate</strong>
+                            <p class="small text-muted mb-0">Detailed breakdown of material quantities, labor hours, and fixed-price quotation.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 mb-0">
+                        <div class="service-icon-box mb-0" style="width:40px; height:40px; font-size:16px;">
+                            <i class="bi bi-calendar-check" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <strong class="d-block text-dark mb-1">Timeline &amp; Permitting Roadmap</strong>
+                            <p class="small text-muted mb-0">Clear milestone schedule and statutory approvals checklist for your property.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-navy card-premium p-4">
+                    <div class="eyebrow" style="color: var(--gold);">Prefer Instant Coordination?</div>
+                    <p class="small text-white opacity-75 mb-3">Reach out via WhatsApp or call our engineering desk directly.</p>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp w-100 justify-content-center">
+                            <i class="bi bi-whatsapp me-1"></i> WhatsApp Us
+                        </a>
+                        <a href="tel:{{ site_settings.primary_phone|default:'+919876543210' }}" class="btn btn-outline-white w-100 justify-content-center">
+                            <i class="bi bi-telephone me-1"></i> {{ site_settings.primary_phone|default:"+91 98765 43210" }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

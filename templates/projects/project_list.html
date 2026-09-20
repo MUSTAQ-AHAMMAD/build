@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Featured Projects &amp; Case Studies | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <span class="current">Projects Portfolio</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Demonstrated Track Record</div>
+        <h1>Proven Engineering &amp; Renovation Capabilities</h1>
+        <p class="hero-desc">
+            Explore our executed and active project portfolio spanning new luxury home builds, 25-year-old flat modernizations, structural restorations, and controlled demolition redevelopments.
+        </p>
+    </div>
+</section>
+
+<!-- Projects Gallery Section -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <!-- Category Filter Tabs -->
+        <div class="project-filter-tabs mb-5">
+            <a href="/projects/" class="project-filter-tab {% if not selected_category %}active{% endif %}">
+                All Projects
+            </a>
+            {% for cat in categories %}
+            <a href="?category={{ cat.slug }}" class="project-filter-tab {% if selected_category.slug == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="row g-4">
+            {% for p in projects %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card-premium p-0 overflow-hidden h-100 d-flex flex-column">
+                    <a href="{{ p.get_absolute_url }}" class="d-block position-relative overflow-hidden" style="height: 240px;">
+                        {% if p.main_image %}
+                        <img src="{{ p.main_image.url }}" alt="{{ p.title }}" class="w-100 h-100 object-fit-cover" style="transition: transform var(--dur-slow) var(--ease);">
+                        {% else %}
+                        <img src="/static/images/project-placeholder.jpg" alt="{{ p.title }}" class="w-100 h-100 object-fit-cover" style="transition: transform var(--dur-slow) var(--ease);">
+                        {% endif %}
+                        <span class="project-category-badge position-absolute top-0 start-0 m-3">{{ p.category.name }}</span>
+                    </a>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-status badge-status-neutral font-monospace" style="font-size: 11px;">
+                                <i class="bi bi-geo-alt me-1"></i>{{ p.location }}
+                            </span>
+                            <span class="badge-status badge-status-success">{{ p.get_project_status_display }}</span>
+                        </div>
+                        <h4 class="h5 font-heading mb-2">
+                            <a href="{{ p.get_absolute_url }}" class="text-dark text-decoration-none">{{ p.title }}</a>
+                        </h4>
+                        <p class="small mb-3 flex-grow-1">{{ p.overview|truncatewords:20 }}</p>
+                        <div class="pt-3 border-top d-flex justify-content-between align-items-center small text-muted">
+                            <span><i class="bi bi-rulers me-1"></i>{{ p.built_up_area }}</span>
+                            <a href="{{ p.get_absolute_url }}" class="service-link small">View Case Study <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- High-Fidelity Fallback Projects -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card-premium p-0 overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative overflow-hidden" style="height: 240px;">
+                        <img src="/static/images/project-placeholder.jpg" alt="Luxury Villa Turnkey Construction" class="w-100 h-100 object-fit-cover">
+                        <span class="project-category-badge position-absolute top-0 start-0 m-3">New Construction</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-status badge-status-neutral font-monospace" style="font-size: 11px;">
+                                <i class="bi bi-geo-alt me-1"></i>Jubilee Hills, Hyderabad
+                            </span>
+                            <span class="badge-status badge-status-success">Completed &bull; Handed Over</span>
+                        </div>
+                        <h4 class="h5 font-heading mb-2">Custom Luxury Villa Development</h4>
+                        <p class="small mb-3 flex-grow-1">Turnkey architectural drafting, foundation execution, and Italian marble finishes across 6,500 sq.ft built-up area.</p>
+                        <div class="pt-3 border-top d-flex justify-content-between align-items-center small text-muted">
+                            <span><i class="bi bi-rulers me-1"></i>6,500 sq.ft</span>
+                            <a href="/contact/" class="service-link small">Inquire Project <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card-premium p-0 overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative overflow-hidden" style="height: 240px;">
+                        <img src="/static/images/hero-renovation.jpg" alt="Resale 3BHK Flat Renovation" class="w-100 h-100 object-fit-cover">
+                        <span class="project-category-badge position-absolute top-0 start-0 m-3">Flat Renovation</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-status badge-status-neutral font-monospace" style="font-size: 11px;">
+                                <i class="bi bi-geo-alt me-1"></i>Indiranagar, Bengaluru
+                            </span>
+                            <span class="badge-status badge-status-success">Completed</span>
+                        </div>
+                        <h4 class="h5 font-heading mb-2">25-Year-Old Resale 3BHK Modernization</h4>
+                        <p class="small mb-3 flex-grow-1">Concealed CPVC plumbing overhaul, PU elastomeric waterproofing in 3 bathrooms, and modular open kitchen integration.</p>
+                        <div class="pt-3 border-top d-flex justify-content-between align-items-center small text-muted">
+                            <span><i class="bi bi-rulers me-1"></i>2,400 sq.ft</span>
+                            <a href="/contact/" class="service-link small">Inquire Project <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card-premium p-0 overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative overflow-hidden" style="height: 240px;">
+                        <img src="/static/images/hero-construction.jpg" alt="Controlled Demolition & Rebuild" class="w-100 h-100 object-fit-cover">
+                        <span class="project-category-badge position-absolute top-0 start-0 m-3">Demolition &amp; Rebuild</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-status badge-status-neutral font-monospace" style="font-size: 11px;">
+                                <i class="bi bi-geo-alt me-1"></i>Anna Nagar, Chennai
+                            </span>
+                            <span class="badge-status badge-status-info">Under Execution</span>
+                        </div>
+                        <h4 class="h5 font-heading mb-2">Commercial Complex Controlled Razing &amp; Rebuild</h4>
+                        <p class="small mb-3 flex-grow-1">Safe mechanical dismantling of outdated structure followed by deep piling and G+4 modern retail commercial execution.</p>
+                        <div class="pt-3 border-top d-flex justify-content-between align-items-center small text-muted">
+                            <span><i class="bi bi-rulers me-1"></i>12,000 sq.ft</span>
+                            <a href="/contact/" class="service-link small">Inquire Project <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

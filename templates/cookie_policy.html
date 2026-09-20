@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Cookie Policy | {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light border-bottom">
+    <div class="container py-3">
+        <h1 class="display-6 font-heading fw-bold">Cookie Policy</h1>
+        <p class="text-muted mb-0">How We Use Cookies & Session Technologies</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 article-content">
+                <h3>1. What Are Cookies?</h3>
+                <p>Cookies are small text files stored on your device that enable our website to remember your session preferences, maintain secure administrator authentication in the CMS portal, and analyze traffic patterns to optimize performance.</p>
+
+                <h3>2. Types of Cookies We Use</h3>
+                <ul>
+                    <li><strong>Essential Security Cookies:</strong> Required for Django CSRF token protection and administrator CMS session management.</li>
+                    <li><strong>Functional Preferences:</strong> Retaining filter states, pagination parameters, and cost estimator configurations.</li>
+                    <li><strong>Analytics & Performance:</strong> Anonymous visitor count tracking to identify popular technical guides and service inquiries.</li>
+                </ul>
+
+                <h3>3. Managing Cookies</h3>
+                <p>You may adjust your browser settings to refuse or alert you about cookies. Disabling essential cookies may impact CMS administrative login functionality.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

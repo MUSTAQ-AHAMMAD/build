@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}How We Work | {{ site_settings.site_name|default:"BUILD+" }} — A Structured Process from First Call to Final Handover{% endblock %}
+{% block meta_description %}BUILD+ follows a structured 10-step process from initial consultation to final handover, ensuring transparency, quality and on-time delivery.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero" aria-labelledby="hww-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+      <a href="/">Home</a><span class="separator">/</span>
+      <span class="current">How We Work</span>
+    </nav>
+    <div class="eyebrow" style="color:var(--gold);">Our Process</div>
+    <h1 id="hww-h1">A Structured Process From First<br>Conversation to Final Handover.</h1>
+    <p class="hero-desc">Every BUILD+ project follows the same rigorous, transparent 10-step framework — from the moment you reach out to the day we hand over the keys.</p>
+  </div>
+</section>
+
+<!-- PROCESS TIMELINE -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="process-timeline">
+
+      <div class="process-step reveal">
+        <div class="process-step-number">01</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-chat-square-text-fill"></i></div>
+          <h3>Consultation</h3>
+          <p>Our first conversation is about understanding your goals. We listen to your vision, timeline, constraints and expectations — no technical jargon, no pressure. Just clarity.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Free of charge</span>
+            <span><i class="bi bi-check2 me-1"></i>Phone, video or in-person</span>
+            <span><i class="bi bi-check2 me-1"></i>NRI-friendly remote option</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">02</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-journal-text"></i></div>
+          <h3>Requirement Analysis</h3>
+          <p>We document your property details, scope of work, budget range, and timeline in detail. This forms the foundation of your project brief and ensures nothing is missed.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Structured requirement capture</span>
+            <span><i class="bi bi-check2 me-1"></i>Budget alignment</span>
+            <span><i class="bi bi-check2 me-1"></i>Scope clarity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">03</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <h3>Site Inspection</h3>
+          <p>Our licensed civil engineer conducts a thorough on-site assessment — measuring existing conditions, identifying structural concerns, evaluating soil or foundation requirements, and validating the scope.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Licensed engineer assigned</span>
+            <span><i class="bi bi-check2 me-1"></i>Structural assessment</span>
+            <span><i class="bi bi-check2 me-1"></i>Detailed site report</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">04</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-calculator-fill"></i></div>
+          <h3>Estimate Preparation</h3>
+          <p>Based on the site inspection, we prepare a 100% itemized BOQ (Bill of Quantities). Every material, grade, quantity and cost is transparent. No hidden markups. No vague lump sums.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>100% itemized BOQ</span>
+            <span><i class="bi bi-check2 me-1"></i>Material grades specified</span>
+            <span><i class="bi bi-check2 me-1"></i>No hidden costs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">05</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+          <h3>Proposal</h3>
+          <p>A formal project proposal is presented covering the full scope, commercial terms, execution timeline, milestone payment schedule, and quality guarantees.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Detailed scope document</span>
+            <span><i class="bi bi-check2 me-1"></i>Milestone payment plan</span>
+            <span><i class="bi bi-check2 me-1"></i>Timeline commitment</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">06</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-check-circle-fill"></i></div>
+          <h3>Approval &amp; Planning</h3>
+          <p>Once you approve the proposal, we finalize the execution schedule, assign your dedicated project manager, and mobilize the team. Government approvals and permits are handled simultaneously.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Dedicated project manager</span>
+            <span><i class="bi bi-check2 me-1"></i>Government approvals handled</span>
+            <span><i class="bi bi-check2 me-1"></i>Execution schedule locked</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">07</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-person-gear"></i></div>
+          <h3>Project Execution</h3>
+          <p>Our in-house civil team executes the project in structured phases — civil, structural, MEP, waterproofing, and finishing. Daily logs and progress photos are updated in your Client Portal.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>In-house civil team</span>
+            <span><i class="bi bi-check2 me-1"></i>Daily site updates</span>
+            <span><i class="bi bi-check2 me-1"></i>Client Portal access</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">08</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+          <h3>Quality Control</h3>
+          <p>Each phase is inspected against the agreed specification before the next phase commences. No shortcut is taken. Material quality, workmanship, and finish are verified at every stage.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Stage-wise inspection</span>
+            <span><i class="bi bi-check2 me-1"></i>Material verification</span>
+            <span><i class="bi bi-check2 me-1"></i>Specification compliance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">09</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-house-check-fill"></i></div>
+          <h3>Handover</h3>
+          <p>At project completion, we conduct a formal walkthrough, prepare the completion report, and hand over all relevant documentation including warranties, approvals, and as-built drawings.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Formal walkthrough</span>
+            <span><i class="bi bi-check2 me-1"></i>Completion documentation</span>
+            <span><i class="bi bi-check2 me-1"></i>Warranty handover</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-step-number">10</div>
+        <div class="process-step-content">
+          <div class="process-step-icon"><i class="bi bi-headset"></i></div>
+          <h3>Post-Project Support</h3>
+          <p>Our commitment doesn't end at handover. We remain available for post-project queries, warranty coordination, and any follow-up requirements — including ongoing property maintenance support.</p>
+          <div class="process-step-detail">
+            <span><i class="bi bi-check2 me-1"></i>Warranty support</span>
+            <span><i class="bi bi-check2 me-1"></i>Maintenance coordination</span>
+            <span><i class="bi bi-check2 me-1"></i>Ongoing client relationship</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section cta-navy">
+  <div class="container-xxl text-center">
+    <div class="eyebrow justify-content-center" style="color:var(--gold);">Get Started</div>
+    <h2 class="text-white mb-4">Ready to Begin Your Project?</h2>
+    <p class="mb-5" style="color:rgba(255,255,255,0.72); max-width:520px; margin:0 auto 2.5rem;">The first step is a free conversation. No obligation. No commitment. Just clarity about your property and what's possible.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Get Free Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="/services/" class="btn btn-outline-light btn-lg">Explore Services</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

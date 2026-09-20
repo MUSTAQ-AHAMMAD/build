@@ -1,0 +1,141 @@
+{% extends "portal/base_portal.html" %}
+
+{% block title %}{{ project.title }} — Project Tracker | BUILD+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="/portal/projects/" class="text-decoration-none small text-muted">← Back to My Projects</a>
+    <div class="d-flex justify-content-between align-items-center mt-1">
+        <h3 class="fw-bold font-heading text-navy mb-0">{{ project.title }}</h3>
+        <span class="badge bg-primary fs-6 text-uppercase">{{ project.get_project_status_display }}</span>
+    </div>
+    <p class="text-muted small">Location: {{ project.location }} • Type: {{ project.project_type }} • Built-up Area: {{ project.built_up_area }}</p>
+</div>
+
+<!-- FINANCIAL & PROGRESS OVERVIEW -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="portal-card p-3">
+            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">OVERALL PROGRESS</small>
+            <div class="h3 fw-bold text-success mt-1 mb-2">{{ project.progress_percentage }}%</div>
+            <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-success" style="width: {{ project.progress_percentage }}%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="portal-card p-3">
+            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">AGREED CONTRACT VALUE</small>
+            <div class="h3 fw-bold text-dark mt-1 mb-0">{{ pay_settings.currency_symbol }}{{ project.contract_amount|floatformat:2 }}</div>
+            <small class="text-muted">Itemized BOQ</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="portal-card p-3">
+            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">SETTLED PAYMENTS</small>
+            <div class="h3 fw-bold text-primary mt-1 mb-0">{{ pay_settings.currency_symbol }}{{ project.paid_amount|floatformat:2 }}</div>
+            <small class="text-muted">Cleared via Bank / Gateway</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- STAGE MILESTONES & TASKS -->
+    <div class="col-lg-8">
+        <!-- Milestone Schedule -->
+        <div class="portal-card p-4 mb-4">
+            <h6 class="fw-bold text-navy mb-3"><i class="bi bi-geo-alt-fill me-2 text-warning"></i> Project Milestone Payment & Execution Schedule</h6>
+            {% for m in milestones %}
+            <div class="d-flex justify-content-between align-items-center p-3 border rounded-3 mb-2 {% if m.status == 'PAID' %}bg-success bg-opacity-10 border-success{% endif %}">
+                <div>
+                    <div class="fw-bold text-dark">{{ m.milestone_name }} ({{ m.percentage }}%)</div>
+                    <small class="text-muted">{{ m.description|default:"Standard construction milestone" }}</small>
+                </div>
+                <div class="text-end">
+                    <div class="fw-bold font-monospace">{{ pay_settings.currency_symbol }}{{ m.amount|floatformat:2 }}</div>
+                    {% if m.status == 'PAID' %}
+                    <span class="badge bg-success">PAID & SETTLED</span>
+                    {% elif m.status == 'DUE' %}
+                    <span class="badge bg-warning text-dark">DUE FOR PAYMENT</span>
+                    {% else %}
+                    <span class="badge bg-secondary">{{ m.status }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted small text-center py-3 mb-0">Milestone schedule is being finalized by your project manager.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Detailed Engineering Work Breakdown Tasks -->
+        <div class="portal-card p-4">
+            <h6 class="fw-bold text-navy mb-3"><i class="bi bi-tools me-2 text-primary"></i> Engineering Work Breakdown & Task Status</h6>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Work Package / Task</th>
+                            <th>Category</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tasks %}
+                        <tr>
+                            <td class="fw-semibold">{{ t.task_name }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ t.get_category_display }}</span></td>
+                            <td class="text-muted">{{ t.due_date|date:"d M Y"|default:"TBD" }}</td>
+                            <td>
+                                {% if t.status == 'COMPLETED' %}
+                                <span class="badge bg-success">COMPLETED</span>
+                                {% elif t.status == 'IN_PROGRESS' %}
+                                <span class="badge bg-info text-dark">IN PROGRESS</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ t.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-3 text-muted">No task items logged yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT DOCUMENTS & SITE PHOTOS -->
+    <div class="col-lg-4">
+        <div class="portal-card p-4 mb-4">
+            <h6 class="fw-bold text-navy mb-3"><i class="bi bi-folder2-open me-2 text-success"></i> Shared Project Documents</h6>
+            <ul class="list-group list-group-flush small">
+                {% for doc in documents %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <div class="fw-semibold text-dark">{{ doc.title }}</div>
+                        <small class="text-muted">{{ doc.get_document_type_display }}</small>
+                    </div>
+                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2">
+                        Download <i class="bi bi-download ms-1"></i>
+                    </a>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted px-0 py-3">No documents uploaded yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Assistance Card -->
+        <div class="portal-card p-4 bg-light">
+            <h6 class="fw-bold text-navy mb-2">Need Assistance on this Project?</h6>
+            <p class="text-muted small mb-3">Reach out directly to your assigned project coordinator.</p>
+            <a href="/portal/support/create/" class="btn btn-primary btn-sm w-100 fw-semibold">
+                Contact Project Desk <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

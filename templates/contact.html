@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | {{ site_settings.site_name|default:"BUILD+" }} — Let's Talk About Your Property{% endblock %}
+{% block meta_description %}Contact BUILD+ for construction, renovation, redevelopment, NRI property services. Get a free consultation or book a site visit.{% endblock %}
+
+{% block content %}
+
+{% if success %}
+<!-- SUCCESS STATE -->
+<section class="page-hero" style="min-height:60vh; display:flex; align-items:center;">
+  <div class="container-xxl text-center">
+    <div class="success-card mx-auto" style="max-width:560px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:56px 40px; box-shadow:0 8px 32px rgba(11,31,51,0.08);">
+      <div style="width:72px; height:72px; background:rgba(23,107,82,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; border:1px solid rgba(23,107,82,0.2);">
+        <i class="bi bi-check2-circle" style="font-size:32px; color:var(--success);"></i>
+      </div>
+      <div class="eyebrow justify-content-center" style="color:var(--gold);">Enquiry Received</div>
+      <h1 style="font-size:clamp(1.6rem,3vw,2.2rem);" class="mb-3">Thank You. We'll Be In Touch Shortly.</h1>
+      <p class="text-muted mb-4">Your enquiry has been logged. Our team will review your requirement and contact you within 4 business hours.</p>
+      {% if enquiry_number %}
+      <div style="background:var(--background); border:1px solid var(--border); border-radius:8px; padding:14px 20px; margin-bottom:28px; font-family:monospace; font-size:1rem; font-weight:700; color:var(--primary); letter-spacing:0.05em;">
+        Reference: {{ enquiry_number }}
+      </div>
+      {% endif %}
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="/" class="btn btn-brand">Back to Home</a>
+        <a href="/projects/" class="btn btn-outline-brand">View Our Projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% else %}
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-labelledby="contact-hero-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+      <a href="/">Home</a><span class="separator">/</span>
+      <span class="current">Contact</span>
+    </nav>
+    <div class="eyebrow" style="color:var(--gold);">We're Here to Help</div>
+    <h1 id="contact-hero-h1">Let's Talk About<br>Your Property.</h1>
+    <p class="hero-desc">Tell us about your project. Our team will review your requirement and connect you with the right expert.</p>
+  </div>
+</section>
+
+<!-- CONTACT CONTENT -->
+<section class="section section-surface" style="padding-top:0;">
+  <div class="container-xxl">
+
+    <!-- INFO CARDS ROW -->
+    <div class="row g-4 mb-5" style="margin-top:-40px;">
+      <div class="col-md-3 col-6">
+        <div class="contact-info-card">
+          <div class="contact-info-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div class="contact-info-label">Call Us</div>
+          <a href="tel:{{ site_settings.primary_phone|default:'+919876543210' }}" class="contact-info-value">
+            {{ site_settings.primary_phone|default:'+91 98765 43210' }}
+          </a>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="contact-info-card">
+          <div class="contact-info-icon" style="color:var(--success);"><i class="bi bi-whatsapp"></i></div>
+          <div class="contact-info-label">WhatsApp</div>
+          <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" class="contact-info-value">Chat Now</a>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="contact-info-card">
+          <div class="contact-info-icon" style="color:var(--info);"><i class="bi bi-envelope-fill"></i></div>
+          <div class="contact-info-label">Email</div>
+          <a href="mailto:{{ site_settings.primary_email|default:'info@buildplus.in' }}" class="contact-info-value">
+            {{ site_settings.primary_email|default:'info@buildplus.in' }}
+          </a>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="contact-info-card">
+          <div class="contact-info-icon" style="color:var(--gold);"><i class="bi bi-clock-fill"></i></div>
+          <div class="contact-info-label">Office Hours</div>
+          <div class="contact-info-value">Mon–Sat, 9 AM–7 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM + SIDEBAR LAYOUT -->
+    <div class="row g-5 align-items-start">
+
+      <!-- FORM -->
+      <div class="col-lg-8">
+        <div class="contact-form-panel">
+          <div class="contact-form-header">
+            <h2 class="h4 mb-1">Submit Your Enquiry</h2>
+            <p class="text-muted mb-0" style="font-size:0.9rem;">Fields marked <span style="color:var(--danger);">*</span> are required.</p>
+          </div>
+          <div class="contact-form-body">
+
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} d-flex align-items-center gap-2 mb-4" role="alert">
+              <i class="bi bi-{% if msg.tags == 'error' %}exclamation-triangle-fill{% else %}info-circle-fill{% endif %}"></i>
+              {{ msg }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <form method="POST" action="/contact/" novalidate>
+              {% csrf_token %}
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="full_name">Full Name <span class="req">*</span></label>
+                  <input type="text" name="full_name" id="full_name" class="form-control form-control-premium" placeholder="e.g. Rajesh Kumar" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="phone_number">Phone Number <span class="req">*</span></label>
+                  <input type="tel" name="phone_number" id="phone_number" class="form-control form-control-premium" placeholder="+91 98765 43210" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="email">Email Address</label>
+                  <input type="email" name="email" id="email" class="form-control form-control-premium" placeholder="you@example.com">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="city_location">City / Location <span class="req">*</span></label>
+                  <input type="text" name="city_location" id="city_location" class="form-control form-control-premium" placeholder="e.g. Jubilee Hills, Hyderabad" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="enquiry_type">Service Required <span class="req">*</span></label>
+                  <select name="enquiry_type" id="enquiry_type" class="form-select form-control-premium" required>
+                    <option value="">Select a Service...</option>
+                    {% for value, label in enquiry_types %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="property_type">Property Type</label>
+                  <input type="text" name="property_type" id="property_type" class="form-control form-control-premium" placeholder="e.g. 3BHK Flat, Independent House, Plot">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="approximate_area">Approximate Area</label>
+                  <input type="text" name="approximate_area" id="approximate_area" class="form-control form-control-premium" placeholder="e.g. 1,800 sq.ft or 300 sq.yds">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium">Site Visit</label>
+                  <div class="form-check form-check-premium mt-2">
+                    <input class="form-check-input" type="checkbox" name="site_visit_requested" id="site_visit_requested">
+                    <label class="form-check-label" for="site_visit_requested">
+                      Yes, I'd like a site visit &amp; inspection
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label-premium" for="message">Your Requirement <span class="req">*</span></label>
+                  <textarea name="message" id="message" rows="5" class="form-control form-control-premium" placeholder="Describe your property, current condition, goals, approximate budget or any specific requirements..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-brand btn-lg w-100">
+                    Submit Enquiry <i class="bi bi-arrow-right ms-2"></i>
+                  </button>
+                  <p class="text-muted text-center mt-3" style="font-size:0.83rem;">
+                    <i class="bi bi-shield-check me-1"></i> Your information is confidential and will not be shared with third parties.
+                  </p>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="col-lg-4">
+        <div class="contact-sidebar">
+          <div class="contact-sidebar-block">
+            <h3 class="h6 text-uppercase fw-bold mb-3" style="letter-spacing:0.06em; color:var(--text-muted);">Our Office</h3>
+            <div class="d-flex gap-3 align-items-start mb-4">
+              <div style="width:38px; height:38px; background:var(--background); border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i class="bi bi-geo-alt-fill" style="color:var(--gold);"></i>
+              </div>
+              <div>
+                <div class="fw-semibold mb-1">{{ site_settings.site_name|default:"BUILD+" }}</div>
+                <div class="text-muted" style="font-size:0.88rem; line-height:1.6;">{{ site_settings.office_address|default:"Bengaluru, Karnataka, India" }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-sidebar-block">
+            <h3 class="h6 text-uppercase fw-bold mb-3" style="letter-spacing:0.06em; color:var(--text-muted);">Service Areas</h3>
+            <div class="d-flex flex-wrap gap-2">
+              {% for city in "Bengaluru,Hyderabad,Chennai,Vijayawada,Visakhapatnam"|split:"," %}
+              <span class="badge-service-area">{{ city }}</span>
+              {% empty %}
+              <span class="badge-service-area">Bengaluru</span>
+              <span class="badge-service-area">Hyderabad</span>
+              <span class="badge-service-area">Chennai</span>
+              <span class="badge-service-area">Vijayawada</span>
+              <span class="badge-service-area">Visakhapatnam</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="contact-sidebar-block">
+            <h3 class="h6 text-uppercase fw-bold mb-3" style="letter-spacing:0.06em; color:var(--text-muted);">Quick Actions</h3>
+            <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" class="btn btn-whatsapp w-100 mb-2">
+              <i class="bi bi-whatsapp me-2"></i> Chat on WhatsApp
+            </a>
+            <a href="/get-free-consultation/" class="btn btn-brand w-100">
+              Free Consultation <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+
+          <div class="contact-sidebar-block" style="background:var(--primary); border-radius:12px; padding:24px; color:#fff;">
+            <div style="font-size:0.7rem; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Why Choose BUILD+</div>
+            <ul class="list-unstyled mb-0" style="font-size:0.875rem; line-height:2.1;">
+              <li><i class="bi bi-check-circle-fill me-2" style="color:var(--gold);"></i> Single-Point Accountability</li>
+              <li><i class="bi bi-check-circle-fill me-2" style="color:var(--gold);"></i> 100% Itemized BOQ</li>
+              <li><i class="bi bi-check-circle-fill me-2" style="color:var(--gold);"></i> Licensed Civil Engineers</li>
+              <li><i class="bi bi-check-circle-fill me-2" style="color:var(--gold);"></i> NRI Remote Supervision</li>
+              <li><i class="bi bi-check-circle-fill me-2" style="color:var(--gold);"></i> Client Portal Access</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

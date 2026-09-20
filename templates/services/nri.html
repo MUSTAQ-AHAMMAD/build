@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}NRI Property Services | {{ site_settings.site_name|default:"BUILD+" }} — Your Property in India, Our Local Presence{% endblock %}
+{% block meta_description %}BUILD+ provides complete NRI property services including remote supervision, renovation management, documentation coordination, and property inspection in India.{% endblock %}
+
+{% block content %}
+
+<!-- HERO — DARK NAVY -->
+<section class="nri-hero" aria-labelledby="nri-h1">
+  <div class="container-xxl">
+    <nav aria-label="breadcrumb" class="breadcrumb-premium mb-4" style="--breadcrumb-color:rgba(255,255,255,0.5); --breadcrumb-active:rgba(255,255,255,0.9);">
+      <a href="/" style="color:rgba(255,255,255,0.5);">Home</a>
+      <span class="separator" style="color:rgba(255,255,255,0.3);">/</span>
+      <a href="/services/" style="color:rgba(255,255,255,0.5);">Services</a>
+      <span class="separator" style="color:rgba(255,255,255,0.3);">/</span>
+      <span class="current" style="color:rgba(255,255,255,0.9);">NRI Services</span>
+    </nav>
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-7">
+        <div class="eyebrow" style="color:var(--gold); margin-bottom:16px;">For Overseas Indian Property Owners</div>
+        <h1 id="nri-h1" class="text-white" style="font-size:clamp(2.2rem,4.5vw,3.4rem); line-height:1.15; margin-bottom:24px;">
+          Your Property in India.<br>
+          <span style="color:var(--gold);">Our Local Presence.</span>
+        </h1>
+        <p style="font-size:1.1rem; color:rgba(255,255,255,0.75); line-height:1.8; margin-bottom:36px; max-width:600px;">
+          Whether you're in the UK, USA, UAE, or anywhere else in the world — BUILD+ provides complete local coordination, supervision, and accountability for your Indian property. Renovation, inspection, maintenance, documentation, and more — all managed by our licensed civil team on your behalf.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Request NRI Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+          <a href="/contact/" class="btn btn-outline-light btn-lg">Talk to Our Team</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <!-- NRI Flowchart -->
+        <div class="nri-flow-card">
+          <div class="nri-flow-title">How It Works</div>
+          <div class="nri-flow-item">
+            <div class="nri-flow-icon"><i class="bi bi-person-fill"></i></div>
+            <div class="nri-flow-text">
+              <div class="fw-bold">You — Overseas</div>
+              <div class="small">UK, USA, UAE, Australia, Canada...</div>
+            </div>
+          </div>
+          <div class="nri-flow-arrow"><i class="bi bi-arrow-down"></i></div>
+          <div class="nri-flow-item" style="background:var(--gold); color:#071321;">
+            <div class="nri-flow-icon" style="background:rgba(7,19,33,0.15);"><i class="bi bi-buildings-fill"></i></div>
+            <div class="nri-flow-text">
+              <div class="fw-bold">BUILD+ Local Team</div>
+              <div class="small">Licensed engineers on the ground</div>
+            </div>
+          </div>
+          <div class="nri-flow-arrow"><i class="bi bi-arrow-down"></i></div>
+          <div class="nri-flow-item">
+            <div class="nri-flow-icon"><i class="bi bi-house-fill"></i></div>
+            <div class="nri-flow-text">
+              <div class="fw-bold">Your Property</div>
+              <div class="small">Supervised, managed, protected</div>
+            </div>
+          </div>
+          <div class="nri-flow-arrow"><i class="bi bi-arrow-down"></i></div>
+          <div class="nri-flow-item">
+            <div class="nri-flow-icon"><i class="bi bi-phone-fill"></i></div>
+            <div class="nri-flow-text">
+              <div class="fw-bold">Reports &amp; Updates</div>
+              <div class="small">Photos, videos, digital portal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STATS -->
+<section class="trust-stats">
+  <div class="container-xxl">
+    <div class="row g-0 align-items-center">
+      <div class="col-6 col-md-3 trust-stat-item">
+        <div class="trust-stat-number">{{ site_settings.years_experience|default:"18" }}<span class="stat-gold">+</span></div>
+        <div class="trust-stat-label">Years Experience</div>
+      </div>
+      <div class="col-6 col-md-3 trust-stat-item">
+        <div class="trust-stat-number">360<span class="stat-gold">°</span></div>
+        <div class="trust-stat-label">NRI Support Coverage</div>
+      </div>
+      <div class="col-6 col-md-3 trust-stat-item">
+        <div class="trust-stat-number">100<span class="stat-gold">%</span></div>
+        <div class="trust-stat-label">Remote Management</div>
+      </div>
+      <div class="col-6 col-md-3 trust-stat-item">
+        <div class="trust-stat-number">5<span class="stat-gold">+</span></div>
+        <div class="trust-stat-label">Cities Covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NRI SERVICES LIST -->
+<section class="section section-surface">
+  <div class="container-xxl">
+    <div class="text-center max-w-700 mx-auto mb-5">
+      <div class="eyebrow justify-content-center">What We Manage For You</div>
+      <h2>Complete NRI Property Services</h2>
+      <p class="text-muted">Every service your property needs — handled locally by our team, reported digitally to you.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-search"></i></div>
+          <h3 class="h5">Property Inspection</h3>
+          <p>Detailed physical inspection with photo and video documentation. Structural condition, maintenance status, and occupancy verification reports.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-eye-fill"></i></div>
+          <h3 class="h5">Remote Site Supervision</h3>
+          <p>Ongoing site supervision by our local civil team. Progress monitored against approved plans and timelines, with regular client updates.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-house-gear-fill"></i></div>
+          <h3 class="h5">Renovation Supervision</h3>
+          <p>Local renovation monitoring, contractor management, quality checks, and progress reporting for overseas owners undertaking flat or home renovation.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-building-fill-gear"></i></div>
+          <h3 class="h5">Construction Monitoring</h3>
+          <p>Regular site visits, stage inspections, material verification, and quality assurance for new construction projects managed remotely.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-camera-video-fill"></i></div>
+          <h3 class="h5">Photo &amp; Video Updates</h3>
+          <p>Regular high-quality photo and video progress reports uploaded directly to your Client Portal. See your property's progress in real time.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-tools"></i></div>
+          <h3 class="h5">Property Maintenance</h3>
+          <p>Scheduled and reactive property maintenance coordination — electrical, plumbing, painting, waterproofing and general upkeep.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-file-earmark-check-fill"></i></div>
+          <h3 class="h5">Documentation Coordination</h3>
+          <p>Assistance with property documentation, encumbrance certificates, Khata, mutation, RERA compliance, and other registration requirements.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-people-fill"></i></div>
+          <h3 class="h5">Vendor Coordination</h3>
+          <p>Local vendor management — sourcing, negotiating, supervising and quality-checking all contractors, suppliers, and service providers on your behalf.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="nri-service-card">
+          <div class="nri-service-icon"><i class="bi bi-arrow-repeat"></i></div>
+          <h3 class="h5">Redevelopment Coordination</h3>
+          <p>Complete redevelopment coordination for NRI apartment and property owners — from feasibility to society coordination to project completion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW NRI WORKS — EDITORIAL -->
+<section class="section section-light">
+  <div class="container-xxl">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5">
+        <div class="eyebrow">Our NRI Process</div>
+        <h2 class="mb-4">How We Manage Your Property Remotely</h2>
+        <p class="mb-4" style="font-size:1.05rem; line-height:1.8;">You don't need to be physically present to make the right decisions about your Indian property. Our system gives you full visibility and control — from anywhere in the world.</p>
+        <div class="nri-steps">
+          <div class="nri-step"><div class="nri-step-num">1</div><div>Initial consultation — phone or video call with our team</div></div>
+          <div class="nri-step"><div class="nri-step-num">2</div><div>Property assessment and scope documentation</div></div>
+          <div class="nri-step"><div class="nri-step-num">3</div><div>Proposal with transparent pricing and timeline</div></div>
+          <div class="nri-step"><div class="nri-step-num">4</div><div>Our local team begins coordination and supervision</div></div>
+          <div class="nri-step"><div class="nri-step-num">5</div><div>Regular photo, video, and written reports via your portal</div></div>
+          <div class="nri-step"><div class="nri-step-num">6</div><div>Completion, documentation handover, and ongoing support</div></div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="nri-benefit-card">
+              <i class="bi bi-globe2 mb-3" style="font-size:1.8rem; color:var(--gold);"></i>
+              <h4 class="h6 mb-2">Manage From Anywhere</h4>
+              <p class="small">Your Client Portal gives you full project visibility from any device, anywhere in the world.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="nri-benefit-card">
+              <i class="bi bi-shield-check mb-3" style="font-size:1.8rem; color:var(--success);"></i>
+              <h4 class="h6 mb-2">Full Accountability</h4>
+              <p class="small">Our licensed civil engineers are physically present on your property, accountable to you directly.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="nri-benefit-card">
+              <i class="bi bi-camera-video mb-3" style="font-size:1.8rem; color:var(--info);"></i>
+              <h4 class="h6 mb-2">Visual Progress Reports</h4>
+              <p class="small">Regular photo and video updates so you can see exactly what's happening on site.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="nri-benefit-card">
+              <i class="bi bi-file-earmark-lock mb-3" style="font-size:1.8rem; color:var(--primary);"></i>
+              <h4 class="h6 mb-2">Document Safety</h4>
+              <p class="small">All property documents managed securely. No fraudulent transactions without your explicit approval.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-navy">
+  <div class="container-xxl text-center">
+    <div class="eyebrow justify-content-center" style="color:var(--gold);">NRI Property Services</div>
+    <h2 class="text-white mb-4">Your Property Deserves<br>Local Expertise.</h2>
+    <p class="mb-5" style="color:rgba(255,255,255,0.72); max-width:520px; margin:0 auto 2.5rem;">Request a free NRI consultation. Tell us about your property and what you need. Our team will respond within 4 business hours.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/get-free-consultation/" class="btn btn-gold btn-lg">Request NRI Consultation <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="/contact/" class="btn btn-outline-light btn-lg">Contact Our Team</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

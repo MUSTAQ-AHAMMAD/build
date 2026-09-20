@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} | Case Study | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/projects/">Projects</a>
+            <span class="separator">/</span>
+            <span class="current">{{ project.title|truncatechars:40 }}</span>
+        </nav>
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge-gold">{{ project.category.name }}</span>
+            <span class="badge-status badge-status-success">{{ project.get_project_status_display }}</span>
+        </div>
+        <h1>{{ project.title }}</h1>
+        <div class="d-flex align-items-center gap-3 flex-wrap" style="color: rgba(255,255,255,0.70); font-size:14.5px;">
+            <span><i class="bi bi-geo-alt me-1 text-gold"></i>{{ project.location }}</span>
+            <span>&bull;</span>
+            <span><i class="bi bi-rulers me-1 text-gold"></i>{{ project.built_up_area }}</span>
+            <span>&bull;</span>
+            <span><i class="bi bi-clock me-1 text-gold"></i>{{ project.duration }}</span>
+        </div>
+    </div>
+</section>
+
+<!-- Project Content -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- Main Image -->
+                <div class="rounded-4 overflow-hidden border shadow-sm mb-5" style="max-height: 500px;">
+                    {% if project.main_image %}
+                    <img src="{{ project.main_image.url }}" alt="{{ project.title }}" class="w-100 h-100 object-fit-cover">
+                    {% else %}
+                    <img src="/static/images/project-placeholder.jpg" alt="{{ project.title }}" class="w-100 h-100 object-fit-cover">
+                    {% endif %}
+                </div>
+
+                <!-- Before & After Comparison -->
+                {% if project.before_image and project.after_image %}
+                <div class="card-premium p-4 mb-5" style="background: var(--background);">
+                    <div class="eyebrow justify-content-center">Transformation Comparison</div>
+                    <h3 class="h4 font-heading text-center mb-4">Before &amp; After Execution</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="rounded-3 overflow-hidden border">
+                                <img src="{{ project.before_image.url }}" alt="Before Execution" class="w-100 object-fit-cover" style="height: 260px;">
+                                <div class="p-2 bg-navy text-white text-center fw-bold small">BEFORE INITIATION</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rounded-3 overflow-hidden border">
+                                <img src="{{ project.after_image.url }}" alt="After Completion" class="w-100 object-fit-cover" style="height: 260px;">
+                                <div class="p-2 bg-gold text-dark text-center fw-bold small">COMPLETED &amp; HANDED OVER</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Narrative Sections -->
+                <div class="card-premium p-4 mb-4">
+                    <h3 class="h4 font-heading mb-3">Project Overview</h3>
+                    <p class="leading-relaxed">{{ project.overview }}</p>
+                </div>
+
+                {% if project.scope_of_work %}
+                <div class="card-premium p-4 mb-4">
+                    <h3 class="h4 font-heading mb-3">Scope of Engineering Work</h3>
+                    <p class="leading-relaxed">{{ project.scope_of_work }}</p>
+                </div>
+                {% endif %}
+
+                {% if project.challenges %}
+                <div class="card-premium p-4 mb-4">
+                    <h3 class="h4 font-heading mb-3">Structural &amp; Logistics Challenges</h3>
+                    <p class="leading-relaxed">{{ project.challenges }}</p>
+                </div>
+                {% endif %}
+
+                {% if project.solutions %}
+                <div class="card-premium p-4 mb-4">
+                    <h3 class="h4 font-heading mb-3">Engineering Solutions Applied</h3>
+                    <p class="leading-relaxed">{{ project.solutions }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Metadata Card -->
+                <div class="card-premium mb-4">
+                    <h4 class="h5 font-heading mb-3 pb-2 border-bottom">Project Specifications</h4>
+                    <table class="table table-sm table-borderless mb-0">
+                        <tr><td class="text-muted small">Category:</td><td class="fw-bold text-dark small text-end">{{ project.category.name }}</td></tr>
+                        <tr><td class="text-muted small">Location:</td><td class="fw-bold text-dark small text-end">{{ project.location }}</td></tr>
+                        <tr><td class="text-muted small">Built-Up Area:</td><td class="fw-bold text-dark small text-end">{{ project.built_up_area }}</td></tr>
+                        <tr><td class="text-muted small">Duration:</td><td class="fw-bold text-dark small text-end">{{ project.duration }}</td></tr>
+                        <tr><td class="text-muted small">Client Typology:</td><td class="fw-bold text-dark small text-end">{{ project.client_type }}</td></tr>
+                        <tr><td class="text-muted small">Status:</td><td class="text-end"><span class="badge-status badge-status-success">{{ project.get_project_status_display }}</span></td></tr>
+                    </table>
+                </div>
+
+                <!-- CTA Card -->
+                <div class="card-navy card-premium p-4">
+                    <div class="eyebrow" style="color: var(--gold);">Have a Similar Scope?</div>
+                    <h4 class="h5 text-white mb-2">Request an On-Site Technical Audit</h4>
+                    <p class="small mb-4" style="color: rgba(255,255,255,0.72);">
+                        Our senior civil engineers will evaluate your property conditions, draft preliminary BOQ estimates, and recommend the optimal execution roadmap.
+                    </p>
+                    <a href="/request-site-visit/" class="btn btn-gold w-100 justify-content-center mb-2">
+                        Book Site Assessment <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                    <a href="/contact/" class="btn btn-outline-white w-100 justify-content-center">
+                        Request Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

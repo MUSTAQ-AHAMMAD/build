@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Property &amp; Land Services | Advisory, Inspection &amp; Management | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">Property &amp; Land Advisory</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Technical Land Diligence</div>
+        <h1>Property Buying, Selling, Inspection &amp; Land Stewardship</h1>
+        <p class="hero-desc">
+            End-to-end technical due diligence, boundary verification, plot maintenance, valuation reports, and transaction assistance.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/request-site-visit/" class="btn btn-gold">
+                Book Land Inspection <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/contact/?type=property_land" class="btn btn-outline-white">
+                Inquire Advisory
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-file-earmark-check" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Land Due Diligence</h3>
+                    <p class="small mb-3">Legal title search, boundary survey verification, zoning master plan checks, and encumbrance certificate diligence.</p>
+                    <a href="/contact/?type=land_diligence" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-shield-check" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Plot Maintenance</h3>
+                    <p class="small mb-3">Perimeter compound walling, security fencing, regular clearing, and anti-encroachment signboard installations.</p>
+                    <a href="/contact/?type=plot_maintenance" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-search" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Property Inspection</h3>
+                    <p class="small mb-3">Independent pre-purchase technical inspections assessing RCC soundness, dampness, and build quality.</p>
+                    <a href="/contact/?type=property_inspection" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-briefcase" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Buy / Sell Assistance</h3>
+                    <p class="small mb-3">Fair market valuation appraisals, buyer matching, documentation drafting, and registration desk representation.</p>
+                    <a href="/contact/?type=buy_sell_assistance" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

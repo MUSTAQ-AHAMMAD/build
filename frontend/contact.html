@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Project Consultation | BUILD+ Engineering</title>
+    <meta name="description" content="Request a consultation, book an on-site property inspection, or discuss your construction, renovation, demolition, or redevelopment requirement.">
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+    <!-- GLOBAL HEADER -->
+    <header class="site-header">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="index.html" class="brand-logo">
+                    <div class="logo-mark">B+</div>
+                    <div class="logo-text">BUILD<span>+</span></div>
+                </a>
+
+                <nav class="d-none d-lg-flex align-items-center gap-1">
+                    <a href="index.html" class="nav-link-custom">Home</a>
+                    <a href="about.html" class="nav-link-custom">About</a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0)" class="nav-link-custom dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                        <ul class="dropdown-menu dropdown-menu-custom shadow-lg">
+                            <li><a class="dropdown-item dropdown-item-custom" href="construction.html">🏗️ Construction Services</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="renovation.html">🔨 Flat & Apartment Renovation</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="demolition-reconstruction.html">⚡ Demolition & Reconstruction</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="redevelopment.html">🏢 Property & Society Redevelopment</a></li>
+                            <li><hr class="dropdown-divider my-1 border-secondary border-opacity-25"></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="property-land.html">📐 Property & Land Services</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="nri-services.html">✈️ NRI Property Services</a></li>
+                        </ul>
+                    </div>
+                    <a href="projects.html" class="nav-link-custom">Projects</a>
+                    <a href="how-we-work.html" class="nav-link-custom">How We Work</a>
+                    <a href="blog.html" class="nav-link-custom">Knowledge Hub</a>
+                    <a href="faqs.html" class="nav-link-custom">FAQs</a>
+                    <a href="contact.html" class="nav-link-custom active">Contact</a>
+                </nav>
+
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="theme-toggle-btn" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">🔍</button>
+                    <button type="button" class="theme-toggle-btn" title="Toggle Light / Dark Mode">🌙</button>
+                    <a href="contact.html" class="btn btn-primary-custom d-none d-sm-inline-flex">Request Consultation →</a>
+                    <button class="navbar-toggler d-lg-none theme-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas">☰</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="py-5 bg-surface-2 border-bottom border-custom">
+        <div class="container py-4">
+            <div class="max-w-700" style="max-width: 780px;">
+                <div class="eyebrow">DIRECT ENGINEERING CONSULTATION</div>
+                <h1 class="display-5 fw-bold mb-3">Let's Discuss Your Project</h1>
+                <p class="lead text-muted-custom fs-6">
+                    Connect directly with our chartered civil engineers and valuation experts. Fill out the progressive requirement form below or reach out via direct phone / WhatsApp.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN FORM & CONTACT DETAILS -->
+    <section class="py-5">
+        <div class="container py-3">
+            <div class="row g-5">
+                <!-- Left: Progressive 5-Step Form (Section 42) -->
+                <div class="col-lg-7">
+                    <div class="card-custom p-4 p-md-5">
+                        <!-- Stepper Progress Bar -->
+                        <div class="stepper-progress-bar">
+                            <div class="step-indicator active" id="stepIndicator1">
+                                <div class="step-bubble">1</div>
+                                <span class="step-label">Service</span>
+                            </div>
+                            <div class="step-indicator" id="stepIndicator2">
+                                <div class="step-bubble">2</div>
+                                <span class="step-label">Property</span>
+                            </div>
+                            <div class="step-indicator" id="stepIndicator3">
+                                <div class="step-bubble">3</div>
+                                <span class="step-label">Location</span>
+                            </div>
+                            <div class="step-indicator" id="stepIndicator4">
+                                <div class="step-bubble">4</div>
+                                <span class="step-label">Scope</span>
+                            </div>
+                            <div class="step-indicator" id="stepIndicator5">
+                                <div class="step-bubble">5</div>
+                                <span class="step-label">Contact</span>
+                            </div>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="progressiveEnquiryForm">
+                            <!-- STEP 1: SERVICE TYPE -->
+                            <div class="step-content active" id="stepPane1">
+                                <h4 class="fw-bold mb-3 font-heading">Step 1: What service do you require?</h4>
+                                <p class="text-muted-custom small mb-4">Select the primary service category for your property.</p>
+                                
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="renovation" checked>
+                                            <strong class="small">🔨 Flat Renovation</strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="construction">
+                                            <strong class="small">🏗️ New Construction</strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="demolition">
+                                            <strong class="small">⚡ Demolition & Rebuild</strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="redevelopment">
+                                            <strong class="small">🏢 Society Redevelopment</strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="nri">
+                                            <strong class="small">✈️ NRI Property Services</strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="p-3 bg-surface-2 rounded border-custom w-100 d-flex align-items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="service_category" value="property_land">
+                                            <strong class="small">📐 Property & Land</strong>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-primary-custom btn-next-step">Continue to Property Type →</button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: PROPERTY TYPE -->
+                            <div class="step-content" id="stepPane2">
+                                <h4 class="fw-bold mb-3 font-heading">Step 2: Property Specifications</h4>
+                                <p class="text-muted-custom small mb-4">Tell us about your property structure and dimensions.</p>
+                                
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">Property Type</label>
+                                        <select class="form-select">
+                                            <option value="flat">Resale / Existing Flat (Apartment)</option>
+                                            <option value="house">Independent House / Villa</option>
+                                            <option value="building">Commercial Building</option>
+                                            <option value="plot">Vacant Land / Plot</option>
+                                            <option value="society">Entire Housing Society</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">Approximate Area (Sq.Ft / Sq.Yds)</label>
+                                        <input type="text" class="form-control" placeholder="e.g. 2,400 sq.ft">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-custom btn-prev-step">← Back</button>
+                                    <button type="button" class="btn btn-primary-custom btn-next-step">Next: Location →</button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 3: LOCATION -->
+                            <div class="step-content" id="stepPane3">
+                                <h4 class="fw-bold mb-3 font-heading">Step 3: Property Location</h4>
+                                <p class="text-muted-custom small mb-4">Where is the property situated?</p>
+                                
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">City</label>
+                                        <input type="text" class="form-control" value="Hyderabad" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">Area / Locality</label>
+                                        <input type="text" class="form-control" placeholder="e.g. Banjara Hills, Gachibowli" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label small fw-bold">Apartment / Building / Landmark</label>
+                                        <input type="text" class="form-control" placeholder="e.g. Flat 302, Green Meadows Apts">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-custom btn-prev-step">← Back</button>
+                                    <button type="button" class="btn btn-primary-custom btn-next-step">Next: Project Scope →</button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 4: SCOPE & BUDGET -->
+                            <div class="step-content" id="stepPane4">
+                                <h4 class="fw-bold mb-3 font-heading">Step 4: Requirement Scope & Timeline</h4>
+                                <p class="text-muted-custom small mb-4">Describe the specific repairs, alterations, or construction requirements.</p>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Detailed Requirements</label>
+                                    <textarea class="form-control" rows="3" placeholder="e.g. Need complete bathroom plumbing replacement, damp proofing on east wall, open kitchen conversion, and full painting..."></textarea>
+                                </div>
+
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="requestSiteVisitCheck" checked>
+                                    <label class="form-check-label small fw-bold" for="requestSiteVisitCheck">
+                                        Request an On-Site Technical Inspection by a Civil Engineer
+                                    </label>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-custom btn-prev-step">← Back</button>
+                                    <button type="button" class="btn btn-primary-custom btn-next-step">Next: Contact Info →</button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 5: CONTACT INFORMATION -->
+                            <div class="step-content" id="stepPane5">
+                                <h4 class="fw-bold mb-3 font-heading">Step 5: How should we reach you?</h4>
+                                <p class="text-muted-custom small mb-4">Provide your direct contact details for quotation dispatch.</p>
+                                
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">Full Name *</label>
+                                        <input type="text" class="form-control" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label small fw-bold">Phone Number *</label>
+                                        <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label small fw-bold">Email Address</label>
+                                        <input type="email" class="form-control" placeholder="you@example.com">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-custom btn-prev-step">← Back</button>
+                                    <button type="submit" class="btn btn-accent fw-bold px-4">Submit Enquiry & Schedule →</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Success Message Container -->
+                        <div id="formSuccessMessage" class="p-4 text-center" style="display: none;">
+                            <div class="rounded-circle bg-success bg-opacity-10 text-success mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; font-size: 2rem;">
+                                ✓
+                            </div>
+                            <h3 class="fw-bold font-heading mb-2">Thank You! Enquiry Received.</h3>
+                            <p class="text-muted-custom mb-4">
+                                Our senior civil engineering team has received your project details. We will contact you within 2 business hours to confirm your on-site inspection schedule.
+                            </p>
+                            <a href="index.html" class="btn btn-outline-custom">Return to Homepage</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Direct Office & Contact Info -->
+                <div class="col-lg-5">
+                    <div class="card-custom p-4 mb-4">
+                        <h5 class="fw-bold mb-3 font-heading text-navy">Direct Engineering Desk</h5>
+                        
+                        <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                            <div class="fs-4">📍</div>
+                            <div>
+                                <strong class="d-block font-heading">Headquarters</strong>
+                                <small class="text-muted-custom">Level 4, Architectural Tower, Road No. 36, Jubilee Hills, Hyderabad - 500033</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                            <div class="fs-4">📞</div>
+                            <div>
+                                <strong class="d-block font-heading">Direct Phone</strong>
+                                <a href="tel:+919876543210" class="text-decoration-none fw-bold">+91 98765 43210</a>
+                                <small class="text-muted-custom d-block">Mon – Sat: 9:00 AM – 7:30 PM IST</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                            <div class="fs-4">💬</div>
+                            <div>
+                                <strong class="d-block font-heading">WhatsApp Priority Desk</strong>
+                                <a href="https://wa.me/919876543210" target="_blank" class="btn btn-sm btn-success py-1 px-3 mt-1">Chat on WhatsApp</a>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="fs-4">✉️</div>
+                            <div>
+                                <strong class="d-block font-heading">Email Inquiries</strong>
+                                <a href="mailto:info@buildplus.com" class="text-decoration-none">info@buildplus.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container text-center text-muted small">
+            &copy; 2026 BUILD+ Construction & Renovation Consultancy. All rights reserved. &nbsp;|&nbsp; <a href="index.html">Back to Home</a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

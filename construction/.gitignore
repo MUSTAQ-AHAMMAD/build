@@ -1,0 +1,32 @@
+# Environment & Sensitive Files
+.env
+.env.local
+*.env
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Django local database & static/media uploads
+*.sqlite3
+*.db
+/media/
+/staticfiles/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test coverage & logs
+*.log
+.coverage
+htmlcov/

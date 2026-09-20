@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Construction Loans &amp; Renovation Finance Assistance | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">Bank Loan &amp; Finance Support</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Financial Advisory Desk</div>
+        <h1>Construction &amp; Renovation Loan Assistance</h1>
+        <p class="hero-desc">
+            Hassle-free technical documentation, stage-wise chartered engineer valuation certificates, and bank-approved detailed BOQ estimates for leading public and private lenders.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/contact/?type=construction_loan" class="btn btn-gold">
+                Request Loan Consultation <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/request-site-visit/" class="btn btn-outline-white">
+                Book Site Inspection
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Finance Services Grid -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-bank" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Home Construction Loans</h3>
+                    <p class="small mb-3">Preparation of structural drawings, sanctioned plan copies, and detailed civil estimates formatted for bank sanction.</p>
+                    <a href="/contact/?type=construction_loan" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-house-gear" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Flat Renovation Loans</h3>
+                    <p class="small mb-3">Itemized BOQs for home improvement, plumbing overhauls, and interior remodeling approved by major mortgage lenders.</p>
+                    <a href="/contact/?type=renovation_loan" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card h-100">
+                    <div class="service-icon-box">
+                        <i class="bi bi-award" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Stage-Wise Valuation Certificates</h3>
+                    <p class="small mb-3">Chartered engineer progress inspection certificates enabling prompt milestone loan disbursement without construction delays.</p>
+                    <a href="/contact/?type=valuation_certificate" class="service-link small">Inquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

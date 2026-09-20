@@ -1,0 +1,174 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Edit Lead: {{ lead.lead_id }}{% endblock %}
+{% block page_title %}Edit Lead: {{ lead.full_name }} ({{ lead.lead_id }}){% endblock %}
+
+{% block crm_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- 1. CUSTOMER INFORMATION -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="font-heading mb-0 fw-bold text-navy">1. Customer Information</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">First Name *</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Company / Firm Name</label>
+                            {{ form.company_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Primary Phone Number *</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">WhatsApp Number</label>
+                            {{ form.whatsapp_number }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Alternate Phone</label>
+                            {{ form.alternate_phone }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Email Address</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Customer Type</label>
+                            {{ form.customer_type }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Contact Method</label>
+                            {{ form.preferred_contact_method }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PROJECT SPECIFICATIONS -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="font-heading mb-0 fw-bold text-navy">2. Project & Property Details</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Service Category *</label>
+                            {{ form.service_category }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Specialized Service Type *</label>
+                            {{ form.service_type }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">Property Type</label>
+                            {{ form.property_type }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">City *</label>
+                            {{ form.city }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">Area / Locality</label>
+                            {{ form.area_locality }}
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label small fw-bold">Property Exact Address / Location</label>
+                            {{ form.property_location }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Built-up / Plot Area</label>
+                            {{ form.approximate_property_area }}
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label small fw-bold">Unit</label>
+                            {{ form.unit }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-bold">Detailed Project Scope / Requirements</label>
+                            {{ form.project_description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. COMMERCIAL ESTIMATIONS -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="font-heading mb-0 fw-bold text-navy">3. Commercials & Budget</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Customer Stated Budget</label>
+                            {{ form.estimated_budget }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Budget Range</label>
+                            {{ form.budget_range }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Expected Project Pipeline Value (₹)</label>
+                            {{ form.expected_project_value }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Expected Closing Date</label>
+                            {{ form.expected_closing_date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. CRM & PIPELINE ASSIGNMENT -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="font-heading mb-0 fw-bold text-navy">4. CRM Status & Assignment</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Lead Source</label>
+                            {{ form.lead_source }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Priority Level</label>
+                            {{ form.priority }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Assigned Staff</label>
+                            {{ form.assigned_to }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Pipeline Stage</label>
+                            {{ form.status }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Next Follow-up Date & Time</label>
+                            {{ form.next_follow_up_date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTONS -->
+            <div class="d-flex gap-2 justify-content-end mb-5">
+                <a href="/cms/crm/leads/{{ lead.id }}/" class="btn btn-outline-secondary px-4">Cancel</a>
+                <button type="submit" class="btn btn-navy px-4 fw-bold">Update Lead Details</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

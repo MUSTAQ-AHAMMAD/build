@@ -1,0 +1,181 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}Central Operations Dashboard{% endblock %}
+{% block page_title %}Central Operations &amp; Content Management{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Dashboard</li>
+{% endblock %}
+
+{% block header_actions %}
+<div class="d-flex gap-2">
+    <a href="/cms/crm/" class="btn btn-navy text-white fw-bold btn-sm">
+        <i class="bi bi-bar-chart-line-fill me-1"></i> Open CRM Suite
+    </a>
+    <a href="/cms/blog/create/" class="btn btn-gold text-dark fw-bold btn-sm">
+        <i class="bi bi-lightning-charge-fill me-1"></i> AI Blog Writer
+    </a>
+</div>
+{% endblock %}
+
+{% block cms_content %}
+<!-- STAT METRICS ROW (CLEAN EXECUTIVE CARDS) -->
+<div class="row g-3 mb-4">
+    <!-- 1. Enquiries / Leads -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-uppercase fw-bold text-muted" style="font-size: 0.72rem; letter-spacing: 0.5px;">Total CRM Leads</small>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main);"><i class="bi bi-people"></i></div>
+            </div>
+            <div class="h3 fw-bold my-1 font-heading" style="color: var(--admin-text-main);">{{ total_enquiries }}</div>
+            <a href="/cms/crm/leads/" class="small fw-semibold text-decoration-none" style="color: var(--admin-text-muted);">View Leads Directory <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- 2. New Leads -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-uppercase fw-bold text-muted" style="font-size: 0.72rem; letter-spacing: 0.5px;">New Inquiries</small>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main);"><i class="bi bi-inbox"></i></div>
+            </div>
+            <div class="h3 fw-bold my-1 font-heading" style="color: var(--admin-text-main);">{{ new_enquiries }}</div>
+            <a href="/cms/crm/leads/?status=NEW" class="small fw-semibold text-decoration-none" style="color: var(--admin-text-muted);">Action Required <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- 3. Published Blogs -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-uppercase fw-bold text-muted" style="font-size: 0.72rem; letter-spacing: 0.5px;">Published Guides</small>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main);"><i class="bi bi-journal-text"></i></div>
+            </div>
+            <div class="h3 fw-bold my-1 font-heading" style="color: var(--admin-text-main);">{{ published_blogs }}</div>
+            <a href="/cms/blog/list/?status=published" class="small fw-semibold text-decoration-none" style="color: var(--admin-text-muted);">{{ total_blogs }} Total Articles <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- 4. Projects -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 h-100" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-uppercase fw-bold text-muted" style="font-size: 0.72rem; letter-spacing: 0.5px;">Showcase Projects</small>
+                <div class="p-2 rounded" style="background: var(--admin-bg-subtle); color: var(--admin-text-main);"><i class="bi bi-buildings"></i></div>
+            </div>
+            <div class="h3 fw-bold my-1 font-heading" style="color: var(--admin-text-main);">{{ total_projects }}</div>
+            <a href="/admin/projects/project/" target="_blank" class="small fw-semibold text-decoration-none" style="color: var(--admin-text-muted);">Manage Portfolio <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- LEFT: RECENT ENQUIRIES / LEADS -->
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-3" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+                <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-inbox me-2 text-primary"></i>Recent Inbound Leads &amp; Enquiries</h6>
+                <a href="/cms/crm/leads/" class="small text-decoration-none" style="color: var(--admin-text-muted);">Open CRM Leads <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="small text-uppercase" style="background: var(--admin-bg-subtle);">
+                        <tr>
+                            <th style="color: var(--admin-text-muted);">Customer &amp; Location</th>
+                            <th style="color: var(--admin-text-muted);">Service Needed</th>
+                            <th style="color: var(--admin-text-muted);">Status</th>
+                            <th style="color: var(--admin-text-muted);">Date</th>
+                            <th class="text-end" style="color: var(--admin-text-muted);">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="small">
+                        {% for enq in recent_enquiries %}
+                        <tr>
+                            <td>
+                                <strong class="d-block" style="color: var(--admin-text-main);">{{ enq.full_name }}</strong>
+                                <small class="text-muted">{{ enq.city_location|default:"Hyderabad" }} &bull; {{ enq.phone_number }}</small>
+                            </td>
+                            <td>
+                                <div>{{ enq.get_enquiry_type_display|truncatechars:28 }}</div>
+                                {% if enq.site_visit_requested %}
+                                <small class="text-warning fw-semibold"><i class="bi bi-geo-alt-fill me-1"></i>Site Visit Requested</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge {% if enq.status == 'NEW' %}bg-primary bg-opacity-10 text-primary border border-primary-subtle{% else %}bg-secondary bg-opacity-10 text-secondary border{% endif %}">
+                                    {{ enq.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-muted">{{ enq.created_at|date:"d M, H:i" }}</td>
+                            <td class="text-end">
+                                <a href="/cms/crm/leads/" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.76rem;">View</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No recent inquiries found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: QUICK ACTIONS & RECENT ARTICLES -->
+    <div class="col-lg-5">
+        <!-- Quick Actions Panel -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="card-header py-3" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+                <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-lightning-charge me-2 text-warning"></i>Quick Actions</h6>
+            </div>
+            <div class="list-group list-group-flush small">
+                <a href="/cms/crm/leads/create/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <span><i class="bi bi-person-plus me-2 text-primary"></i>Add New Lead / Enquiry</span>
+                    <i class="bi bi-arrow-right text-muted"></i>
+                </a>
+                <a href="/crm/follow-ups/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <span><i class="bi bi-telephone me-2 text-warning"></i>Open Follow-ups Desk</span>
+                    <i class="bi bi-arrow-right text-muted"></i>
+                </a>
+                <a href="/crm/site-visits/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <span><i class="bi bi-geo-alt me-2 text-danger"></i>Scheduled Site Inspections</span>
+                    <i class="bi bi-arrow-right text-muted"></i>
+                </a>
+                <a href="/cms/blog/create/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <span><i class="bi bi-cpu me-2 text-success"></i>Launch Gemini AI Blog Generator</span>
+                    <i class="bi bi-arrow-right text-muted"></i>
+                </a>
+                <a href="/cms/settings/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <span><i class="bi bi-sliders me-2 text-secondary"></i>Edit Global Website Settings &amp; Phone</span>
+                    <i class="bi bi-arrow-right text-muted"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Articles -->
+        <div class="card border-0 shadow-sm rounded-3" style="background: var(--admin-bg-surface); border: 1px solid var(--admin-border) !important;">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); border-bottom: 1px solid var(--admin-border);">
+                <h6 class="font-heading mb-0 fw-bold" style="color: var(--admin-text-main);"><i class="bi bi-journal-check me-2 text-success"></i>Recent Knowledge Hub Posts</h6>
+                <a href="/cms/blog/list/" class="small text-decoration-none" style="color: var(--admin-text-muted);">All Blogs <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="list-group list-group-flush small">
+                {% for b in recent_blogs %}
+                <div class="list-group-item d-flex justify-content-between align-items-center" style="background: var(--admin-bg-surface); color: var(--admin-text-main); border-color: var(--admin-border-subtle);">
+                    <div>
+                        <strong class="d-block text-truncate" style="max-width: 250px;">{{ b.title }}</strong>
+                        <small class="text-muted">{{ b.category.name|default:"General" }} &bull; {{ b.published_date|date:"d M Y" }}</small>
+                    </div>
+                    <span class="badge {% if b.status == 'published' %}bg-success-subtle text-success border border-success-subtle{% else %}bg-secondary-subtle text-secondary{% endif %}">
+                        {{ b.status|title }}
+                    </span>
+                </div>
+                {% empty %}
+                <div class="p-3 text-muted text-center">No recent blog posts.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'cms/base_cms.html' %}
+
+{% block title %}Website Global Settings{% endblock %}
+{% block page_title %}Website Global Settings{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Website Settings</li>
+{% endblock %}
+
+{% block cms_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3">
+                <h5 class="font-heading mb-0">Global Company & Contact Settings</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Site Brand Name</label>
+                            {{ form.site_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Tagline</label>
+                            {{ form.tagline }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Primary Phone</label>
+                            {{ form.primary_phone }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">WhatsApp Number</label>
+                            {{ form.whatsapp_number }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Primary Email</label>
+                            {{ form.primary_email }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Office Address</label>
+                            {{ form.office_address }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Years Experience</label>
+                            {{ form.years_experience }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Projects Completed</label>
+                            {{ form.projects_completed }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Happy Clients</label>
+                            {{ form.happy_clients }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Service Cities String</label>
+                            {{ form.service_cities }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Global SEO Meta Description</label>
+                            {{ form.meta_description }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Global SEO Meta Keywords</label>
+                            {{ form.meta_keywords }}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-navy px-4 py-2 fw-bold">Save Website Settings</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

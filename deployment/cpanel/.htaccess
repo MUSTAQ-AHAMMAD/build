@@ -1,0 +1,30 @@
+# ==============================================================================
+# BUILD+ ENTERPRISE PORTAL — CPANEL APACHE & PASSENGER CONFIGURATION
+# ==============================================================================
+
+RewriteEngine On
+
+# 1. Enforce HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Serve Static Assets Directly (Bypass Python Passenger for Speed)
+RewriteRule ^static/(.*)$ /home/CPANEL_USER/construction_portal/staticfiles/$1 [L]
+
+# 3. Serve User Media Uploads Directly
+RewriteRule ^media/(.*)$ /home/CPANEL_USER/construction_portal/media/$1 [L]
+
+# 4. Security: Prevent Direct Execution of PHP/Python scripts inside Media folder
+<Directory "/home/CPANEL_USER/construction_portal/media">
+    php_flag engine off
+    Options -ExecCGI
+    AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
+</Directory>
+
+# 5. Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

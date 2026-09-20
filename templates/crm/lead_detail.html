@@ -1,0 +1,667 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Lead {{ lead.lead_id }}: {{ lead.full_name }}{% endblock %}
+{% block page_title %}{{ lead.full_name }} — {{ lead.lead_id }}{% endblock %}
+
+{% block crm_content %}
+<!-- TOP ACTION BAR -->
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-2">
+        <span class="badge {{ lead.status_badge_class }} fs-6">{{ lead.get_status_display }}</span>
+        <span class="badge {{ lead.priority_badge_class }}">{{ lead.get_priority_display }} Priority</span>
+        <span class="badge bg-light text-dark border font-monospace">{{ lead.lead_id }}</span>
+    </div>
+
+    <!-- QUICK ACTION BUTTONS -->
+    <div class="mobile-action-chips d-flex gap-2 flex-wrap mb-0">
+        <a href="/cms/crm/leads/{{ lead.id }}/edit/" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center">
+            <i class="bi bi-pencil me-1"></i> Edit
+        </a>
+        
+        <button type="button" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#assignModal">
+            <i class="bi bi-person-fill me-1"></i> Assign
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-dark d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#followupModal">
+            <i class="bi bi-telephone-outbound-fill me-1"></i> Follow-up
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-warning text-dark d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#sitevisitModal">
+            <i class="bi bi-geo-alt-fill me-1"></i> Site Visit
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-info text-dark d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#estimateModal">
+            <i class="bi bi-calculator-fill me-1"></i> Estimate
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#noteModal">
+            <i class="bi bi-chat-text-fill me-1"></i> Note
+        </button>
+
+        {% if lead.status != 'WON' %}
+        <button type="button" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#wonModal">
+            <i class="bi bi-trophy-fill me-1"></i> Mark Won
+        </button>
+        {% endif %}
+
+        {% if lead.status != 'LOST' %}
+        <button type="button" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#lostModal">
+            <i class="bi bi-x-circle me-1"></i> Lost
+        </button>
+        {% endif %}
+
+        {% if lead.status != 'ON_HOLD' %}
+        <button type="button" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#onHoldModal">
+            <i class="bi bi-pause-circle me-1"></i> Hold
+        </button>
+        {% endif %}
+
+        <a href="/cms/crm/leads/{{ lead.id }}/delete/" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center" title="Delete">
+            <i class="bi bi-trash3"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- LEFT COLUMN: CUSTOMER & PROJECT SUMMARY -->
+    <div class="col-lg-4">
+        <!-- CUSTOMER PROFILE CARD -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold text-navy">Customer Contact</h6>
+            </div>
+            <div class="card-body p-3">
+                <div class="mb-3">
+                    <h5 class="font-heading fw-bold text-dark mb-1">{{ lead.full_name }}</h5>
+                    {% if lead.company_name %}<div class="text-muted small fw-bold mb-1">{{ lead.company_name }}</div>{% endif %}
+                    <span class="badge bg-light text-dark border">{{ lead.get_customer_type_display }}</span>
+                </div>
+
+                <div class="mb-2 small">
+                    <span class="text-muted d-block">Phone / WhatsApp:</span>
+                    <strong class="text-dark">{{ lead.phone }}</strong>
+                    {% if lead.whatsapp_number %}
+                    <a href="https://wa.me/{{ lead.whatsapp_number|cut:' '|cut:'+' }}" target="_blank" class="btn btn-sm btn-outline-success py-0 px-2 ms-1"><i class="bi bi-whatsapp me-1"></i>Chat</a>
+                    {% endif %}
+                </div>
+
+                {% if lead.alternate_phone %}
+                <div class="mb-2 small">
+                    <span class="text-muted d-block">Alternate Phone:</span>
+                    <span>{{ lead.alternate_phone }}</span>
+                </div>
+                {% endif %}
+
+                {% if lead.email %}
+                <div class="mb-2 small">
+                    <span class="text-muted d-block">Email Address:</span>
+                    <a href="mailto:{{ lead.email }}" class="text-primary text-decoration-none">{{ lead.email }}</a>
+                </div>
+                {% endif %}
+
+                <div class="mb-0 small">
+                    <span class="text-muted d-block">Preferred Contact:</span>
+                    <span>{{ lead.get_preferred_contact_method_display }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROJECT & LOCATION CARD -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold text-navy">Project & Property</h6>
+            </div>
+            <div class="card-body p-3 small">
+                <div class="mb-2">
+                    <span class="text-muted d-block">Service Requested:</span>
+                    <strong class="text-dark">{{ lead.get_service_type_display }}</strong>
+                    <small class="text-muted d-block">({{ lead.get_service_category_display }})</small>
+                </div>
+
+                <div class="mb-2">
+                    <span class="text-muted d-block">Property Type:</span>
+                    <strong>{{ lead.get_property_type_display }}</strong>
+                </div>
+
+                <div class="mb-2">
+                    <span class="text-muted d-block">Location / City:</span>
+                    <strong>{{ lead.city }}{% if lead.area_locality %}, {{ lead.area_locality }}{% endif %}</strong>
+                    {% if lead.property_location %}<div class="text-muted">{{ lead.property_location }}</div>{% endif %}
+                </div>
+
+                {% if lead.approximate_property_area %}
+                <div class="mb-2">
+                    <span class="text-muted d-block">Dimensions / Area:</span>
+                    <strong>{{ lead.approximate_property_area }} {{ lead.unit }}</strong>
+                </div>
+                {% endif %}
+
+                {% if lead.project_description %}
+                <div class="mb-0 mt-3 pt-2 border-top">
+                    <span class="text-muted d-block mb-1">Requirement Notes:</span>
+                    <div class="p-2 bg-light rounded text-dark">{{ lead.project_description|linebreaks }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- COMMERCIALS & PIPELINE CARD -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold text-navy">Commercials & Pipeline</h6>
+            </div>
+            <div class="card-body p-3 small">
+                {% if lead.status == 'WON' and lead.final_project_value %}
+                <div class="p-2 mb-3 bg-success bg-opacity-10 rounded border border-success">
+                    <small class="text-success fw-bold d-block text-uppercase">Closed Won Project Value</small>
+                    <div class="h4 font-heading text-success fw-bold mb-0">₹{{ lead.final_project_value|floatformat:2 }}</div>
+                    <small class="text-muted">Won Date: {{ lead.won_date|date:"d M Y" }}</small>
+                </div>
+                {% endif %}
+
+                {% if lead.expected_project_value %}
+                <div class="mb-2">
+                    <span class="text-muted d-block">Pipeline Expected Value:</span>
+                    <strong class="text-navy fs-6">₹{{ lead.expected_project_value|floatformat:2 }}</strong>
+                </div>
+                {% endif %}
+
+                {% if lead.estimated_budget %}
+                <div class="mb-2">
+                    <span class="text-muted d-block">Customer Stated Budget:</span>
+                    <span>{{ lead.estimated_budget }}</span>
+                </div>
+                {% endif %}
+
+                <div class="mb-2">
+                    <span class="text-muted d-block">Lead Source:</span>
+                    <span>{{ lead.lead_source.name|default:lead.lead_source_text }}</span>
+                </div>
+
+                <div class="mb-2">
+                    <span class="text-muted d-block">Assigned Representative:</span>
+                    <strong class="text-dark">{% if lead.assigned_to %}{{ lead.assigned_to.get_full_name|default:lead.assigned_to.username }}{% else %}Unassigned{% endif %}</strong>
+                </div>
+
+                {% if lead.next_follow_up_date %}
+                <div class="mb-0">
+                    <span class="text-muted d-block">Next Follow-up Scheduled:</span>
+                    <span class="{% if lead.is_overdue %}text-danger fw-bold{% else %}text-dark{% endif %}">
+                        {{ lead.next_follow_up_date|date:"d M Y, h:i A" }}
+                    </span>
+                </div>
+                {% endif %}
+
+                {% if lead.status == 'LOST' %}
+                <div class="p-2 mt-3 bg-danger bg-opacity-10 rounded border border-danger">
+                    <small class="text-danger fw-bold d-block">LOST REASON</small>
+                    <div>{{ lead.get_lost_reason_display }}</div>
+                    {% if lead.lost_notes %}<small class="text-muted">{{ lead.lost_notes }}</small>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN: INTERACTIVE TABS (TIMELINE, FOLLOW-UPS, SITE VISITS, ESTIMATES, NOTES) -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white p-0">
+                <ul class="nav nav-tabs card-header-tabs m-0 border-0" id="crmLeadTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 px-4 fw-bold {% if active_tab == 'timeline' %}active text-navy{% else %}text-muted{% endif %}" id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline-pane" type="button" role="tab">
+                            ⏳ Activity Timeline ({{ activities.count }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 px-4 fw-bold {% if active_tab == 'followup' %}active text-navy{% else %}text-muted{% endif %}" id="followup-tab" data-bs-toggle="tab" data-bs-target="#followup-pane" type="button" role="tab">
+                            <i class="bi bi-telephone-outbound-fill me-1"></i> Follow-ups ({{ follow_ups.count }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 px-4 fw-bold {% if active_tab == 'sitevisit' %}active text-navy{% else %}text-muted{% endif %}" id="sitevisit-tab" data-bs-toggle="tab" data-bs-target="#sitevisit-pane" type="button" role="tab">
+                            <i class="bi bi-geo-alt-fill me-1"></i> Site Visits ({{ site_visits.count }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 px-4 fw-bold {% if active_tab == 'estimates' %}active text-navy{% else %}text-muted{% endif %}" id="estimates-tab" data-bs-toggle="tab" data-bs-target="#estimates-pane" type="button" role="tab">
+                            <i class="bi bi-calculator-fill me-1"></i> Estimates ({{ estimates.count }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 px-4 fw-bold {% if active_tab == 'notes' %}active text-navy{% else %}text-muted{% endif %}" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes-pane" type="button" role="tab">
+                            <i class="bi bi-chat-left-text-fill me-1"></i> Notes ({{ notes.count }})
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="tab-content" id="crmLeadTabsContent">
+                    <!-- TAB 1: ACTIVITY TIMELINE -->
+                    <div class="tab-pane fade {% if active_tab == 'timeline' %}show active{% endif %}" id="timeline-pane" role="tabpanel">
+                        <div class="py-2">
+                            {% for act in activities %}
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <strong class="text-dark small">{{ act.title }}</strong>
+                                    <small class="text-muted">{{ act.created_at|date:"d M Y, h:i A" }}</small>
+                                </div>
+                                {% if act.description %}
+                                <p class="text-muted small mb-1">{{ act.description|linebreaksbr }}</p>
+                                {% endif %}
+                                {% if act.performed_by %}
+                                <small class="text-light opacity-75 bg-secondary px-2 py-0 rounded" style="font-size: 0.7rem;">by {{ act.performed_by.username }}</small>
+                                {% endif %}
+                            </div>
+                            {% empty %}
+                            <p class="text-muted text-center py-4">No logged activity yet.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: FOLLOW-UPS -->
+                    <div class="tab-pane fade {% if active_tab == 'followup' %}show active{% endif %}" id="followup-pane" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="font-heading mb-0 fw-bold">Scheduled & Past Follow-ups</h6>
+                            <button type="button" class="btn btn-sm btn-navy" data-bs-toggle="modal" data-bs-target="#followupModal">+ Schedule Follow-up</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle small mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date & Type</th>
+                                        <th>Subject</th>
+                                        <th>Assigned</th>
+                                        <th>Status / Outcome</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for fu in follow_ups %}
+                                    <tr class="{% if fu.completed %}table-light{% endif %}">
+                                        <td>
+                                            <strong>{{ fu.follow_up_date|date:"d M Y" }}</strong>
+                                            <small class="text-muted d-block">{{ fu.get_follow_up_type_display }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="fw-bold text-dark">{{ fu.subject }}</div>
+                                            {% if fu.notes %}<small class="text-muted">{{ fu.notes|truncatewords:10 }}</small>{% endif %}
+                                        </td>
+                                        <td>{{ fu.assigned_to.username|default:"-" }}</td>
+                                        <td>
+                                            {% if fu.completed %}
+                                            <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Completed</span>
+                                            {% if fu.outcome %}<small class="text-muted d-block">{{ fu.outcome|truncatewords:8 }}</small>{% endif %}
+                                            {% else %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-end">
+                                            {% if not fu.completed %}
+                                            <form method="post" action="/cms/crm/follow-ups/{{ fu.id }}/complete/" class="d-inline">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="next" value="/cms/crm/leads/{{ lead.id }}/?tab=followup">
+                                                <button type="submit" class="btn btn-sm btn-success py-0 px-2" title="Mark Completed"><i class="bi bi-check-lg me-1"></i>Done</button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="5" class="text-center py-4 text-muted">No follow-ups recorded.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: SITE VISITS -->
+                    <div class="tab-pane fade {% if active_tab == 'sitevisit' %}show active{% endif %}" id="sitevisit-pane" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="font-heading mb-0 fw-bold">Site Visits & Engineering Audits</h6>
+                            <button type="button" class="btn btn-sm btn-navy" data-bs-toggle="modal" data-bs-target="#sitevisitModal">+ Schedule Site Visit</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle small mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Visit Date</th>
+                                        <th>Site Address</th>
+                                        <th>Assigned Engineer</th>
+                                        <th>Status</th>
+                                        <th>Observations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sv in site_visits %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ sv.visit_date|date:"d M Y" }}</strong>
+                                            {% if sv.visit_time %}<small class="text-muted d-block">{{ sv.visit_time }}</small>{% endif %}
+                                        </td>
+                                        <td>{{ sv.site_address }}</td>
+                                        <td>{% if sv.assigned_staff %}{{ sv.assigned_staff.get_full_name|default:sv.assigned_staff.username }}{% else %}Unassigned{% endif %}</td>
+                                        <td><span class="badge bg-primary">{{ sv.get_status_display }}</span></td>
+                                        <td>
+                                            {% if sv.site_condition %}<div class="small"><strong>Condition:</strong> {{ sv.site_condition|truncatewords:8 }}</div>{% endif %}
+                                            {% if sv.measurements %}<div class="small text-muted"><strong>Specs:</strong> {{ sv.measurements|truncatewords:8 }}</div>{% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="5" class="text-center py-4 text-muted">No site visits scheduled yet.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: ESTIMATES & PROPOSALS -->
+                    <div class="tab-pane fade {% if active_tab == 'estimates' %}show active{% endif %}" id="estimates-pane" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="font-heading mb-0 fw-bold">Cost Estimates & BOQ Proposals</h6>
+                            <button type="button" class="btn btn-sm btn-navy" data-bs-toggle="modal" data-bs-target="#estimateModal">+ Add Estimate</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle small mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Estimate #</th>
+                                        <th>Date</th>
+                                        <th>Scope Description</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for est in estimates %}
+                                    <tr>
+                                        <td><strong class="font-monospace text-dark">{{ est.estimate_number }}</strong></td>
+                                        <td>{{ est.estimate_date|date:"d M Y" }}</td>
+                                        <td>{{ est.description }}</td>
+                                        <td><strong class="text-navy">₹{{ est.total_amount|floatformat:2 }}</strong></td>
+                                        <td><span class="badge bg-info text-dark">{{ est.get_status_display }}</span></td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="5" class="text-center py-4 text-muted">No estimates created yet.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 5: INTERNAL NOTES -->
+                    <div class="tab-pane fade {% if active_tab == 'notes' %}show active{% endif %}" id="notes-pane" role="tabpanel">
+                        <div class="mb-4">
+                            <form method="post" action="/cms/crm/leads/{{ lead.id }}/notes/">
+                                {% csrf_token %}
+                                <div class="mb-2">{{ note_form.note }}</div>
+                                <button type="submit" class="btn btn-sm btn-navy fw-bold">+ Add Note</button>
+                            </form>
+                        </div>
+
+                        {% for n in notes %}
+                        <div class="p-3 mb-2 bg-light rounded border">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="small text-dark">{% if n.created_by %}{{ n.created_by.get_full_name|default:n.created_by.username }}{% else %}Staff{% endif %}</strong>
+                                <small class="text-muted">{{ n.created_at|date:"d M Y, h:i A" }}</small>
+                            </div>
+                            <p class="small text-dark mb-0">{{ n.note|linebreaksbr }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center py-3">No internal discussion notes logged.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- CRM ACTION MODALS -->
+<!-- ============================================================================== -->
+
+<!-- 1. ASSIGN MODAL -->
+<div class="modal fade" id="assignModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/assign/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title font-heading fw-bold">Assign Lead to Representative</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Assign To Staff Member</label>
+                    {{ assign_form.assigned_to }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Priority Level</label>
+                    {{ assign_form.priority }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-navy fw-bold">Update Assignment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 2. SCHEDULE FOLLOW-UP MODAL -->
+<div class="modal fade" id="followupModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/followup/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title font-heading fw-bold">Schedule / Log Follow-up</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Date *</label>
+                        {{ followup_form.follow_up_date }}
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Time</label>
+                        {{ followup_form.follow_up_time }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Communication Type</label>
+                    {{ followup_form.follow_up_type }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Subject / Agenda *</label>
+                    {{ followup_form.subject }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Notes</label>
+                    {{ followup_form.notes }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Assigned Staff</label>
+                    {{ followup_form.assigned_to }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-navy fw-bold">Schedule Follow-up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 3. SCHEDULE SITE VISIT MODAL -->
+<div class="modal fade" id="sitevisitModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/sitevisit/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title font-heading fw-bold">Schedule On-Site Inspection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Visit Date *</label>
+                        {{ sitevisit_form.visit_date }}
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Visit Time</label>
+                        {{ sitevisit_form.visit_time }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Site Address *</label>
+                    {{ sitevisit_form.site_address }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Assigned Site Engineer</label>
+                    {{ sitevisit_form.assigned_staff }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Site Contact Person</label>
+                    {{ sitevisit_form.site_contact }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Inspection Requirements</label>
+                    {{ sitevisit_form.requirements }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-warning text-dark fw-bold">Schedule Site Visit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 4. ADD ESTIMATE MODAL -->
+<div class="modal fade" id="estimateModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/estimate/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title font-heading fw-bold">Create Estimate / BOQ Proposal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Scope Description *</label>
+                    {{ estimate_form.description }}
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Subtotal (₹) *</label>
+                        {{ estimate_form.estimated_amount }}
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Tax / GST (₹)</label>
+                        {{ estimate_form.tax_amount }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Grand Total (₹)</label>
+                    {{ estimate_form.total_amount }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Status</label>
+                    {{ estimate_form.status }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-navy fw-bold">Save Estimate</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 5. MARK WON MODAL -->
+<div class="modal fade" id="wonModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/won/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title font-heading fw-bold"><i class="bi bi-trophy-fill me-2"></i>Mark Project as WON</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Final Closed Contract Value (₹) *</label>
+                    {{ mark_won_form.final_project_value }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Contract Won Date</label>
+                    {{ mark_won_form.won_date }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Project Closing Notes</label>
+                    {{ mark_won_form.won_notes }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success fw-bold">Confirm Project WON</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 6. MARK LOST MODAL -->
+<div class="modal fade" id="lostModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/lost/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title font-heading fw-bold">Mark Lead as LOST</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Primary Reason for Loss *</label>
+                    {{ mark_lost_form.lost_reason }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Detailed Loss Analysis Notes</label>
+                    {{ mark_lost_form.lost_notes }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger fw-bold">Confirm Lost</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 7. PLACE ON HOLD MODAL -->
+<div class="modal fade" id="onHoldModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" action="/cms/crm/leads/{{ lead.id }}/on-hold/" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title font-heading fw-bold">Place Lead On Hold</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Reason for On-Hold State *</label>
+                    {{ on_hold_form.on_hold_reason }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Expected Follow-up Date to Resume</label>
+                    {{ on_hold_form.next_follow_up_date }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-secondary fw-bold">Confirm On Hold</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

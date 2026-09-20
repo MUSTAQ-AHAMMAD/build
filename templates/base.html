@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.site_name|default:"BUILD+ Construction & Property Services" }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_settings.meta_description|default:"Premier construction, flat renovation, demolition, redevelopment and NRI property management services across Bengaluru, Hyderabad, Chennai." }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{{ site_settings.meta_keywords|default:"construction, flat renovation, redevelopment, NRI property services" }}{% endblock %}">
+
+    {% block og_tags %}
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.site_name|default:"BUILD+ Construction" }}{% endblock %}">
+    <meta property="og:description" content="{{ site_settings.meta_description|default:"Complete Construction & Property Solutions Partner." }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/static/images/hero-construction.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    {% endblock %}
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeAndConstructionBusiness",
+      "name": "{{ site_settings.site_name|default:'BUILD+ Construction & Property Services' }}",
+      "description": "{{ site_settings.meta_description|default:'Complete Construction & Property Solutions Partner.' }}",
+      "url": "https://buildplus.in",
+      "telephone": "{{ site_settings.primary_phone|default:'+91 98765 43210' }}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{ site_settings.office_address|default:'Bengaluru, Karnataka, India' }}"
+      },
+      "openingHours": "Mo-Sa 09:00-19:00",
+      "areaServed": "Bengaluru, Hyderabad, Chennai, Vijayawada, Visakhapatnam"
+    }
+    </script>
+
+    <!-- Google Fonts: Manrope + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- PWA Web App Manifest & Meta -->
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#0B1F33">
+    <link rel="apple-touch-icon" href="/static/images/icon-192.png">
+
+    <!-- Theme Switcher — load before body to prevent flash -->
+    <script src="/static/js/theme_switcher.js"></script>
+
+    <!-- BUILD+ Premium CSS System -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="/static/css/ai_chat.css">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ============================================================
+     TOP UTILITY BAR
+     ============================================================ -->
+<div class="topbar d-none d-md-flex">
+    <div class="topbar-inner">
+        <div class="topbar-locations">
+            <i class="bi bi-geo-alt-fill" style="color: var(--gold); font-size: 11px;"></i>
+            <span>Serving</span>
+            <span class="dot">•</span>
+            <span class="location-item">Bengaluru</span>
+            <span class="dot">•</span>
+            <span class="location-item">Hyderabad</span>
+            <span class="dot">•</span>
+            <span class="location-item">Chennai</span>
+            <span class="dot">•</span>
+            <span class="location-item">Vijayawada</span>
+            <span class="dot">•</span>
+            <span class="location-item">Visakhapatnam</span>
+        </div>
+        <div class="topbar-right">
+            <!-- Theme switcher -->
+            <div class="dropdown theme-switcher-dropdown">
+                <button class="btn btn-sm dropdown-toggle py-0 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="currentThemeLabel" style="color: rgba(255,255,255,0.55); border:none; background:transparent; font-size:12px;">
+                    <i class="bi bi-circle-half"></i> Theme
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end theme-menu shadow-sm">
+                    <li><a class="dropdown-item theme-btn" data-theme-val="light" href="javascript:void(0)" onclick="setThemePreference('light')"><i class="bi bi-sun me-2"></i>Light</a></li>
+                    <li><a class="dropdown-item theme-btn" data-theme-val="dark" href="javascript:void(0)" onclick="setThemePreference('dark')"><i class="bi bi-moon me-2"></i>Dark</a></li>
+                    <li><a class="dropdown-item theme-btn" data-theme-val="system" href="javascript:void(0)" onclick="setThemePreference('system')"><i class="bi bi-display me-2"></i>System</a></li>
+                </ul>
+            </div>
+            <div class="topbar-divider"></div>
+            <a href="/portal/" class="topbar-portal-link">
+                <i class="bi bi-person-circle"></i> Client Portal
+            </a>
+            <div class="topbar-divider"></div>
+            <a href="/request-site-visit/" class="topbar-visit-btn">
+                Book Site Visit <i class="bi bi-arrow-right"></i>
+            </a>
+            {% if user.is_authenticated and user.is_staff %}
+            <div class="topbar-divider"></div>
+            <a href="/cms/" style="color: var(--gold); font-size: 12px; font-weight: 700;">CMS <i class="bi bi-grid-3x3-gap-fill"></i></a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     MAIN NAVIGATION — WHITE, STICKY
+     ============================================================ -->
+<nav class="main-navbar navbar navbar-expand-xl" id="mainNavbar" role="navigation" aria-label="Main navigation">
+    <div class="container-xxl">
+
+        <!-- LOGO -->
+        <a class="brand-logo navbar-brand" href="/" aria-label="{{ site_settings.site_name|default:'BUILD+' }} — Home">
+            BUILD<span>+</span>
+        </a>
+
+        <!-- MOBILE: Offcanvas Toggler -->
+        <button class="navbar-toggler d-xl-none" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#mobileNav"
+                aria-controls="mobileNav" aria-label="Open navigation menu">
+            <i class="bi bi-list" style="font-size: 22px; color: var(--text);"></i>
+        </button>
+
+        <!-- DESKTOP NAV -->
+        <div class="collapse navbar-collapse d-none d-xl-flex" id="desktopNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/about/' in request.path %}active{% endif %}" href="/about/">About</a>
+                </li>
+
+                <!-- SERVICES MEGA MENU -->
+                <li class="nav-item dropdown has-mega-menu">
+                    <a class="nav-link dropdown-toggle {% if '/services/' in request.path or '/construction/' in request.path or '/renovation/' in request.path or '/demolition' in request.path or '/redevelopment/' in request.path or '/nri-services/' in request.path %}active{% endif %}"
+                       href="/services/" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       id="servicesDropdown">
+                        Services
+                    </a>
+                    <div class="dropdown-menu mega-menu-dropdown" aria-labelledby="servicesDropdown">
+                        <div class="row g-0">
+                            <!-- Col 1: Construction & Renovation -->
+                            <div class="col-lg-3 pe-3 border-end">
+                                <div class="mega-menu-col-header">Construction</div>
+                                <a class="mega-menu-item" href="/construction/">
+                                    <i class="bi bi-buildings text-muted" style="font-size:13px;"></i>
+                                    New Construction
+                                </a>
+                                <a class="mega-menu-sublink" href="/construction/residential/">Residential & Houses</a>
+                                <a class="mega-menu-sublink" href="/construction/villas/">Villas & Independent Homes</a>
+                                <a class="mega-menu-sublink" href="/construction/apartments/">Apartment Buildings</a>
+                                <a class="mega-menu-sublink" href="/construction/commercial/">Commercial & Offices</a>
+
+                                <div class="mega-menu-col-header mt-3">Renovation</div>
+                                <a class="mega-menu-item" href="/renovation/">
+                                    <i class="bi bi-house-gear text-muted" style="font-size:13px;"></i>
+                                    Flat & Apartment Renovation
+                                </a>
+                                <a class="mega-menu-sublink" href="/renovation/flats/">Old & Damaged Flats</a>
+                                <a class="mega-menu-sublink" href="/renovation/interior/">Kitchen & Bath Remodeling</a>
+                                <a class="mega-menu-sublink" href="/repair-restoration-maintenance/">Repair & Maintenance</a>
+                            </div>
+
+                            <!-- Col 2: Demolition & Property -->
+                            <div class="col-lg-3 px-3 border-end">
+                                <div class="mega-menu-col-header">Redevelopment</div>
+                                <a class="mega-menu-item" href="/demolition-reconstruction/">
+                                    <i class="bi bi-hammer text-muted" style="font-size:13px;"></i>
+                                    Demolition & Reconstruction
+                                </a>
+                                <a class="mega-menu-sublink" href="/demolition-reconstruction/">Building Demolition</a>
+                                <a class="mega-menu-sublink" href="/demolition-reconstruction/">Site Clearing & Debris</a>
+                                <a class="mega-menu-item mt-2" href="/redevelopment/">
+                                    <i class="bi bi-arrow-repeat text-muted" style="font-size:13px;"></i>
+                                    Property Redevelopment
+                                </a>
+                                <a class="mega-menu-sublink" href="/redevelopment/">Society Redevelopment</a>
+                                <a class="mega-menu-sublink" href="/redevelopment/">Old Building Reconstruction</a>
+
+                                <div class="mega-menu-col-header mt-3">Property</div>
+                                <a class="mega-menu-item" href="/property-land/">
+                                    <i class="bi bi-map text-muted" style="font-size:13px;"></i>
+                                    Property & Land Advisory
+                                </a>
+                                <a class="mega-menu-sublink" href="/property-documentation/">Documentation Support</a>
+                                <a class="mega-menu-sublink" href="/property-inspection-assessment/">Property Inspection & Audit</a>
+                            </div>
+
+                            <!-- Col 3: Support Services -->
+                            <div class="col-lg-3 px-3 border-end">
+                                <div class="mega-menu-col-header">NRI Services</div>
+                                <a class="mega-menu-item" href="/nri-services/">
+                                    <i class="bi bi-globe2 text-muted" style="font-size:13px;"></i>
+                                    NRI Property Services
+                                </a>
+                                <a class="mega-menu-sublink" href="/nri-services/">Property Inspection Reports</a>
+                                <a class="mega-menu-sublink" href="/nri-services/">Remote Supervision</a>
+                                <a class="mega-menu-sublink" href="/nri-services/">Renovation Management</a>
+                                <a class="mega-menu-sublink" href="/nri-services/">Documentation Coordination</a>
+
+                                <div class="mega-menu-col-header mt-3">Advisory</div>
+                                <a class="mega-menu-item" href="/government-approvals-compliance/">
+                                    <i class="bi bi-file-earmark-check text-muted" style="font-size:13px;"></i>
+                                    Government Approvals
+                                </a>
+                                <a class="mega-menu-sublink" href="/bank-loan-finance-support/">Bank Loan & Finance Support</a>
+                                <a class="mega-menu-sublink" href="/legal-registration-coordination/">Legal & Registration</a>
+                                <a class="mega-menu-sublink" href="/project-management/">Project Management (PMC)</a>
+                            </div>
+
+                            <!-- Col 4: CTA Box -->
+                            <div class="col-lg-3 ps-3">
+                                <div class="mega-menu-cta-box">
+                                    <div style="font-size:11px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">
+                                        Free Site Assessment
+                                    </div>
+                                    <p style="font-size:13px; color:rgba(255,255,255,0.68); line-height:1.55; margin-bottom:14px;">
+                                        Book a structural engineer for an on-site inspection and detailed project estimate.
+                                    </p>
+                                    <a href="/request-site-visit/" class="btn btn-gold btn-sm w-100" style="font-size:13px; padding: 9px 16px;">
+                                        Book Site Visit <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+
+                                <div style="margin-top:20px;">
+                                    <div style="font-size:11px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); margin-bottom:10px;">Quick Links</div>
+                                    <a class="mega-menu-sublink ps-0" href="/projects/">View All Projects</a>
+                                    <a class="mega-menu-sublink ps-0" href="/how-we-work/">How We Work</a>
+                                    <a class="mega-menu-sublink ps-0" href="/faqs/">FAQs</a>
+                                    <a class="mega-menu-sublink ps-0" href="/contact/">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {% if '/projects/' in request.path %}active{% endif %}" href="/projects/">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/how-we-work/' in request.path %}active{% endif %}" href="/how-we-work/">How We Work</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/nri-services/' in request.path %}active{% endif %}" href="/nri-services/">NRI Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/blog/' in request.path %}active{% endif %}" href="/blog/">Insights</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/contact/' in request.path %}active{% endif %}" href="/contact/">Contact</a>
+                </li>
+
+                <!-- Primary CTA -->
+                <li class="nav-item ms-2">
+                    <a href="/contact/" class="btn-navbar-cta">
+                        Get Free Consultation
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     MOBILE OFFCANVAS NAVIGATION
+     ============================================================ -->
+<div class="offcanvas offcanvas-start offcanvas-nav" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel" style="width: 320px;">
+    <div class="offcanvas-header">
+        <div class="brand-logo" style="font-size: 24px; color:#fff;">BUILD<span style="color:var(--gold);">+</span></div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close navigation"></button>
+    </div>
+    <div class="offcanvas-body">
+        <nav aria-label="Mobile navigation">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about/" class="nav-link">About Us</a>
+
+            <!-- Services Accordion -->
+            <div class="accordion accordion-flush" id="mobileServicesAccordion">
+                <div class="accordion-item" style="border:none; border-bottom: 1px solid var(--border-light);">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#mobileServices"
+                            aria-expanded="false">
+                        Services
+                    </button>
+                    <div id="mobileServices" class="accordion-collapse collapse" data-bs-parent="#mobileServicesAccordion">
+                        <div class="accordion-body">
+                            <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); padding: 8px 0 4px 16px;">Construction</div>
+                            <a href="/construction/">New Construction</a>
+                            <a href="/renovation/">Flat & Apartment Renovation</a>
+                            <a href="/repair-restoration-maintenance/">Repair & Maintenance</a>
+                            <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); padding: 10px 0 4px 16px;">Redevelopment</div>
+                            <a href="/demolition-reconstruction/">Demolition & Reconstruction</a>
+                            <a href="/redevelopment/">Property Redevelopment</a>
+                            <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); padding: 10px 0 4px 16px;">Property & NRI</div>
+                            <a href="/property-land/">Property & Land Advisory</a>
+                            <a href="/nri-services/">NRI Property Services</a>
+                            <a href="/property-inspection-assessment/">Property Inspection</a>
+                            <a href="/bank-loan-finance-support/">Finance Support</a>
+                            <a href="/project-management/">Project Management</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/projects/" class="nav-link">Projects</a>
+            <a href="/how-we-work/" class="nav-link">How We Work</a>
+            <a href="/nri-services/" class="nav-link">NRI Services</a>
+            <a href="/blog/" class="nav-link">Insights</a>
+            <a href="/faqs/" class="nav-link">FAQs</a>
+            <a href="/contact/" class="nav-link">Contact</a>
+        </nav>
+
+        <div class="offcanvas-cta-area">
+            <a href="/contact/" class="btn btn-brand w-100 mb-2">
+                Get Free Consultation
+            </a>
+            <a href="/request-site-visit/" class="btn btn-outline-brand w-100">
+                Book Site Visit <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <div class="mt-3 d-flex gap-2 justify-content-center">
+                <a href="/portal/" style="font-size:13px; color: var(--text-muted); text-decoration:none;">
+                    <i class="bi bi-person-circle me-1"></i> Client Portal
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FLASH MESSAGES -->
+{% if messages %}
+<div class="container-xxl" style="padding-top: 16px;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show d-flex align-items-center gap-2" role="alert" style="border-radius: var(--radius-sm); font-size: 14.5px;">
+        {% if message.tags == 'success' %}<i class="bi bi-check-circle-fill text-success"></i>
+        {% elif message.tags == 'error' or message.tags == 'danger' %}<i class="bi bi-exclamation-triangle-fill text-danger"></i>
+        {% else %}<i class="bi bi-info-circle-fill text-info"></i>{% endif %}
+        {{ message }}
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ============================================================
+     GLOBAL CTA SECTION
+     ============================================================ -->
+{% block global_cta %}
+<section class="global-cta" aria-labelledby="global-cta-heading">
+    <div class="container-xxl">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <div class="eyebrow" style="color: rgba(201, 162, 39, 0.85);">
+                    <span style="background: rgba(201,162,39,0.3); display:inline-block; width:28px; height:2px;"></span>
+                    Tell Us About Your Property
+                </div>
+                <h2 id="global-cta-heading" style="color:#fff; font-size: 38px; margin-bottom: 12px; letter-spacing: -0.5px;">
+                    Planning Your Next Property Project?
+                </h2>
+                <p style="color: rgba(255,255,255,0.68); font-size: 17px; margin: 0; max-width: 580px;">
+                    From new construction and renovation to redevelopment and NRI property supervision — let our engineers guide your next step.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex flex-column gap-2">
+                    <a href="/request-site-visit/" class="btn btn-gold btn-lg w-100 justify-content-center">
+                        Book a Site Visit <i class="bi bi-arrow-right ms-1 btn-arrow"></i>
+                    </a>
+                    <a href="/contact/" class="btn btn-outline-white w-100 justify-content-center">
+                        Get Free Consultation
+                    </a>
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp w-100 justify-content-center" style="font-size:14px;">
+                        <i class="bi bi-whatsapp me-1"></i> WhatsApp Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- ============================================================
+     SITE FOOTER
+     ============================================================ -->
+<footer class="site-footer" role="contentinfo">
+    <div class="container-xxl">
+        <div class="row g-5 pb-4" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+
+            <!-- Col 1: Brand -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-brand">BUILD<span>+</span></div>
+                <p class="footer-tagline">
+                    Complete Construction & Property Solutions — from new build to renovation, redevelopment and dedicated NRI property management.
+                </p>
+                <div class="footer-social-links">
+                    <a href="{{ site_settings.facebook_url|default:'#' }}" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="{{ site_settings.instagram_url|default:'#' }}" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="{{ site_settings.linkedin_url|default:'#' }}" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" class="footer-social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Col 2: Services -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <div class="footer-col-heading">Services</div>
+                <ul class="footer-links">
+                    <li><a href="/construction/">New Construction</a></li>
+                    <li><a href="/renovation/">Flat Renovation</a></li>
+                    <li><a href="/demolition-reconstruction/">Demolition & Rebuild</a></li>
+                    <li><a href="/redevelopment/">Property Redevelopment</a></li>
+                    <li><a href="/property-land/">Property & Land</a></li>
+                    <li><a href="/nri-services/">NRI Services</a></li>
+                    <li><a href="/interior-remodeling/">Interior Remodeling</a></li>
+                    <li><a href="/project-management/">Project Management</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Property Support -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <div class="footer-col-heading">Advisory</div>
+                <ul class="footer-links">
+                    <li><a href="/government-approvals-compliance/">Govt. Approvals</a></li>
+                    <li><a href="/property-documentation/">Documentation</a></li>
+                    <li><a href="/bank-loan-finance-support/">Bank Loan Support</a></li>
+                    <li><a href="/property-inspection-assessment/">Inspection & Audit</a></li>
+                    <li><a href="/legal-registration-coordination/">Legal & Registration</a></li>
+                    <li><a href="/repair-restoration-maintenance/">Repair & Maintenance</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Company -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <div class="footer-col-heading">Company</div>
+                <ul class="footer-links">
+                    <li><a href="/about/">About BUILD+</a></li>
+                    <li><a href="/projects/">Projects Portfolio</a></li>
+                    <li><a href="/how-we-work/">How We Work</a></li>
+                    <li><a href="/blog/">Engineering Insights</a></li>
+                    <li><a href="/faqs/">FAQs</a></li>
+                    <li><a href="/contact/">Contact Us</a></li>
+                    <li><a href="/portal/">Client Portal</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 5: Contact -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-col-heading">Contact</div>
+                <div class="footer-contact-item">
+                    <i class="bi bi-telephone-fill icon"></i>
+                    <div>
+                        <strong>{{ site_settings.primary_phone|default:"+91 98765 43210" }}</strong><br>
+                        <span style="font-size:12px;">Mon–Sat, 9AM–7PM</span>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="bi bi-whatsapp icon"></i>
+                    <div>
+                        <strong>WhatsApp Available</strong><br>
+                        <span style="font-size:12px;">Quick project inquiries</span>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="bi bi-envelope-fill icon"></i>
+                    <div>
+                        <a href="mailto:{{ site_settings.primary_email|default:'contact@buildplus.in' }}" style="color: rgba(255,255,255,0.65);">
+                            {{ site_settings.primary_email|default:"contact@buildplus.in" }}
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="bi bi-geo-alt-fill icon"></i>
+                    <div>{{ site_settings.office_address|default:"Bengaluru, Karnataka, India" }}</div>
+                </div>
+                <div class="mt-3">
+                    <a href="/contact/" class="btn btn-gold btn-sm w-100">Request Consultation</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-divider">
+            <div class="copyright">
+                &copy; 2026 {{ site_settings.site_name|default:"BUILD+ Construction & Property Services" }}. All rights reserved.
+            </div>
+            <div class="footer-legal-links">
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-and-conditions/">Terms</a>
+                <a href="/disclaimer/">Disclaimer</a>
+                <a href="/cookie-policy/">Cookie Policy</a>
+                <a href="/sitemap.xml">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ============================================================
+     BUILD+ AI CUSTOMER CONSULTANT WIDGET
+     ============================================================ -->
+<div id="buildAiAssistantMount"></div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/static/js/navigation.js" defer></script>
+<script src="/static/js/animations.js" defer></script>
+<script src="/static/js/ai_chat.js" defer></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/static/sw.js').catch(() => {});
+  });
+}
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

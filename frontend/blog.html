@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub & Technical Guides | BUILD+ Engineering Insights</title>
+    <meta name="description" content="Expert insights, cost calculators, structural waterproofing guides, demolition regulations, and society redevelopment manuals written by civil engineers.">
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+    <!-- GLOBAL HEADER -->
+    <header class="site-header">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="index.html" class="brand-logo">
+                    <div class="logo-mark">B+</div>
+                    <div class="logo-text">BUILD<span>+</span></div>
+                </a>
+
+                <nav class="d-none d-lg-flex align-items-center gap-1">
+                    <a href="index.html" class="nav-link-custom">Home</a>
+                    <a href="about.html" class="nav-link-custom">About</a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0)" class="nav-link-custom dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                        <ul class="dropdown-menu dropdown-menu-custom shadow-lg">
+                            <li><a class="dropdown-item dropdown-item-custom" href="construction.html">🏗️ Construction Services</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="renovation.html">🔨 Flat & Apartment Renovation</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="demolition-reconstruction.html">⚡ Demolition & Reconstruction</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="redevelopment.html">🏢 Property & Society Redevelopment</a></li>
+                            <li><hr class="dropdown-divider my-1 border-secondary border-opacity-25"></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="property-land.html">📐 Property & Land Services</a></li>
+                            <li><a class="dropdown-item dropdown-item-custom" href="nri-services.html">✈️ NRI Property Services</a></li>
+                        </ul>
+                    </div>
+                    <a href="projects.html" class="nav-link-custom">Projects</a>
+                    <a href="how-we-work.html" class="nav-link-custom">How We Work</a>
+                    <a href="blog.html" class="nav-link-custom active">Knowledge Hub</a>
+                    <a href="faqs.html" class="nav-link-custom">FAQs</a>
+                    <a href="contact.html" class="nav-link-custom">Contact</a>
+                </nav>
+
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="theme-toggle-btn" data-bs-toggle="modal" data-bs-target="#searchModal" title="Search">🔍</button>
+                    <button type="button" class="theme-toggle-btn" title="Toggle Light / Dark Mode">🌙</button>
+                    <a href="contact.html" class="btn btn-primary-custom d-none d-sm-inline-flex">Request Consultation →</a>
+                    <button class="navbar-toggler d-lg-none theme-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas">☰</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="py-5 bg-surface-2 border-bottom border-custom">
+        <div class="container py-4">
+            <div class="max-w-700" style="max-width: 780px;">
+                <div class="eyebrow">ENGINEERING KNOWLEDGE CENTRE</div>
+                <h1 class="display-5 fw-bold mb-3">Insights for Better Property Decisions</h1>
+                <p class="lead text-muted-custom fs-6">
+                    Authoritative technical guides, cost breakdowns, waterproofing protocols, demolition bylaws, and society redevelopment manuals written by practicing engineers.
+                </p>
+                <div class="mt-4">
+                    <input type="search" id="blogSearchInput" class="form-control form-control-lg" placeholder="Search guides by keyword e.g. 'waterproofing', 'resale flat', 'demolition'...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG LISTING -->
+    <section class="py-5">
+        <div class="container py-4">
+            <!-- Category Filters -->
+            <div class="d-flex justify-content-center gap-2 flex-wrap mb-5">
+                <button type="button" class="btn btn-sm btn-primary-custom blog-filter-btn active" data-category="all">All Categories</button>
+                <button type="button" class="btn btn-sm btn-outline-custom blog-filter-btn" data-category="renovation">Flat Renovation</button>
+                <button type="button" class="btn btn-sm btn-outline-custom blog-filter-btn" data-category="construction">Construction</button>
+                <button type="button" class="btn btn-sm btn-outline-custom blog-filter-btn" data-category="demolition">Demolition</button>
+                <button type="button" class="btn btn-sm btn-outline-custom blog-filter-btn" data-category="redevelopment">Redevelopment</button>
+                <button type="button" class="btn btn-sm btn-outline-custom blog-filter-btn" data-category="nri">NRI Advisory</button>
+            </div>
+
+            <!-- Articles Grid -->
+            <div class="row g-4" id="blogGrid">
+                <!-- Article 1 -->
+                <div class="col-md-6 col-lg-4 blog-item" data-category="renovation">
+                    <div class="card-custom p-0 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Resale Flat Renovation Guide" style="height: 200px; width: 100%; object-fit: cover;">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="badge bg-warning text-dark align-self-start mb-2 small">Renovation Guide</span>
+                            <h5 class="fw-bold mb-2 blog-title"><a href="blog-detail.html" class="text-decoration-none text-dark-theme">Complete Checklist for Renovating a 20+ Year Old Resale Flat</a></h5>
+                            <p class="text-muted-custom small blog-excerpt flex-grow-1">
+                                What every buyer must inspect before starting civil works: GI pipe corrosion, structural beam loads, and electrical rewiring requirements.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top small text-muted-custom">
+                                <span>🗓️ Sep 2026</span>
+                                <span>⏱️ 6 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="col-md-6 col-lg-4 blog-item" data-category="construction">
+                    <div class="card-custom p-0 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80" alt="RCC Foundation Concrete Curing Guide" style="height: 200px; width: 100%; object-fit: cover;">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="badge bg-primary text-white align-self-start mb-2 small">Construction</span>
+                            <h5 class="fw-bold mb-2 blog-title"><a href="blog-detail.html" class="text-decoration-none text-dark-theme">Understanding Concrete Curing Protocols & Strength Testing</a></h5>
+                            <p class="text-muted-custom small blog-excerpt flex-grow-1">
+                                Why 21 days of water curing is critical to prevent micro-cracks and achieve design compressive strength in high-load foundations.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top small text-muted-custom">
+                                <span>🗓️ Aug 2026</span>
+                                <span>⏱️ 8 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 3 -->
+                <div class="col-md-6 col-lg-4 blog-item" data-category="redevelopment">
+                    <div class="card-custom p-0 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="Society Redevelopment Feasibility Guide" style="height: 200px; width: 100%; object-fit: cover;">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="badge bg-navy text-white align-self-start mb-2 small">Redevelopment</span>
+                            <h5 class="fw-bold mb-2 blog-title"><a href="blog-detail.html" class="text-decoration-none text-dark-theme">How Apartment Societies Can Successfully Navigate Self-Redevelopment</a></h5>
+                            <p class="text-muted-custom small blog-excerpt flex-grow-1">
+                                A step-by-step roadmap for building committees: from structural audits and FSI calculations to legal consensus frameworks.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top small text-muted-custom">
+                                <span>🗓️ Jul 2026</span>
+                                <span>⏱️ 10 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="noBlogsMessage" class="text-center py-5" style="display: none;">
+                <p class="text-muted-custom fs-5">No technical articles found matching your query.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container text-center text-muted small">
+            &copy; 2026 BUILD+ Knowledge Hub. All rights reserved. &nbsp;|&nbsp; <a href="contact.html">Contact Editorial Desk</a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/filters.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% extends "portal/base_portal.html" %}
+
+{% block title %}Create Support Request — Client Portal | BUILD+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="/portal/support/" class="text-decoration-none small text-muted">← Back to Support Desk</a>
+    <h4 class="fw-bold font-heading text-navy mt-1">Submit a Support or Technical Query</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="portal-card p-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Related Project (Optional)</label>
+                    <select name="project_id" class="form-select">
+                        <option value="">-- Select Project if applicable --</option>
+                        {% for p in projects %}
+                        <option value="{{ p.id }}">{{ p.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Query Category *</label>
+                        <select name="category" class="form-select">
+                            <option value="project_progress">Project Execution & Progress</option>
+                            <option value="billing_payment">Billing, Milestone & Payment</option>
+                            <option value="site_inspection">Site Visit & Quality Audit</option>
+                            <option value="quality_materials">Material Quality & Specifications</option>
+                            <option value="general_inquiry">General Inquiry</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Priority</label>
+                        <select name="priority" class="form-select">
+                            <option value="LOW">Low — General inquiry</option>
+                            <option value="MEDIUM" selected>Medium — Standard query</option>
+                            <option value="HIGH">High — Urgent attention needed</option>
+                            <option value="URGENT">Urgent — Critical site blocker</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Subject / Title *</label>
+                    <input type="text" name="subject" class="form-control" placeholder="e.g. Question about foundation concrete curing or milestone invoice" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-semibold">Detailed Description *</label>
+                    <textarea name="description" rows="5" class="form-control" placeholder="Provide complete details or concerns so our team can investigate immediately..." required></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="/portal/support/" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">Submit Request <i class="bi bi-arrow-right ms-1"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Disclaimer | {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light border-bottom">
+    <div class="container py-3">
+        <h1 class="display-6 font-heading fw-bold">Disclaimer</h1>
+        <p class="text-muted mb-0">Legal & Technical Advisory Notice</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 article-content">
+                <h3>1. General Informational Purpose</h3>
+                <p>The information, cost calculators, blog articles, and technical specifications provided on this portal are for general educational and informational purposes. While prepared by qualified civil engineers and architectural consultants, website content does not constitute formal structural certification without an explicit on-site inspection and formal contract execution.</p>
+
+                <h3>2. Estimates & BOQ Projections</h3>
+                <p>All preliminary cost approximations, rate per square foot benchmarks, and project timelines are subject to site-specific variables including existing structural health, soil strata, material market fluctuations, and municipal sanction requirements.</p>
+
+                <h3>3. Third-Party Links & External Citations</h3>
+                <p>Any external links to regulatory bodies, municipal portals, or third-party resources are provided for client convenience. BUILD+ assumes no responsibility for third-party content or policies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

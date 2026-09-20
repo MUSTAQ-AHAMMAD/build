@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact &amp; Project Consultation | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <span class="current">Contact Us</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Direct Technical Consultation</div>
+        <h1>Let's Discuss Your Property Requirement</h1>
+        <p class="hero-desc">
+            Connect with our civil engineers and architectural consultants for project estimation, structural audits, building sanctions, and turnkey execution.
+        </p>
+    </div>
+</section>
+
+<!-- Contact Form & Coordinates -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="row g-5">
+            <!-- Form Column -->
+            <div class="col-lg-7">
+                <div class="card-premium p-4 p-md-5">
+                    <h3 class="h4 font-heading mb-1">Submit Your Project Enquiry</h3>
+                    <p class="small text-muted mb-4">Our senior engineering team responds within 24 business hours.</p>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.enquiry_type.id_for_label }}">Service / Enquiry Category *</label>
+                            {{ form.enquiry_type }}
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.full_name.id_for_label }}">Your Full Name *</label>
+                                {{ form.full_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.phone_number.id_for_label }}">Phone / WhatsApp *</label>
+                                {{ form.phone_number }}
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.email.id_for_label }}">Email Address (Optional)</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.city_location.id_for_label }}">City / Location *</label>
+                                {{ form.city_location }}
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.property_type.id_for_label }}">Property Typology</label>
+                                {{ form.property_type }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.approximate_area.id_for_label }}">Approx. Built-up Area (Sq.Ft)</label>
+                                {{ form.approximate_area }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.message.id_for_label }}">Project Description &amp; Specific Requirements *</label>
+                            {{ form.message }}
+                        </div>
+
+                        <div class="mb-4 form-check p-3 bg-light rounded-2 border">
+                            {{ form.site_visit_requested }}
+                            <label class="form-check-label fw-bold text-dark ms-2" for="{{ form.site_visit_requested.id_for_label }}">
+                                <i class="bi bi-geo-alt-fill text-gold me-1"></i> Request an On-Site Engineering Audit &amp; Inspection
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-brand btn-lg w-100 justify-content-center">
+                            Submit Project Consultation Request <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Details Column -->
+            <div class="col-lg-5">
+                <div class="card-premium p-4 p-md-5 mb-4">
+                    <h4 class="h5 font-heading mb-4 pb-2 border-bottom">Direct Communication</h4>
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="service-icon-box mb-0" style="width:44px; height:44px; font-size:18px;">
+                            <i class="bi bi-geo-alt" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold d-block" style="font-size:11px;">Corporate Headquarters</small>
+                            <p class="text-dark fw-bold mb-0">{{ site_settings.office_address|default:"Bengaluru, Karnataka, India" }}</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="service-icon-box mb-0" style="width:44px; height:44px; font-size:18px;">
+                            <i class="bi bi-telephone" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold d-block" style="font-size:11px;">Direct Telephone Desk</small>
+                            <p class="text-dark fw-bold mb-0">{{ site_settings.primary_phone|default:"+91 98765 43210" }}</p>
+                            <span class="small text-muted">Mon–Sat, 9:00 AM – 7:00 PM</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="service-icon-box mb-0" style="width:44px; height:44px; font-size:18px; background: rgba(37, 211, 102, 0.1); border-color: rgba(37, 211, 102, 0.3);">
+                            <i class="bi bi-whatsapp" style="color: #25D366;"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold d-block" style="font-size:11px;">WhatsApp Support</small>
+                            <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210'|cut:'+' }}" target="_blank" rel="noopener noreferrer" class="text-success fw-bold text-decoration-none">
+                                Instant WhatsApp Chat <i class="bi bi-box-arrow-up-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 mb-0">
+                        <div class="service-icon-box mb-0" style="width:44px; height:44px; font-size:18px;">
+                            <i class="bi bi-envelope" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold d-block" style="font-size:11px;">Email Desk</small>
+                            <a href="mailto:{{ site_settings.primary_email|default:'contact@buildplus.in' }}" class="text-dark fw-bold text-decoration-none">
+                                {{ site_settings.primary_email|default:"contact@buildplus.in" }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NRI Desk Promo Card -->
+                <div class="card-navy card-premium p-4">
+                    <div class="eyebrow" style="color: var(--gold);">Are You an Overseas Property Owner?</div>
+                    <h4 class="h5 text-white mb-2">Dedicated NRI Assistance Desk</h4>
+                    <p class="small mb-3" style="color: rgba(255,255,255,0.72);">
+                        Our team coordinates remote video logs, escrow milestone disbursements, and statutory compliance across US, UK, Gulf, and APAC time zones.
+                    </p>
+                    <a href="/nri-services/" class="btn btn-gold btn-sm">
+                        Explore NRI Services <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

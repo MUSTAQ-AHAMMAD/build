@@ -1,0 +1,55 @@
+{% extends "portal/base_portal.html" %}
+
+{% block title %}Estimates & BOQ — Client Portal | BUILD+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1 font-heading" style="color: var(--text-primary);">Estimates & Bill of Quantities (BOQ)</h4>
+        <p class="text-muted small mb-0">Transparent line-by-line cost breakdowns, material specifications, and engineering scope</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for est in estimates %}
+    <div class="col-lg-6">
+        <div class="portal-card p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h5 class="fw-bold font-monospace mb-0" style="color: var(--text-primary);">{{ est.estimate_number }}</h5>
+                    <small class="text-muted">Generated on {{ est.created_at|date:"d M Y" }}</small>
+                </div>
+                <span class="badge-status badge-status-draft">{{ est.status }}</span>
+            </div>
+            
+            <p class="small my-2" style="color: var(--text-secondary);">{{ est.description|default:"Detailed structural & material cost estimate." }}</p>
+
+            <div class="p-3 rounded-3 my-3" style="background-color: var(--border-subtle); border: 1px solid var(--border-color);">
+                <div class="d-flex justify-content-between small text-muted">
+                    <span>Subtotal:</span>
+                    <span class="font-monospace" style="color: var(--text-primary);">{{ pay_settings.currency_symbol }}{{ est.estimated_amount|floatformat:2 }}</span>
+                </div>
+                {% if est.tax_amount > 0 %}
+                <div class="d-flex justify-content-between small text-muted">
+                    <span>GST:</span>
+                    <span class="font-monospace" style="color: var(--text-primary);">{{ pay_settings.currency_symbol }}{{ est.tax_amount|floatformat:2 }}</span>
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between fw-bold pt-2 border-top mt-1" style="border-color: var(--border-color) !important;">
+                    <span style="color: var(--text-primary);">Total Estimate:</span>
+                    <span class="font-monospace fs-6" style="color: var(--brand-success);">{{ pay_settings.currency_symbol }}{{ est.total_amount|floatformat:2 }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="/portal/support/create/" class="btn btn-sm btn-outline-secondary">Ask Question</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 text-muted">
+        No formal estimates prepared for your account yet. Once your site inspection is conducted, our engineering desk will publish your custom BOQ here.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}CRM Conversion Reports & Analytics{% endblock %}
+{% block page_title %}Executive CRM Reports & Funnel Analytics{% endblock %}
+
+{% block crm_content %}
+<!-- CONVERSION FUNNEL METRICS CARDS (SECTION 31) -->
+<div class="row g-3 mb-4">
+    <div class="col-md">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white text-center">
+            <small class="text-muted text-uppercase fw-bold">Lead → Qualified</small>
+            <div class="display-6 font-heading fw-bold text-primary">{{ conv_metrics.qualified_rate }}%</div>
+            <small class="text-muted">Discovery & Screening</small>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white text-center">
+            <small class="text-muted text-uppercase fw-bold">Lead → Site Visit</small>
+            <div class="display-6 font-heading fw-bold text-warning">{{ conv_metrics.site_visit_rate }}%</div>
+            <small class="text-muted">Technical Inspection</small>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white text-center">
+            <small class="text-muted text-uppercase fw-bold">Lead → Proposal</small>
+            <div class="display-6 font-heading fw-bold text-info">{{ conv_metrics.proposal_rate }}%</div>
+            <small class="text-muted">BOQ Quotation Sent</small>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white text-center">
+            <small class="text-muted text-uppercase fw-bold">Lead → WON Conversion</small>
+            <div class="display-6 font-heading fw-bold text-success">{{ conv_metrics.won_rate }}%</div>
+            <small class="text-success fw-bold">{{ won_count }} Closed Projects</small>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white text-center">
+            <small class="text-muted text-uppercase fw-bold">Lost Rate</small>
+            <div class="display-6 font-heading fw-bold text-danger">{{ conv_metrics.lost_rate }}%</div>
+            <small class="text-danger">{{ lost_count }} Lost Leads</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- 1. SERVICE DISTRIBUTION REPORT -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3 h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold">Service Category Breakdown</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Service Category</th>
+                            <th class="text-center">Total Leads</th>
+                            <th class="text-center">Won</th>
+                            <th class="text-end">Won Value (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in service_report %}
+                        <tr>
+                            <td>
+                                <strong>
+                                    {% if row.service_category == 'renovation' %}Flat & Apartment Renovation
+                                    {% elif row.service_category == 'construction' %}Construction Services
+                                    {% elif row.service_category == 'demolition' %}Demolition Services
+                                    {% elif row.service_category == 'redevelopment' %}Property Redevelopment
+                                    {% elif row.service_category == 'nri_services' %}NRI Property Services
+                                    {% elif row.service_category == 'property_land' %}Property & Land Advisory
+                                    {% elif row.service_category == 'finance' %}Construction Finance
+                                    {% else %}{{ row.service_category|title }}{% endif %}
+                                </strong>
+                            </td>
+                            <td class="text-center"><span class="badge bg-secondary">{{ row.count }}</span></td>
+                            <td class="text-center"><span class="badge bg-success">{{ row.won_count }}</span></td>
+                            <td class="text-end fw-bold text-success">₹{{ row.won_val|default:0|floatformat:0 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-3 text-muted">No data available.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. LEAD SOURCE ROI REPORT -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3 h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="font-heading mb-0 fw-bold">Lead Acquisition Source Performance</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Source</th>
+                            <th class="text-center">Total Inquiries</th>
+                            <th class="text-center">Won Projects</th>
+                            <th class="text-end">Revenue Generated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in source_report %}
+                        <tr>
+                            <td><strong>{{ row.lead_source__name|default:row.lead_source_text|default:"Direct / Other" }}</strong></td>
+                            <td class="text-center"><span class="badge bg-navy text-white">{{ row.count }}</span></td>
+                            <td class="text-center"><span class="badge bg-success">{{ row.won_count }}</span></td>
+                            <td class="text-end fw-bold text-success">₹{{ row.won_val|default:0|floatformat:0 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-3 text-muted">No source data available.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. SALES STAFF PERFORMANCE REPORT -->
+<div class="card border-0 shadow-sm rounded-3">
+    <div class="card-header bg-white py-3">
+        <h6 class="font-heading mb-0 fw-bold">Sales Representative Performance</h6>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 small">
+            <thead class="table-light">
+                <tr>
+                    <th>Sales Representative</th>
+                    <th class="text-center">Assigned Leads</th>
+                    <th class="text-center">Won Leads</th>
+                    <th class="text-center">Lost</th>
+                    <th class="text-end">Active Pipeline (₹)</th>
+                    <th class="text-end">Closed Revenue (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staff_report %}
+                <tr>
+                    <td>
+                        <strong class="text-dark">{{ staff.get_full_name|default:staff.username }}</strong>
+                        <small class="text-muted d-block">{{ staff.email }}</small>
+                    </td>
+                    <td class="text-center"><span class="badge bg-navy text-white">{{ staff.assigned_leads }}</span></td>
+                    <td class="text-center"><span class="badge bg-success">{{ staff.won_leads }}</span></td>
+                    <td class="text-center"><span class="badge bg-danger">{{ staff.lost_leads }}</span></td>
+                    <td class="text-end text-navy fw-bold">₹{{ staff.pipeline_val|default:0|floatformat:0 }}</td>
+                    <td class="text-end text-success fw-bold">₹{{ staff.won_val|default:0|floatformat:0 }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center py-3 text-muted">No staff metrics recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

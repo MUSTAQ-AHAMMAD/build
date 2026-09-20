@@ -1,0 +1,775 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static humanize admin_dashboard_tags %}
+
+{% block title %}Executive Console | BUILD+ Enterprise Operations{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+/* Dashboard Container */
+.dashboard-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4px 40px;
+}
+
+/* 1. Executive Clean Surface Header */
+.exec-header {
+    background: var(--admin-bg-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-md);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 22px;
+    box-shadow: var(--admin-shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.exec-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2563EB 0%, #C9A227 50%, #059669 100%);
+}
+
+.exec-header h1 {
+    font-size: 1.32rem;
+    font-weight: 800;
+    color: var(--admin-text-main);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+    font-family: 'Manrope', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.exec-header p {
+    margin: 0;
+    color: var(--admin-text-muted);
+    font-size: 0.84rem;
+}
+
+.live-pulse-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(5, 150, 105, 0.1);
+    color: #059669;
+    border: 1px solid rgba(5, 150, 105, 0.25);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    background-color: #059669;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.25);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+}
+
+.header-action-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-exec {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: var(--admin-radius-sm);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    min-height: 38px;
+    white-space: nowrap;
+}
+
+.btn-exec.primary {
+    background: #0F172A;
+    color: #FFFFFF !important;
+    border: 1px solid #0F172A;
+}
+
+.btn-exec.primary:hover {
+    background: #1E293B;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+}
+
+[data-theme="dark"] .btn-exec.primary {
+    background: #C9A227;
+    color: #071321 !important;
+    border-color: #C9A227;
+}
+
+[data-theme="dark"] .btn-exec.primary:hover {
+    background: #D4AF37;
+    color: #071321 !important;
+}
+
+.btn-exec.secondary {
+    background: var(--admin-bg-surface);
+    color: var(--admin-text-main) !important;
+    border: 1px solid var(--admin-border);
+}
+
+.btn-exec.secondary:hover {
+    background: var(--admin-bg-hover);
+    border-color: #CBD5E1;
+    color: var(--admin-text-main) !important;
+}
+
+/* 2. Executive 4-Card KPI Grid */
+.kpi-row-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+@media (max-width: 1199.98px) {
+    .kpi-row-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .kpi-row-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kpi-card {
+    background: var(--admin-bg-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: var(--admin-shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.kpi-card.c-blue::before { background: #2563EB; }
+.kpi-card.c-green::before { background: #059669; }
+.kpi-card.c-indigo::before { background: #4F46E5; }
+.kpi-card.c-purple::before { background: #9333EA; }
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--admin-shadow-md);
+    color: inherit;
+}
+
+.kpi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.kpi-label {
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--admin-text-muted);
+}
+
+.kpi-icon-tile {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.kpi-card.c-blue .kpi-icon-tile { background: rgba(37, 99, 235, 0.1); color: #2563EB; }
+.kpi-card.c-green .kpi-icon-tile { background: rgba(5, 150, 105, 0.1); color: #059669; }
+.kpi-card.c-indigo .kpi-icon-tile { background: rgba(79, 70, 229, 0.1); color: #4F46E5; }
+.kpi-card.c-purple .kpi-icon-tile { background: rgba(147, 51, 234, 0.1); color: #9333EA; }
+
+.kpi-val {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--admin-text-main);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: 'Manrope', sans-serif;
+    margin-bottom: 8px;
+}
+
+.kpi-sub {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--admin-text-muted);
+}
+
+.kpi-pill {
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.kpi-pill.p-blue { background: rgba(37, 99, 235, 0.1); color: #2563EB; }
+.kpi-pill.p-green { background: rgba(5, 150, 105, 0.1); color: #059669; }
+.kpi-pill.p-indigo { background: rgba(79, 70, 229, 0.1); color: #4F46E5; }
+.kpi-pill.p-purple { background: rgba(147, 51, 234, 0.1); color: #9333EA; }
+
+/* 3. Command Grid Layout (8 cols + 4 cols) */
+.command-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .command-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Panels */
+.exec-panel {
+    background: var(--admin-bg-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: var(--admin-shadow-sm);
+    overflow: hidden;
+}
+
+.exec-panel-head {
+    padding: 14px 20px;
+    background: transparent;
+    border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exec-panel-head h2, .exec-panel-head h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--admin-text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Manrope', sans-serif;
+}
+
+.exec-panel-link {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2563EB !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.exec-panel-link:hover {
+    text-decoration: underline;
+}
+
+[data-theme="dark"] .exec-panel-link {
+    color: var(--admin-gold) !important;
+}
+
+/* Executive Table */
+.exec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+}
+
+.exec-table th {
+    background: var(--admin-bg-subtle, #F8FAFC);
+    color: var(--admin-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--admin-border);
+    white-space: nowrap;
+}
+
+.exec-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--admin-border-subtle, #EDF2F7);
+    color: var(--admin-text-main);
+    vertical-align: middle;
+}
+
+.exec-table tbody tr:hover {
+    background: var(--admin-bg-hover, #F8FAFC);
+}
+
+.exec-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Badges */
+.badge-status-pill {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.badge-status-pill.new { background: rgba(37, 99, 235, 0.1); color: #2563EB; }
+.badge-status-pill.won { background: rgba(5, 150, 105, 0.12); color: #059669; }
+.badge-status-pill.site_visit { background: rgba(201, 162, 39, 0.15); color: #B45309; }
+.badge-status-pill.contacted { background: rgba(14, 165, 233, 0.12); color: #0284C7; }
+.badge-status-pill.proposal { background: rgba(147, 51, 234, 0.12); color: #9333EA; }
+.badge-status-pill.negotiation { background: rgba(249, 115, 22, 0.12); color: #EA580C; }
+.badge-status-pill.lost { background: rgba(239, 68, 68, 0.1); color: #DC2626; }
+
+/* Workspace Desk Items */
+.desk-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--admin-border-subtle, #EDF2F7);
+    text-decoration: none !important;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.desk-nav-item:last-child {
+    border-bottom: none;
+}
+
+.desk-nav-item:hover {
+    background: var(--admin-bg-hover, #F8FAFC);
+}
+
+.desk-nav-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.desk-nav-icon.crm { background: rgba(37, 99, 235, 0.1); color: #2563EB; }
+.desk-nav-icon.cms { background: rgba(14, 165, 233, 0.1); color: #0284C7; }
+.desk-nav-icon.pay { background: rgba(5, 150, 105, 0.1); color: #059669; }
+.desk-nav-icon.ai { background: rgba(147, 51, 234, 0.1); color: #9333EA; }
+.desk-nav-icon.blog { background: rgba(217, 119, 6, 0.1); color: #D97706; }
+.desk-nav-icon.portal { background: rgba(100, 116, 139, 0.1); color: #64748B; }
+
+.desk-nav-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--admin-text-main);
+    line-height: 1.2;
+}
+
+.desk-nav-sub {
+    font-size: 0.74rem;
+    color: var(--admin-text-muted);
+}
+
+/* System Health Row */
+.health-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--admin-border-subtle, #EDF2F7);
+    font-size: 0.82rem;
+}
+
+.health-row:last-child {
+    border-bottom: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{% get_admin_metrics as metrics %}
+
+<div class="dashboard-wrapper">
+    <!-- 1. Executive Operations Header -->
+    <div class="exec-header">
+        <div>
+            <h1>
+                <span>Executive Operations Console</span>
+                <span class="live-pulse-badge">
+                    <span class="pulse-dot"></span> All Systems Live
+                </span>
+            </h1>
+            <p>Welcome, {{ request.user.first_name|default:request.user.username }}. Overview of civil operations, commercial pipeline, and automated AI leads.</p>
+        </div>
+        <div class="header-action-group">
+            <a href="/admin/crm/lead/add/" class="btn-exec primary">
+                <i class="bi bi-plus-lg"></i> Inbound Lead
+            </a>
+            <a href="/admin/projects/project/add/" class="btn-exec secondary">
+                <i class="bi bi-building"></i> New Project
+            </a>
+            <a href="/payment/requests/create/" class="btn-exec secondary">
+                <i class="bi bi-credit-card"></i> Payment Link
+            </a>
+            <a href="/cms/blog/create/" class="btn-exec secondary">
+                <i class="bi bi-lightning-charge"></i> AI Writer
+            </a>
+        </div>
+    </div>
+
+    <!-- 2. High-Impact Executive KPI Row (4 Cards) -->
+    <div class="kpi-row-grid">
+        <!-- KPI 1: Active Leads -->
+        <a href="/crm/leads/" class="kpi-card c-blue">
+            <div class="kpi-top">
+                <span class="kpi-label">Customer Enquiries</span>
+                <div class="kpi-icon-tile">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+            </div>
+            <div class="kpi-val">{{ metrics.total_leads }}</div>
+            <div class="kpi-sub">
+                <span class="kpi-pill p-blue">+{{ metrics.new_leads }} New Today</span>
+                <span>Active inquiries</span>
+            </div>
+        </a>
+
+        <!-- KPI 2: Verified Revenue -->
+        <a href="/payment/transactions/" class="kpi-card c-green">
+            <div class="kpi-top">
+                <span class="kpi-label">Total Revenue</span>
+                <div class="kpi-icon-tile">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+            </div>
+            <div class="kpi-val">₹{{ metrics.total_revenue|intcomma }}</div>
+            <div class="kpi-sub">
+                <span class="kpi-pill p-green">{{ metrics.successful_tx_count }} Settled</span>
+                <span>Verified ledger</span>
+            </div>
+        </a>
+
+        <!-- KPI 3: Operational Projects -->
+        <a href="/admin/projects/project/" class="kpi-card c-indigo">
+            <div class="kpi-top">
+                <span class="kpi-label">Active Projects</span>
+                <div class="kpi-icon-tile">
+                    <i class="bi bi-buildings-fill"></i>
+                </div>
+            </div>
+            <div class="kpi-val">{{ metrics.active_projects }}</div>
+            <div class="kpi-sub">
+                <span class="kpi-pill p-indigo">Civil &amp; Renovation</span>
+                <span>Live sites</span>
+            </div>
+        </a>
+
+        <!-- KPI 4: Automated AI Sessions -->
+        <a href="/aichatboat/" class="kpi-card c-purple">
+            <div class="kpi-top">
+                <span class="kpi-label">AI Chat Sessions</span>
+                <div class="kpi-icon-tile">
+                    <i class="bi bi-robot"></i>
+                </div>
+            </div>
+            <div class="kpi-val">{{ metrics.ai_chat_sessions }}</div>
+            <div class="kpi-sub">
+                <span class="kpi-pill p-purple">{{ metrics.ai_leads_converted }} Leads</span>
+                <span>AI conversions</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- 3. Main 2-Column Command Center (8 cols + 4 cols) -->
+    <div class="command-grid">
+        <!-- Left Area (8 cols): Tables & Execution Tracker -->
+        <div>
+            <!-- Card 1: Recent Inbound Leads -->
+            <div class="exec-panel">
+                <div class="exec-panel-head">
+                    <h2><i class="bi bi-inbox-fill text-primary"></i> Recent Inbound Enquiries &amp; Prospects</h2>
+                    <a href="/crm/leads/" class="exec-panel-link">View All in CRM <i class="bi bi-arrow-right"></i></a>
+                </div>
+
+                <!-- Desktop Table -->
+                <div class="table-responsive">
+                    <table class="exec-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 160px;">Lead ID</th>
+                                <th>Client Name</th>
+                                <th>Service Scope</th>
+                                <th>City / Location</th>
+                                <th style="width: 100px;">Status</th>
+                                <th style="width: 100px;">Received</th>
+                                <th class="text-end" style="width: 90px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lead in metrics.recent_leads %}
+                            <tr>
+                                <td>
+                                    <a href="/crm/leads/{{ lead.pk }}/" class="fw-bold font-monospace text-decoration-none" style="color: var(--admin-text-main); font-size: 0.8rem;">
+                                        {{ lead.lead_id }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">{{ lead.full_name }}</div>
+                                    <small class="text-muted">{{ lead.phone }}</small>
+                                </td>
+                                <td>
+                                    <div>{{ lead.get_service_category_display }}</div>
+                                    <small class="text-muted">{{ lead.get_property_type_display }}</small>
+                                </td>
+                                <td>{{ lead.city|default:"Hyderabad" }}</td>
+                                <td>
+                                    <span class="badge-status-pill {{ lead.status|lower }}">
+                                        {{ lead.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ lead.created_at|date:"d M Y" }}</small>
+                                </td>
+                                <td class="text-end">
+                                    <a href="/crm/leads/{{ lead.pk }}/" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.74rem;">
+                                        Profile <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    No customer enquiries logged yet.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Card 2: Active Projects Tracker -->
+            <div class="exec-panel">
+                <div class="exec-panel-head">
+                    <h2><i class="bi bi-buildings text-info"></i> Active Infrastructure &amp; Construction Projects</h2>
+                    <a href="/admin/projects/project/" class="exec-panel-link">Manage Projects <i class="bi bi-arrow-right"></i></a>
+                </div>
+
+                <div class="p-3">
+                    {% for proj in metrics.recent_projects %}
+                    <div class="p-3 rounded mb-3" style="background: var(--admin-bg-subtle, #F8FAFC); border: 1px solid var(--admin-border-subtle, #E2E8F0);">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h6 class="fw-bold mb-1" style="color: var(--admin-text-main);">{{ proj.title }}</h6>
+                                <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>{{ proj.location }} &bull; {{ proj.category.name }}</small>
+                            </div>
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary border px-2 py-1 small fw-semibold">
+                                {{ proj.get_project_status_display }}
+                            </span>
+                        </div>
+
+                        <div class="mt-2">
+                            <div class="d-flex justify-content-between small text-muted mb-1">
+                                <span>Execution Progress</span>
+                                <span class="fw-bold" style="color: var(--admin-text-main);">{{ proj.progress_percentage }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px; background-color: var(--admin-border);">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ proj.progress_percentage }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top" style="border-color: var(--admin-border-subtle) !important;">
+                            <small class="text-muted">Budget: <strong style="color: var(--admin-text-main);">₹{{ proj.contract_amount|floatformat:2 }}</strong></small>
+                            <a href="/portal/projects/{{ proj.slug }}/" target="_blank" class="small text-decoration-none fw-semibold">
+                                Client Tracker <i class="bi bi-box-arrow-up-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-4 text-muted">
+                        No active projects currently under execution.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Area (4 cols): Operations Desks, Health & Action Queue -->
+        <div>
+            <!-- Card 1: Workspace Desks Navigation -->
+            <div class="exec-panel">
+                <div class="exec-panel-head">
+                    <h3><i class="bi bi-grid-fill text-primary"></i> Operations Desks</h3>
+                </div>
+                <div>
+                    <a href="/crm/" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon crm"><i class="bi bi-people-fill"></i></div>
+                            <div>
+                                <div class="desk-nav-title">CRM Sales Pipeline</div>
+                                <div class="desk-nav-sub">Leads, Follow-ups, Site Visits &amp; BOQ</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                    </a>
+                    <a href="/cms/" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon cms"><i class="bi bi-layout-text-window-reverse"></i></div>
+                            <div>
+                                <div class="desk-nav-title">Content &amp; Site CMS</div>
+                                <div class="desk-nav-sub">Services, Projects, Pages &amp; Media</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                    </a>
+                    <a href="/payment/" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon pay"><i class="bi bi-wallet2"></i></div>
+                            <div>
+                                <div class="desk-nav-title">Payments &amp; Ledger</div>
+                                <div class="desk-nav-sub">Gateways, UPI VPA &amp; Tax Invoices</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                    </a>
+                    <a href="/aichatboat/" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon ai"><i class="bi bi-robot"></i></div>
+                            <div>
+                                <div class="desk-nav-title">AI Customer Assistant</div>
+                                <div class="desk-nav-sub">Conversations, RAG Knowledge &amp; Handoff</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                    </a>
+                    <a href="/cms/blog/" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon blog"><i class="bi bi-journal-richtext"></i></div>
+                            <div>
+                                <div class="desk-nav-title">Editorial Blog &amp; Insights</div>
+                                <div class="desk-nav-sub">Publications &amp; Gemini AI Writer</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                    </a>
+                    <a href="/portal/" target="_blank" class="desk-nav-item">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="desk-nav-icon portal"><i class="bi bi-person-workspace"></i></div>
+                            <div>
+                                <div class="desk-nav-title">Client Self-Service Portal</div>
+                                <div class="desk-nav-sub">Live project tracker &amp; invoice receipts</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-box-arrow-up-right text-muted small"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: System Health & Integrations -->
+            <div class="exec-panel">
+                <div class="exec-panel-head">
+                    <h3><i class="bi bi-shield-check text-success"></i> System Health &amp; Security</h3>
+                </div>
+                <div>
+                    <div class="health-row">
+                        <span><i class="bi bi-database me-2 text-primary"></i> Database Engine</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle small fw-semibold">Operational</span>
+                    </div>
+                    <div class="health-row">
+                        <span><i class="bi bi-cpu me-2" style="color: #7C3AED;"></i> Google Gemini AI</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle small fw-semibold">Configured</span>
+                    </div>
+                    <div class="health-row">
+                        <span><i class="bi bi-credit-card me-2 text-success"></i> Payment Gateway Webhooks</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle small fw-semibold">Active</span>
+                    </div>
+                    <div class="health-row">
+                        <span><i class="bi bi-lock me-2 text-warning"></i> Session &amp; CSRF Security</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle small fw-semibold">Hardened</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Today's Action Queue -->
+            <div class="exec-panel">
+                <div class="exec-panel-head">
+                    <h3><i class="bi bi-clock-history text-warning"></i> Operations Queue</h3>
+                </div>
+                <div class="p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom" style="border-color: var(--admin-border-subtle) !important;">
+                        <span class="small"><i class="bi bi-person-exclamation me-2 text-primary"></i> Uncontacted Inquiries</span>
+                        <span class="badge bg-primary rounded-pill">{{ metrics.new_leads }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom" style="border-color: var(--admin-border-subtle) !important;">
+                        <span class="small"><i class="bi bi-calendar-event me-2 text-warning"></i> Site Visits Scheduled</span>
+                        <span class="badge bg-warning text-dark rounded-pill">{{ metrics.site_visits_today|default:"0" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small"><i class="bi bi-file-earmark-text me-2 text-info"></i> Open Proposals</span>
+                        <span class="badge bg-info rounded-pill">{{ metrics.pending_proposals }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

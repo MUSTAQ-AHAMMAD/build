@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Demolition &amp; Reconstruction Services | {{ site_settings.site_name|default:"BUILD+" }}{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container-xxl">
+        <nav aria-label="breadcrumb" class="breadcrumb-premium mb-3">
+            <a href="/">Home</a>
+            <span class="separator">/</span>
+            <a href="/services/">Services</a>
+            <span class="separator">/</span>
+            <span class="current">Demolition &amp; Reconstruction</span>
+        </nav>
+        <div class="eyebrow" style="color: var(--gold);">Controlled Dismantling &amp; Rebuild</div>
+        <h1>When Repair is Not Enough, Rebuild with Precision.</h1>
+        <p class="hero-desc">
+            Engineered mechanical demolition, internal strip-outs, municipal clearance coordination, debris disposal, and integrated turnkey rebuilding for outdated or unsafe structures.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="/request-site-visit/" class="btn btn-gold">
+                Request Demolition Audit <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/contact/?type=demolition" class="btn btn-outline-white">
+                Discuss Demolition Scope
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Demolition Services Grid -->
+<section class="section section-surface">
+    <div class="container-xxl">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <div class="eyebrow justify-content-center">Dismantling &amp; Rebuilding</div>
+            <h2>Surgical Demolition with Zero Neighbor Impact</h2>
+            <p>We combine high-reach mechanical excavators, diamond concrete wire-sawing, sound barrier curtains, and complete municipal compliance.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Building Demolition -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-hammer" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Complete Building Demolition</h3>
+                    <p class="small mb-3">Mechanical razing of old independent houses, dilapidated apartments, and commercial complexes.</p>
+                    <ul class="service-benefits">
+                        <li>Vibration &amp; acoustic monitoring</li>
+                        <li>Dust suppression water misting cannons</li>
+                        <li>Structural propping of adjacent walls</li>
+                        <li>Municipal demolition permits &amp; NOC</li>
+                    </ul>
+                    <a href="/contact/?type=building_demolition" class="service-link">
+                        Inquire Building Demolition <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Flat Dismantling -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-door-open" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Flat &amp; Interior Strip-Out</h3>
+                    <p class="small mb-3">Internal non-load-bearing wall dismantling, tile chipping, and bathroom strip-outs in occupied societies.</p>
+                    <ul class="service-benefits">
+                        <li>Zero damage to structural columns &amp; beams</li>
+                        <li>Elevator &amp; corridor floor protective sheeting</li>
+                        <li>Restricted noise hours per RWA guidelines</li>
+                        <li>Bagged debris lowering and daily clearing</li>
+                    </ul>
+                    <a href="/contact/?type=interior_stripout" class="service-link">
+                        Inquire Interior Strip-Out <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Site Clearance -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-truck" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Debris Carting &amp; Site Prep</h3>
+                    <p class="small mb-3">Responsible waste hauling, authorized government dumping yard compliance, and land leveling.</p>
+                    <ul class="service-benefits">
+                        <li>Segregation of recyclable steel and masonry</li>
+                        <li>Authorized C&amp;D waste processing disposal</li>
+                        <li>Excavator grading, leveling &amp; compaction</li>
+                        <li>Clear site handover ready for foundation casting</li>
+                    </ul>
+                    <a href="/contact/?type=site_clearance" class="service-link">
+                        Inquire Site Clearing <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Turnkey Reconstruction -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card" style="border-top: 3px solid var(--gold);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="service-icon-box mb-0" style="background: var(--gold-soft); border-color: var(--gold);">
+                            <i class="bi bi-arrow-clockwise" style="color: var(--gold);"></i>
+                        </div>
+                        <span class="badge-gold">Turnkey</span>
+                    </div>
+                    <h3 class="h5 mb-2">Demolish-to-Rebuild Projects</h3>
+                    <p class="small mb-3">Single-window responsibility from razing an obsolete property to handing over a brand new modern building.</p>
+                    <ul class="service-benefits">
+                        <li>Unified architectural &amp; structural engineering</li>
+                        <li>Continuous project management with no vendor gap</li>
+                        <li>Time-saving overlap between demolition and piling</li>
+                        <li>Single accountable commercial contract</li>
+                    </ul>
+                    <a href="/contact/?type=demolish_rebuild" class="service-link">
+                        Inquire Turnkey Rebuild <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Partial Demolition -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-scissors" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Selective &amp; Partial Demolition</h3>
+                    <p class="small mb-3">Surgical diamond cutting to remove cantilever balconies, extra floors, or obsolete wings safely.</p>
+                    <ul class="service-benefits">
+                        <li>Diamond wire-sawing with zero micro-cracks</li>
+                        <li>Hydraulic jacking &amp; temporary steel shoring</li>
+                        <li>Selective slab opening for stairwells &amp; lifts</li>
+                        <li>Structural stability sign-off by PE</li>
+                    </ul>
+                    <a href="/contact/?type=selective_demolition" class="service-link">
+                        Inquire Selective Demolition <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Hazardous & Unsafe Buildings -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-icon-box">
+                        <i class="bi bi-exclamation-triangle" style="color: var(--warning);"></i>
+                    </div>
+                    <h3 class="h5 mb-2">Distressed Building Emergency Razing</h3>
+                    <p class="small mb-3">Rapid response demolition for fire-damaged, tilted, or legally condemned structures under municipal notice.</p>
+                    <ul class="service-benefits">
+                        <li>Rapid mobilization of shoring equipment</li>
+                        <li>Controlled non-explosive collapse engineering</li>
+                        <li>Safety barricading &amp; public safety coordination</li>
+                        <li>Municipal compliance clearance report</li>
+                    </ul>
+                    <a href="/contact/?type=emergency_demolition" class="service-link">
+                        Inquire Emergency Razing <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
